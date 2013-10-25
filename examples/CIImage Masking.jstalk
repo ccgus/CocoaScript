@@ -1,0 +1,11 @@
+var img  = [CIImage cosImageNamed:"duck"];
+var img2 = [CIImage cosImageNamed:"llama"];
+var mask = [CIImage cosImageNamed:"mask4"];
+
+var blendFilter = [CIFilter filterWithName:"CIBlendWithMask"];
+[blendFilter setValue:img forKey:"inputImage"];
+[blendFilter setValue:img2 forKey:"inputBackgroundImage"];
+[blendFilter setValue:mask forKey:@"inputMaskImage"];
+
+[COSImageTools viewCIImage:[blendFilter outputImage] inWindowNamed:"mask" extent:CGRectMake(0, 0, 400, 400)];
+

@@ -1,0 +1,2 @@
+
+[[SBApplication application:"Messages"] setStatusMessage:"Happy (funball)"];

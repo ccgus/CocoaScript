@@ -1,0 +1,143 @@
+var sketcher = [COSCodeSketcher codeSketcherWithName:"Code Sketcher - New Time"];
+[sketcher setFrameRate:60];
+
+var drawFunction = function() {
+    
+    
+    
+    var date = [NSDate date]
+    var c = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSWeekOfYearCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit) fromDate:date];
+    
+    var tm_hour   = [c hour];
+    var tm_min    = [c minute];
+    var tm_sec    = [c second];
+    var dayOfWeek = [c weekday] - 1;
+    var dayOfYear = (([c weekOfYear] - 1) * 7) + dayOfWeek;
+    
+    var extent    = [sketcher bounds];
+    
+    var w = extent.size.width;
+    
+    var m_width  = w/60;
+    var h_width  = w/24;
+    var d_width  = w/7;
+    var dy_width = w/365;
+    
+    var base = 80;
+    
+    [sketcher fillWithColor:[NSColor blackColor]]
+    
+    [[NSColor whiteColor] set];
+    
+    // minute tics
+    for (alpha=0; alpha < 60; alpha++) {
+        var r = NSMakeRect(Math.floor(m_width * alpha), base, 1, 5);
+        [NSBezierPath fillRect:r];
+    }
+    
+    // hour tics
+    for (alpha=0; alpha < 24; alpha++) {
+        var r = NSMakeRect(Math.floor(h_width*alpha), base-30, 1, 5);
+        [NSBezierPath fillRect:r];
+    }
+    
+    // day of the year.
+    [[NSColor colorWithCalibratedWhite:.3 alpha:1] set];
+    var r = NSMakeRect(dy_width*dayOfYear + (tm_hour * (dy_width/24)), base-20, 1, 15);
+    [NSBezierPath fillRect:r];
+    
+    // day of the week.
+    [[NSColor colorWithCalibratedRed:0 green:0 blue:1 alpha:1] set];
+    r = NSMakeRect(d_width*dayOfWeek + (tm_hour * (d_width/24)),base-20,2,15);
+    [NSBezierPath fillRect:r];
+    
+    
+    /*
+        Above was with calls using Cocoa, below is how to use with CGContext* stuff.
+    */
+    
+    // hour
+    
+    var context = [sketcher context];
+    
+    CGContextSetLineWidth(context, 2.0);
+    
+    
+    
+    CGContextSetRGBStrokeColor(context, 1.0, 1.0, 1.0, 0.5);
+    var offset = (h_width*tm_hour) + (tm_min * (h_width/60));
+    
+    if (offset < 18) {
+        CGContextBeginPath(context);
+        CGContextAddArc(context, offset + w ,base-12, 9, 0, 2*Math.PI, 0);
+        CGContextClosePath(context);
+        CGContextStrokePath(context);
+    }
+    else if (offset > w - 18) {
+        CGContextBeginPath(context);
+        CGContextAddArc(context, offset -w ,base-12, 9, 0, 2*Math.PI, 0);
+        CGContextClosePath(context);
+        CGContextStrokePath(context);
+    }
+    
+    CGContextBeginPath(context);
+    CGContextAddArc(context, offset ,base-12, 9, 0, 2*Math.PI, 0);
+    CGContextClosePath(context);
+    CGContextStrokePath(context);
+    
+    // minute
+    CGContextSetRGBStrokeColor(context, 1.0, 0.0, 0.0, 0.5);
+    offset = (m_width*tm_min)  + (tm_sec * (m_width/60));
+    
+    if (offset < 14) {
+        CGContextBeginPath(context);
+        CGContextAddArc(context, offset + w,base-12, 7, 0, 2*Math.PI, 0);
+        CGContextClosePath(context);
+        CGContextStrokePath(context);
+    
+    }
+    else if (offset > w - 14) {
+        CGContextBeginPath(context);
+        CGContextAddArc(context, offset - w,base-12, 7, 0, 2*Math.PI, 0);
+        CGContextClosePath(context);
+        CGContextStrokePath(context);
+    }
+    
+    CGContextBeginPath(context);
+    CGContextAddArc(context, offset ,base-12, 7, 0, 2*Math.PI, 0);
+    CGContextClosePath(context);
+    CGContextStrokePath(context);
+    
+    // seconds
+    
+    CGContextSetRGBStrokeColor(context, 0.0, 1.0, 0.0, 0.5);
+    
+    var ti = [date timeIntervalSince1970];
+    ti = ti - Math.floor(ti);
+    
+    offset = (m_width*tm_sec) + (ti * m_width);
+    
+    if (offset < 10 ) {
+        CGContextBeginPath(context);
+        CGContextAddArc(context, offset +w ,base-12, 5, 0, 2*Math.PI, 0);
+        CGContextClosePath(context);
+        CGContextStrokePath(context);
+    }
+    else if (offset > w - 10) {
+        CGContextBeginPath(context);
+        CGContextAddArc(context, offset -w ,base-12, 5, 0, 2*Math.PI, 0);
+        CGContextClosePath(context);
+        CGContextStrokePath(context);
+    }
+    
+    CGContextBeginPath(context);
+    CGContextAddArc(context, offset ,base-12, 5, 0, 2*Math.PI, 0);
+    CGContextClosePath(context);
+    CGContextStrokePath(context);
+};
+
+
+[sketcher setDrawRect:drawFunction];
+
+
+

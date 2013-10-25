@@ -1,0 +1,14 @@
+var filter = [COSQuickCIFilter quickFilterWithKernel:"""
+kernel vec4 mykernel(vec4 colorA, vec4 colorB) {
+    vec2 dest = destCoord();
+    vec4 ret  = dest.x < 100.0 ? colorA : colorB;
+    return premultiply(ret);
+}"""];
+
+[filter addKernelArgument:[CIColor colorWithString:"0.0 0.0 1.0 1.0"]];
+[filter addKernelArgument:[CIColor colorWithString:"0.0 1.0 1.0 0.5"]];
+
+var img = [filter outputImage];
+
+[COSImageTools viewCIImage:img inWindowNamed:"test" extent:CGRectMake(0, 0, 400, 200)];
+

@@ -1,0 +1,41 @@
+/*
+This a sample on how to use the COSCodeSketcher class, which add experimental processing.org like functionality to Cocoa Script.
+*/
+
+var sketcher = [COSCodeSketcher codeSketcherWithName:"Draw"];
+
+sketcher.setup = function() {
+    [sketcher setSize:NSMakeSize(600, 300)];
+    [sketcher clear];
+};
+
+sketcher.drawRect = function() {
+    [sketcher fillWithColor:[NSColor colorWithCalibratedWhite:1 alpha:.01]];
+}
+
+sketcher.mouseDown = function() {
+    // reset our points
+    m1 = m2 = m3 = m4 = null;
+};
+
+sketcher.mouseDragged = function() {
+    
+    var m0 = [sketcher mouseLocation];
+    
+    if (m4) {
+        [[NSColor colorWithCalibratedWhite:0 alpha:.1] set];
+        
+        [NSBezierPath strokeLineFromPoint:m0 toPoint:m4]
+        [NSBezierPath strokeLineFromPoint:m1 toPoint:m4]
+        [NSBezierPath strokeLineFromPoint:m2 toPoint:m4]
+        [NSBezierPath strokeLineFromPoint:m3 toPoint:m4]
+    }
+    
+    m4 = m3;
+    m3 = m2;
+    m2 = m1;
+    m1 = m0;
+};
+
+
+[sketcher setFrameRate:30]

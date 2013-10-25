@@ -1,0 +1,79 @@
+function drawInImage(img, f) {
+    [img lockFocus]
+    f();
+    [img unlockFocus];
+}
+
+function makeButton(pressed, size, scale) {
+    
+    var img = [NSImage imageWithSize:size];
+    
+    drawInImage(img, function() {
+    
+        var start   = [NSColor colorWithCalibratedRed:0.922 green:0.365 blue:0.224 alpha:1.000];
+        var end     = [NSColor colorWithCalibratedRed:0.899 green:0.187 blue:0.000 alpha:1.000];
+        var outline = [NSColor colorWithCalibratedRed:0.576 green:0.130 blue:0.019 alpha:1.000];
+        var whiteDrop   = [NSColor colorWithCalibratedRed:1 green:1 blue:1 alpha:.2];
+        var pressedDrop = [NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:.03];
+        var radius  = size.height / 2;
+        var width   = size.width - 2;
+        var height  = size.height - 2;
+        
+        var bp = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(.5, .5, width, height) xRadius:radius yRadius:radius];
+        [whiteDrop set];
+        [bp stroke];
+        
+        bp = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(.5, 1.5, width, height) xRadius:radius yRadius:radius];
+        var gradient = [[[NSGradient alloc] initWithStartingColor:start endingColor:end] autorelease];
+        
+        var angle = pressed ? 90 : -90;
+        
+        [gradient drawInBezierPath:bp angle:angle];
+        
+        if (pressed) {
+            [pressedDrop set];
+        }
+        else {
+            [whiteDrop set];
+        }
+        
+        
+        var whiteLineStart = NSMakePoint(radius, height + .5);
+        var whiteLineEnd = NSMakePoint(whiteLineStart.x + (width - radius * 2), whiteLineStart.y);
+        
+        whiteLineStart.x -= 2;
+        whiteLineEnd.x += 4;
+        
+        [NSBezierPath strokeLineFromPoint:whiteLineStart toPoint:whiteLineEnd];
+        
+        whiteLineStart.x += 2;
+        whiteLineEnd.x -= 4;
+        [NSBezierPath strokeLineFromPoint:whiteLineStart toPoint:whiteLineEnd];
+        
+        [outline set];
+        [bp stroke];
+        
+        var atts = {"NSFont":[NSFont systemFontOfSize:14]};
+        
+        [@"Choose…" drawAtPoint:NSMakePoint(20, 5) withAttributes:atts];
+        
+    });
+    
+    return img;
+}
+
+var imgRect = NSMakeRect(0, 0, 100, 26);
+var up     = makeButton(true, imgRect.size, 2);
+var down   = makeButton(false, imgRect.size, 1);
+var both   = [NSImage imageWithSize:NSMakeSize(150, 100)];
+
+drawInImage(both, function() {
+    [[NSColor grayColor] set];
+    [NSBezierPath fillRect:NSMakeRect(0, 0, 150, 100)];
+    [up drawAtPoint:NSMakePoint(25, 15) fromRect:imgRect  operation:NSCompositeSourceOver  fraction:1];
+    [down drawAtPoint:NSMakePoint(25, 45) fromRect:imgRect  operation:NSCompositeSourceOver  fraction:1];
+});
+
+
+[COSImageTools viewNSImage:both inWindowNamed:"buttons"];
+

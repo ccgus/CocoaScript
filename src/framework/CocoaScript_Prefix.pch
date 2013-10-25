@@ -1,0 +1,17 @@
+//
+// Prefix header for all source files of the 'JSTalk' target in the 'JSTalk' project
+//
+
+//#define NS_BUILD_32_LIKE_64 1
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
+
+#ifdef DEBUG
+    #define debug(...) NSLog(__VA_ARGS__)
+#else
+    #define debug(...)
+#endif
+
+#define JSTPrefs [NSUserDefaults standardUserDefaults]

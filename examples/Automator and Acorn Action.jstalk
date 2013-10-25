@@ -1,0 +1,18 @@
+// This goes in the JSTalk Automator Action
+
+function run(input, parameters) {
+	var acorn = [JSTalk application:"Acorn"];
+    
+    var idx = 0;
+    
+    while (idx < input.length()) {
+        var filePath = input[idx];
+        var doc = [acorn open: filePath];
+        [doc scaleImageToHeight:200];
+        [[doc dataRepresentationOfType:"public.png"] writeToFile: filePath + ".png"];
+        [doc close];
+        idx++;
+    }
+     
+	return input;
+}

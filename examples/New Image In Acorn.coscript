@@ -1,0 +1,9 @@
+var imageURL = [NSURL URLWithString:"http://flyingmeat.com/images/fmlogo.pdf"];
+
+var image = [[NSImage alloc] initWithContentsOfURL:imageURL];
+
+var acorn = [COScript application:"Acorn"];
+
+[[acorn sharedDocumentController] newDocumentWithImageData:[image TIFFRepresentation]];
+
+

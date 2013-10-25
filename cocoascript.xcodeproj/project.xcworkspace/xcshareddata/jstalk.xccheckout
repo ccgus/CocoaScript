@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7C6852B7-5A62-4F33-8D95-6F14E6D9F6DA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>jstalk</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>37FFC68B-82A3-4625-916D-B7C15D293305</key>
+		<string>https://github.com/ccgus/jstalk</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>jstalk.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>37FFC68B-82A3-4625-916D-B7C15D293305</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ccgus/jstalk</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>37FFC68B-82A3-4625-916D-B7C15D293305</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>37FFC68B-82A3-4625-916D-B7C15D293305</string>
+			<key>IDESourceControlWCCName</key>
+			<string>jstalk</string>
+		</dict>
+	</array>
+</dict>
+</plist>

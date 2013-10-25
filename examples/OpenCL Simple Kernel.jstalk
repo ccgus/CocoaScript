@@ -1,0 +1,29 @@
+var src = """
+__kernel void test2(write_only image2d_t img) {
+    int2 coord = (int2)(get_global_id(0), get_global_id(1));
+    float4 val = (float4)(1, 0, 0, 1);
+    
+    if (coord.x < 100) {
+        val = (float4)(0, 0, 0, 1);
+    }
+    
+    write_imagef(img, coord, val);
+}""";
+
+var w = 400;
+var h = 400;
+
+var context = [COSOpenCLContext new];
+var program = [context programWithSource:src];
+[program build];
+
+var kernel = [program createKernel:"test2"];
+
+var buffer = [COSOpenCLImageBuffer instanceWithContext:context width:w height:h];
+
+[kernel setArgument:0 buffer:buffer];
+
+[kernel enqueueCallWithGlobalSizeX:w Y:h];
+[context finish];
+
+[COSImageTools viewImageBuffer:buffer inWindowNamed:"foo"];

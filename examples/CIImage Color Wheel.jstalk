@@ -1,0 +1,52 @@
+var filter = [COSQuickCIFilter quickFilterWithKernel:"""
+bool isOdd(int v) {
+    float dividend = float(v) / 2.0;
+    return dividend != floor(dividend);
+}
+
+vec4 hsvToRgb(vec4 hsv) {
+    float h = hsv.r;
+    float s = hsv.g;
+    float v = hsv.b;
+    int i = int(floor(h));
+    float f = isOdd(i) ? h - float(i) : 1.0 - (h - float(i));
+    float m = v * (1.0 - s);
+    float n = v * (1.0 - s * f);
+    vec4 result = (i == 0) ? vec4(v, n, m, hsv.a) : ((i == 1) ?
+        vec4(n, v, m, hsv.a) : ((i == 2) ? vec4(m, v, n, hsv.a) : ((i == 3) ?
+        vec4(m, n, v, hsv.a) : ((i == 4) ? vec4(n, m, v, hsv.a) : ((i == 5) ?
+        vec4(v, m, n, hsv.a) : vec4(v, n, m, hsv.a))))));
+    
+    return (h == -1.0) ? vec4(v, v, v, hsv.a) : result;
+}
+
+kernel vec4 colorWheel(float radius) {
+    
+    vec2 center = vec2(radius, radius);
+    vec2 v0 = destCoord();
+    vec2 v1 = vec2(v0.x, radius);
+    float a = distance(v0, v1);
+    float b = distance(v1, center);
+    
+    float angle = atan(a,b);
+    
+    float pi = 3.14159265;
+    angle = (v0.x>radius)?((v0.y>radius)?
+        (atan(b,a)+pi/2.0):atan(a,b)+pi):
+        (v0.y<radius)?(atan(b,a)+(pi*1.5)):atan(a,b);
+    
+    vec4 theColor = vec4(1.0);
+    
+    theColor.r = (angle * 3.0) / pi;
+    
+    // make it a cirlce
+    float dist = length(destCoord() - center);
+    theColor.a = clamp(radius - dist, 0.0, 1.0);
+    
+    return premultiply(hsvToRgb(theColor));
+}"""];
+
+[filter addKernelArgument:[NSNumber numberWithInt:100]];
+
+[COSImageTools viewCIImage:[filter outputImage] inWindowNamed:"Color Wheel" extent:CGRectMake(0, 0, 200, 200)];
+

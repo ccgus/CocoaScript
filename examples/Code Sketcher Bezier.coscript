@@ -1,0 +1,98 @@
+/*
+This a sample on how to use the COSCodeSketcher class, which add experimental processing.org like functionality to Cocoa Script.
+*/
+
+var sketcher = [COSCodeSketcher codeSketcherWithName:"Bezier"];
+[sketcher setFlipped:false];
+
+function makePointObject(x, y) {
+
+    return {
+        x: x,
+        y: y,
+        nsp: function () {
+            return NSMakePoint(this.x, this.y);
+        },
+        
+        inPoint: function(p) {
+            var radius = 3;
+            var distance = Math.sqrt((this.x - p.x) * (this.x - p.x) + (this.y - p.y) * (this.y - p.y));
+            return Math.abs(distance) <= radius;
+        },
+        
+        drawPoint: function() {
+            var radius = 2;
+            var r = NSMakeRect(this.x - radius, this.y - radius, radius*2, radius*2);
+            var path = [NSBezierPath bezierPathWithOvalInRect:r];
+            [[NSColor blueColor] set]
+            [path fill];
+        },
+        
+    }
+}
+
+var sp  = makePointObject(10, 10);
+var ep  = makePointObject(400, 50);
+var cp1 = makePointObject(20, 50);
+var cp2 = makePointObject(380, 150);
+
+var points = [sp, ep, cp1, cp2];
+
+var movingPoint = null;
+
+sketcher.setup = function() {
+    [sketcher setSize:NSMakeSize(600, 600)];
+    [sketcher clear];
+};
+
+sketcher.drawRect = function() {
+    var path = [NSBezierPath bezierPath];
+    [sketcher clear];
+    
+    [[NSColor greenColor] set];
+    [NSBezierPath strokeLineFromPoint:sp toPoint:cp1];
+    [NSBezierPath strokeLineFromPoint:ep toPoint:cp2];
+    
+    
+    [[NSColor blackColor] set];
+    [path moveToPoint:sp.nsp()];
+    [path curveToPoint:ep.nsp() controlPoint1:cp1.nsp() controlPoint2:cp2.nsp()];
+    [path stroke];
+    
+    points.forEach(function(p) {
+        p.drawPoint();
+    });
+}
+
+sketcher.mouseDown = function(event) {
+    
+    var loc = [sketcher mouseLocation];
+    
+    points.forEach(function(p) {
+        if (p.inPoint(loc)) {
+            movingPoint = p;
+            return;
+        }
+    });
+};
+
+sketcher.mouseUp = function (event) {
+    movingPoint = null;
+}
+
+sketcher.mouseDragged = function(event) {
+    
+    var loc = [sketcher mouseLocation];
+    
+    if (movingPoint) {
+        movingPoint.x = loc.x;
+        movingPoint.y = loc.y;
+    }
+    else {
+        points.forEach(function(p) {
+            p.x += [event deltaX];
+            p.y -= [event deltaY];
+        });
+    }
+};
+

@@ -1,0 +1,13 @@
+var pi       = [NSProcessInfo processInfo];
+var argCount = [[pi arguments] count];
+
+print("There are " + argCount + " args");
+
+var idx = 0;
+while (idx < argCount) {
+    
+    print("argument " + idx + ": " + [pi arguments][idx]);
+    
+    idx++;
+}
+
