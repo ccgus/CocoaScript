@@ -20,6 +20,20 @@
                ReferencedContainer = "container:jstalk.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC5FB7C10F1FDCCC00F4ECC2"
+               BuildableName = "coscript"
+               BlueprintName = "coscript tool"
+               ReferencedContainer = "container:cocoascript.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

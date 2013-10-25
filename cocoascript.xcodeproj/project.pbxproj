@@ -22,7 +22,6 @@
 		CC4143660F2527E400E46669 /* CocoaScript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CC41431A0F25254200E46669 /* CocoaScript.framework */; };
 		CC5EDD4D1237F6DF00E0D965 /* JSTalkStatusIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CC5EDD4C1237F6DF00E0D965 /* JSTalkStatusIcon.png */; };
 		CC5EDD531237F71300E0D965 /* JSTalkStatusIconAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = CC5EDD521237F71300E0D965 /* JSTalkStatusIconAlt.png */; };
-		CC5FB7DD0F1FDE2900F4ECC2 /* jstalkmain.m in Sources */ = {isa = PBXBuildFile; fileRef = CC5FB7C70F1FDD0B00F4ECC2 /* jstalkmain.m */; };
 		CC5FB7DF0F1FDE3800F4ECC2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		CC5FB7E00F1FDE3900F4ECC2 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC5B8A40F1EFA6D00126722 /* JavaScriptCore.framework */; };
 		CC66D754181A2A210039A0A5 /* MarkerLineNumberView.h in Headers */ = {isa = PBXBuildFile; fileRef = CC66D74C181A2A210039A0A5 /* MarkerLineNumberView.h */; };
@@ -124,7 +123,7 @@
 		CC66D813181A2A470039A0A5 /* TDWordOrReservedState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7B6181A2A460039A0A5 /* TDWordOrReservedState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CC66D814181A2A470039A0A5 /* TDWordState.h in Headers */ = {isa = PBXBuildFile; fileRef = CC66D7B7181A2A460039A0A5 /* TDWordState.h */; };
 		CC66D815181A2A470039A0A5 /* TDWordState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7B8181A2A460039A0A5 /* TDWordState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		CC66D81E181A2A710039A0A5 /* COScript.h in Headers */ = {isa = PBXBuildFile; fileRef = CC66D816181A2A710039A0A5 /* COScript.h */; };
+		CC66D81E181A2A710039A0A5 /* COScript.h in Headers */ = {isa = PBXBuildFile; fileRef = CC66D816181A2A710039A0A5 /* COScript.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CC66D81F181A2A710039A0A5 /* COScript.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D817181A2A710039A0A5 /* COScript.m */; };
 		CC66D820181A2A710039A0A5 /* COSExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = CC66D818181A2A710039A0A5 /* COSExtras.h */; };
 		CC66D821181A2A710039A0A5 /* COSExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D819181A2A710039A0A5 /* COSExtras.m */; };
@@ -209,7 +208,14 @@
 		CC66D8BD181A2B0A0039A0A5 /* MOStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D899181A2B0A0039A0A5 /* MOStruct.m */; };
 		CC66D8BE181A2B0A0039A0A5 /* MOUndefined.h in Headers */ = {isa = PBXBuildFile; fileRef = CC66D89A181A2B0A0039A0A5 /* MOUndefined.h */; };
 		CC66D8BF181A2B0A0039A0A5 /* MOUndefined.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D89B181A2B0A0039A0A5 /* MOUndefined.m */; };
-		CC7576B40F6DF3B7003AE279 /* JSTFileWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7576B30F6DF3B7003AE279 /* JSTFileWatcher.m */; };
+		CC66D8CF181A2E2F0039A0A5 /* JSTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8C1181A2E2F0039A0A5 /* JSTAppDelegate.m */; };
+		CC66D8D0181A2E2F0039A0A5 /* JSTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8C3181A2E2F0039A0A5 /* JSTDocument.m */; };
+		CC66D8D1181A2E2F0039A0A5 /* JSTDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8C5181A2E2F0039A0A5 /* JSTDocumentController.m */; };
+		CC66D8D2181A2E2F0039A0A5 /* JSTFileWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8C7181A2E2F0039A0A5 /* JSTFileWatcher.m */; };
+		CC66D8D3181A2E2F0039A0A5 /* JSTPluginMover.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8C9181A2E2F0039A0A5 /* JSTPluginMover.m */; };
+		CC66D8D5181A2E2F0039A0A5 /* JSTTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */; };
+		CC66D8D6181A2E2F0039A0A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8CE181A2E2F0039A0A5 /* main.m */; };
+		CC66D8D8181A2FC10039A0A5 /* cocoascript_tool.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8D7181A2FC10039A0A5 /* cocoascript_tool.m */; };
 		CC86430D163B29E600908427 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC86430C163B29E600908427 /* QuartzCore.framework */; };
 		CC86430F163B29F500908427 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC86430E163B29F500908427 /* OpenCL.framework */; };
 		CC94E0520F4A616300208BE0 /* JSTalk.icns in Resources */ = {isa = PBXBuildFile; fileRef = CC94E0510F4A616300208BE0 /* JSTalk.icns */; };
@@ -226,11 +232,6 @@
 		CCC5B8C70F1EFA9700126722 /* JSTDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8BA0F1EFA9700126722 /* JSTDocument.xib */; };
 		CCC5B8C90F1EFA9700126722 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8BE0F1EFA9700126722 /* MainMenu.xib */; };
 		CCC5B8CA0F1EFA9700126722 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8C00F1EFA9700126722 /* Credits.rtf */; };
-		CCC5B8CD0F1EFAAA00126722 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC5B8CC0F1EFAAA00126722 /* main.m */; };
-		CCC5B8D00F1EFABA00126722 /* JSTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC5B8CE0F1EFABA00126722 /* JSTDocument.m */; };
-		CCC5B94E0F1EFC4500126722 /* JSTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC5B94D0F1EFC4500126722 /* JSTAppDelegate.m */; };
-		CCE16C3E12188AE500F6D312 /* JSTPluginMover.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE16C3D12188AE500F6D312 /* JSTPluginMover.m */; };
-		CCE16C8312188F5000F6D312 /* JSTDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE16C8212188F5000F6D312 /* JSTDocumentController.m */; };
 		CCF68F1E0F4E3E4F00925FCA /* JSTalkDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = CCF68F1D0F4E3E4F00925FCA /* JSTalkDocument.icns */; };
 /* End PBXBuildFile section */
 
@@ -275,7 +276,6 @@
 		CC5EDD4C1237F6DF00E0D965 /* JSTalkStatusIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = JSTalkStatusIcon.png; path = res/images/JSTalkStatusIcon.png; sourceTree = "<group>"; };
 		CC5EDD521237F71300E0D965 /* JSTalkStatusIconAlt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = JSTalkStatusIconAlt.png; path = res/images/JSTalkStatusIconAlt.png; sourceTree = "<group>"; };
 		CC5FB7C20F1FDCCC00F4ECC2 /* coscript */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = coscript; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC5FB7C70F1FDD0B00F4ECC2 /* jstalkmain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = jstalkmain.m; path = src/jstalkmain.m; sourceTree = "<group>"; };
 		CC66D74C181A2A210039A0A5 /* MarkerLineNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerLineNumberView.h; path = src/framework/MarkerLineNumberView.h; sourceTree = "<group>"; };
 		CC66D74D181A2A210039A0A5 /* MarkerLineNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerLineNumberView.m; path = src/framework/MarkerLineNumberView.m; sourceTree = "<group>"; };
 		CC66D74E181A2A210039A0A5 /* NoodleLineNumberMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoodleLineNumberMarker.h; path = src/framework/NoodleLineNumberMarker.h; sourceTree = "<group>"; };
@@ -460,8 +460,20 @@
 		CC66D899181A2B0A0039A0A5 /* MOStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOStruct.m; path = src/framework/mocha/Objects/MOStruct.m; sourceTree = SOURCE_ROOT; };
 		CC66D89A181A2B0A0039A0A5 /* MOUndefined.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOUndefined.h; path = src/framework/mocha/Objects/MOUndefined.h; sourceTree = SOURCE_ROOT; };
 		CC66D89B181A2B0A0039A0A5 /* MOUndefined.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOUndefined.m; path = src/framework/mocha/Objects/MOUndefined.m; sourceTree = SOURCE_ROOT; };
-		CC7576B20F6DF3B7003AE279 /* JSTFileWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTFileWatcher.h; path = src/JSTFileWatcher.h; sourceTree = "<group>"; };
-		CC7576B30F6DF3B7003AE279 /* JSTFileWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTFileWatcher.m; path = src/JSTFileWatcher.m; sourceTree = "<group>"; };
+		CC66D8C0181A2E2F0039A0A5 /* JSTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTAppDelegate.h; path = src/editor/JSTAppDelegate.h; sourceTree = "<group>"; };
+		CC66D8C1181A2E2F0039A0A5 /* JSTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTAppDelegate.m; path = src/editor/JSTAppDelegate.m; sourceTree = "<group>"; };
+		CC66D8C2181A2E2F0039A0A5 /* JSTDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTDocument.h; path = src/editor/JSTDocument.h; sourceTree = "<group>"; };
+		CC66D8C3181A2E2F0039A0A5 /* JSTDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTDocument.m; path = src/editor/JSTDocument.m; sourceTree = "<group>"; };
+		CC66D8C4181A2E2F0039A0A5 /* JSTDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTDocumentController.h; path = src/editor/JSTDocumentController.h; sourceTree = "<group>"; };
+		CC66D8C5181A2E2F0039A0A5 /* JSTDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTDocumentController.m; path = src/editor/JSTDocumentController.m; sourceTree = "<group>"; };
+		CC66D8C6181A2E2F0039A0A5 /* JSTFileWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTFileWatcher.h; path = src/editor/JSTFileWatcher.h; sourceTree = "<group>"; };
+		CC66D8C7181A2E2F0039A0A5 /* JSTFileWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTFileWatcher.m; path = src/editor/JSTFileWatcher.m; sourceTree = "<group>"; };
+		CC66D8C8181A2E2F0039A0A5 /* JSTPluginMover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTPluginMover.h; path = src/editor/JSTPluginMover.h; sourceTree = "<group>"; };
+		CC66D8C9181A2E2F0039A0A5 /* JSTPluginMover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTPluginMover.m; path = src/editor/JSTPluginMover.m; sourceTree = "<group>"; };
+		CC66D8CC181A2E2F0039A0A5 /* JSTTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTTextView.h; path = src/editor/JSTTextView.h; sourceTree = "<group>"; };
+		CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTTextView.m; path = src/editor/JSTTextView.m; sourceTree = "<group>"; };
+		CC66D8CE181A2E2F0039A0A5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = src/editor/main.m; sourceTree = "<group>"; };
+		CC66D8D7181A2FC10039A0A5 /* cocoascript_tool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = cocoascript_tool.m; path = src/cocoascript_tool.m; sourceTree = "<group>"; };
 		CC86430C163B29E600908427 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = ../../../../../../System/Library/Frameworks/QuartzCore.framework; sourceTree = "<group>"; };
 		CC86430E163B29F500908427 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = ../../../../../../System/Library/Frameworks/OpenCL.framework; sourceTree = "<group>"; };
 		CC94E0510F4A616300208BE0 /* JSTalk.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = JSTalk.icns; path = res/images/JSTalk.icns; sourceTree = "<group>"; };
@@ -479,15 +491,6 @@
 		CCC5B8BB0F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = res/English.lproj/JSTDocument.xib; sourceTree = "<group>"; };
 		CCC5B8BF0F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = res/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CCC5B8C10F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = res/English.lproj/Credits.rtf; sourceTree = "<group>"; };
-		CCC5B8CC0F1EFAAA00126722 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = src/main.m; sourceTree = "<group>"; };
-		CCC5B8CE0F1EFABA00126722 /* JSTDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTDocument.m; path = src/JSTDocument.m; sourceTree = "<group>"; };
-		CCC5B8CF0F1EFABA00126722 /* JSTDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTDocument.h; path = src/JSTDocument.h; sourceTree = "<group>"; };
-		CCC5B94C0F1EFC4500126722 /* JSTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTAppDelegate.h; path = src/JSTAppDelegate.h; sourceTree = "<group>"; };
-		CCC5B94D0F1EFC4500126722 /* JSTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTAppDelegate.m; path = src/JSTAppDelegate.m; sourceTree = "<group>"; };
-		CCE16C3C12188AE500F6D312 /* JSTPluginMover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTPluginMover.h; path = src/JSTPluginMover.h; sourceTree = "<group>"; };
-		CCE16C3D12188AE500F6D312 /* JSTPluginMover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTPluginMover.m; path = src/JSTPluginMover.m; sourceTree = "<group>"; };
-		CCE16C8112188F5000F6D312 /* JSTDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSTDocumentController.h; path = src/JSTDocumentController.h; sourceTree = "<group>"; };
-		CCE16C8212188F5000F6D312 /* JSTDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTDocumentController.m; path = src/JSTDocumentController.m; sourceTree = "<group>"; };
 		CCF68F1D0F4E3E4F00925FCA /* JSTalkDocument.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = JSTalkDocument.icns; path = res/images/JSTalkDocument.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -577,8 +580,7 @@
 			isa = PBXGroup;
 			children = (
 				CC66D826181A2A810039A0A5 /* CocoaScript_Prefix.pch */,
-				CCC5B8CC0F1EFAAA00126722 /* main.m */,
-				CC5FB7C70F1FDD0B00F4ECC2 /* jstalkmain.m */,
+				CC66D8D7181A2FC10039A0A5 /* cocoascript_tool.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -747,16 +749,19 @@
 		CC43C0CE0F4BBA520044BA41 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
-				CCC5B94C0F1EFC4500126722 /* JSTAppDelegate.h */,
-				CCC5B94D0F1EFC4500126722 /* JSTAppDelegate.m */,
-				CCC5B8CF0F1EFABA00126722 /* JSTDocument.h */,
-				CCC5B8CE0F1EFABA00126722 /* JSTDocument.m */,
-				CC7576B20F6DF3B7003AE279 /* JSTFileWatcher.h */,
-				CC7576B30F6DF3B7003AE279 /* JSTFileWatcher.m */,
-				CCE16C3C12188AE500F6D312 /* JSTPluginMover.h */,
-				CCE16C3D12188AE500F6D312 /* JSTPluginMover.m */,
-				CCE16C8112188F5000F6D312 /* JSTDocumentController.h */,
-				CCE16C8212188F5000F6D312 /* JSTDocumentController.m */,
+				CC66D8C0181A2E2F0039A0A5 /* JSTAppDelegate.h */,
+				CC66D8C1181A2E2F0039A0A5 /* JSTAppDelegate.m */,
+				CC66D8C2181A2E2F0039A0A5 /* JSTDocument.h */,
+				CC66D8C3181A2E2F0039A0A5 /* JSTDocument.m */,
+				CC66D8C4181A2E2F0039A0A5 /* JSTDocumentController.h */,
+				CC66D8C5181A2E2F0039A0A5 /* JSTDocumentController.m */,
+				CC66D8C6181A2E2F0039A0A5 /* JSTFileWatcher.h */,
+				CC66D8C7181A2E2F0039A0A5 /* JSTFileWatcher.m */,
+				CC66D8C8181A2E2F0039A0A5 /* JSTPluginMover.h */,
+				CC66D8C9181A2E2F0039A0A5 /* JSTPluginMover.m */,
+				CC66D8CC181A2E2F0039A0A5 /* JSTTextView.h */,
+				CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */,
+				CC66D8CE181A2E2F0039A0A5 /* main.m */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -923,6 +928,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC66D81E181A2A710039A0A5 /* COScript.h in Headers */,
 				CC66D89C181A2B0A0039A0A5 /* MOAllocator.h in Headers */,
 				CC66D80E181A2A470039A0A5 /* TDWhitespaceState.h in Headers */,
 				CC66D812181A2A470039A0A5 /* TDWordOrReservedState.h in Headers */,
@@ -937,7 +943,6 @@
 				CC66D8AA181A2B0A0039A0A5 /* MOMethod_Private.h in Headers */,
 				CC66D7F4181A2A470039A0A5 /* TDSymbol.h in Headers */,
 				CC66D8A8181A2B0A0039A0A5 /* MOJavaScriptObject.h in Headers */,
-				CC66D81E181A2A710039A0A5 /* COScript.h in Headers */,
 				CC66D8A6181A2B0A0039A0A5 /* MOInstanceVariableDescription.h in Headers */,
 				CC66D84C181A2AB10039A0A5 /* MOBridgeSupportParser.h in Headers */,
 				CC66D848181A2AB10039A0A5 /* MOBridgeSupportController.h in Headers */,
@@ -1150,12 +1155,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCC5B8CD0F1EFAAA00126722 /* main.m in Sources */,
-				CCC5B8D00F1EFABA00126722 /* JSTDocument.m in Sources */,
-				CCC5B94E0F1EFC4500126722 /* JSTAppDelegate.m in Sources */,
-				CC7576B40F6DF3B7003AE279 /* JSTFileWatcher.m in Sources */,
-				CCE16C3E12188AE500F6D312 /* JSTPluginMover.m in Sources */,
-				CCE16C8312188F5000F6D312 /* JSTDocumentController.m in Sources */,
+				CC66D8D3181A2E2F0039A0A5 /* JSTPluginMover.m in Sources */,
+				CC66D8D0181A2E2F0039A0A5 /* JSTDocument.m in Sources */,
+				CC66D8CF181A2E2F0039A0A5 /* JSTAppDelegate.m in Sources */,
+				CC66D8D1181A2E2F0039A0A5 /* JSTDocumentController.m in Sources */,
+				CC66D8D5181A2E2F0039A0A5 /* JSTTextView.m in Sources */,
+				CC66D8D2181A2E2F0039A0A5 /* JSTFileWatcher.m in Sources */,
+				CC66D8D6181A2E2F0039A0A5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1257,7 +1263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC5FB7DD0F1FDE2900F4ECC2 /* jstalkmain.m in Sources */,
+				CC66D8D8181A2FC10039A0A5 /* cocoascript_tool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1307,7 +1313,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = src/CocoaScript_Prefix.pch;
+				GCC_PREFIX_HEADER = src/framework/CocoaScript_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = res/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -1324,7 +1330,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = src/CocoaScript_Prefix.pch;
+				GCC_PREFIX_HEADER = src/framework/CocoaScript_Prefix.pch;
 				INFOPLIST_FILE = res/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
@@ -1433,7 +1439,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = src/CocoaScript_Prefix.pch;
+				GCC_PREFIX_HEADER = src/framework/CocoaScript_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
 				OTHER_CFLAGS = "-DDEBUG";
 				OTHER_LDFLAGS = (
@@ -1454,7 +1460,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = src/CocoaScript_Prefix.pch;
+				GCC_PREFIX_HEADER = src/framework/CocoaScript_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
 				OTHER_LDFLAGS = (
 					"-lexpat",
