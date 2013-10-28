@@ -270,3 +270,22 @@ static BOOL JSTImageToolsCISWRender = NO;
 
 
 @end
+
+
+
+@interface JSTImageTools : COSImageTools
+
+@end
+
+
+@implementation JSTImageTools
+
+// compat
+
+@end
+
+
+
+
+
+

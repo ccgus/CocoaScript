@@ -68,7 +68,7 @@
             BlueprintIdentifier = "8D15AC270486D014006FF6A4"
             BuildableName = "Cocoa Script Editor.app"
             BlueprintName = "Cocoa Script Editor"
-            ReferencedContainer = "container:jstalk.xcodeproj">
+            ReferencedContainer = "container:cocoascript.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

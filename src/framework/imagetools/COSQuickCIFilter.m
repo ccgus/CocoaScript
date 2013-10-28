@@ -89,3 +89,15 @@
 }
 
 @end
+
+
+@interface JSTQuickCIFilter : COSQuickCIFilter
+
+@end
+
+@implementation JSTQuickCIFilter
+
+// backwards compat
+
+@end
+
