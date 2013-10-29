@@ -31,7 +31,7 @@
                BlueprintIdentifier = "CC5FB7C10F1FDCCC00F4ECC2"
                BuildableName = "coscript"
                BlueprintName = "coscript tool"
-               ReferencedContainer = "container:cocoascript.xcodeproj">
+               ReferencedContainer = "container:Cocoa Script.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

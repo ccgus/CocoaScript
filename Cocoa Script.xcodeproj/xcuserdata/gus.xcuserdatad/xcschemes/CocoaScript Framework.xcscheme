@@ -17,7 +17,7 @@
                BlueprintIdentifier = "CC4143190F25254200E46669"
                BuildableName = "CocoaScript.framework"
                BlueprintName = "Cocoa Script Framework"
-               ReferencedContainer = "container:cocoascript.xcodeproj">
+               ReferencedContainer = "container:Cocoa Script.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
