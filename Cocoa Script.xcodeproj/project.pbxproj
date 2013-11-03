@@ -1410,7 +1410,6 @@
 				GCC_WARN_MISSING_PARENTHESES = YES;
 				GCC_WARN_SHADOW = YES;
 				INFOPLIST_FILE = "res/JSTalkFramework-Info.plist";
-				INSTALL_PATH = "@rpath";
 				OTHER_CFLAGS = "-DDEBUG";
 				OTHER_LDFLAGS = (
 					"-lffi",
@@ -1441,7 +1440,6 @@
 				GCC_WARN_MISSING_PARENTHESES = YES;
 				GCC_WARN_SHADOW = YES;
 				INFOPLIST_FILE = "res/JSTalkFramework-Info.plist";
-				INSTALL_PATH = "@rpath";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
