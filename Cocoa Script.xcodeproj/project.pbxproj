@@ -228,10 +228,87 @@
 		CC99F0F4181A239200F0D48E /* mask3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CC99F0EB181A239200F0D48E /* mask3.jpg */; };
 		CC99F0F5181A239200F0D48E /* mask4.png in Resources */ = {isa = PBXBuildFile; fileRef = CC99F0EC181A239200F0D48E /* mask4.png */; };
 		CC99F0F6181A239200F0D48E /* rail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CC99F0ED181A239200F0D48E /* rail.jpg */; };
+		CC9FEF8C182969A9009DB0F9 /* COScript.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D817181A2A710039A0A5 /* COScript.m */; };
+		CC9FEF8E182969A9009DB0F9 /* COSExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D819181A2A710039A0A5 /* COSExtras.m */; };
+		CC9FEF90182969A9009DB0F9 /* COSListener.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D81B181A2A710039A0A5 /* COSListener.m */; };
+		CC9FEF92182969A9009DB0F9 /* COSPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D81D181A2A710039A0A5 /* COSPreprocessor.m */; };
+		CC9FEF94182969B9009DB0F9 /* MOBridgeSupportController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D841181A2AB10039A0A5 /* MOBridgeSupportController.m */; };
+		CC9FEF96182969B9009DB0F9 /* MOBridgeSupportLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D843181A2AB10039A0A5 /* MOBridgeSupportLibrary.m */; };
+		CC9FEF98182969B9009DB0F9 /* MOBridgeSupportParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D845181A2AB10039A0A5 /* MOBridgeSupportParser.m */; };
+		CC9FEF9A182969B9009DB0F9 /* MOBridgeSupportSymbol.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D847181A2AB10039A0A5 /* MOBridgeSupportSymbol.m */; };
+		CC9FEF9C182969CE009DB0F9 /* MOFunctionArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D86D181A2AF30039A0A5 /* MOFunctionArgument.m */; };
+		CC9FEF9E182969CE009DB0F9 /* MOMapTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D86F181A2AF30039A0A5 /* MOMapTable.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFA0182969CE009DB0F9 /* MOUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D871181A2AF30039A0A5 /* MOUtilities.m */; };
+		CC9FEFA2182969D3009DB0F9 /* MOAllocator.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D879181A2B0A0039A0A5 /* MOAllocator.m */; };
+		CC9FEFA4182969D3009DB0F9 /* MOBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D87B181A2B0A0039A0A5 /* MOBox.m */; };
+		CC9FEFA6182969D3009DB0F9 /* MOClassDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D87D181A2B0A0039A0A5 /* MOClassDescription.m */; };
+		CC9FEFA9182969D3009DB0F9 /* MOClosure.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D880181A2B0A0039A0A5 /* MOClosure.m */; };
+		CC9FEFAC182969D3009DB0F9 /* MOInstanceVariableDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D883181A2B0A0039A0A5 /* MOInstanceVariableDescription.m */; };
+		CC9FEFAE182969D3009DB0F9 /* MOJavaScriptObject.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D885181A2B0A0039A0A5 /* MOJavaScriptObject.m */; };
+		CC9FEFB1182969D3009DB0F9 /* MOMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D888181A2B0A0039A0A5 /* MOMethod.m */; };
+		CC9FEFB4182969D3009DB0F9 /* MOMethodDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D88B181A2B0A0039A0A5 /* MOMethodDescription.m */; };
+		CC9FEFB6182969D3009DB0F9 /* MOObjCRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D88D181A2B0A0039A0A5 /* MOObjCRuntime.m */; };
+		CC9FEFB9182969D3009DB0F9 /* MOPointer.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D890181A2B0A0039A0A5 /* MOPointer.m */; };
+		CC9FEFBB182969D3009DB0F9 /* MOPointerValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D892181A2B0A0039A0A5 /* MOPointerValue.m */; };
+		CC9FEFBD182969D3009DB0F9 /* MOPropertyDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D894181A2B0A0039A0A5 /* MOPropertyDescription.m */; };
+		CC9FEFC0182969D3009DB0F9 /* MOProtocolDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D897181A2B0A0039A0A5 /* MOProtocolDescription.m */; };
+		CC9FEFC2182969D3009DB0F9 /* MOStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D899181A2B0A0039A0A5 /* MOStruct.m */; };
+		CC9FEFC4182969D3009DB0F9 /* MOUndefined.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D89B181A2B0A0039A0A5 /* MOUndefined.m */; };
+		CC9FEFC6182969DD009DB0F9 /* NSArray+MochaAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D851181A2ABF0039A0A5 /* NSArray+MochaAdditions.m */; };
+		CC9FEFC8182969DD009DB0F9 /* NSDictionary+MochaAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D853181A2ABF0039A0A5 /* NSDictionary+MochaAdditions.m */; };
+		CC9FEFCA182969DD009DB0F9 /* NSObject+MochaAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D855181A2ABF0039A0A5 /* NSObject+MochaAdditions.m */; };
+		CC9FEFCC182969DD009DB0F9 /* NSOrderedSet+MochaAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D857181A2ABF0039A0A5 /* NSOrderedSet+MochaAdditions.m */; };
+		CC9FEFCE18296A2A009DB0F9 /* TDAlternation.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D75D181A2A460039A0A5 /* TDAlternation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFD018296A2A009DB0F9 /* TDAny.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D75F181A2A460039A0A5 /* TDAny.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFD218296A2A009DB0F9 /* TDAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D761181A2A460039A0A5 /* TDAssembly.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFD418296A2A009DB0F9 /* TDCaseInsensitiveLiteral.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D763181A2A460039A0A5 /* TDCaseInsensitiveLiteral.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFD618296A2A009DB0F9 /* TDChar.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D765181A2A460039A0A5 /* TDChar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFD818296A2A009DB0F9 /* TDCharacterAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D767181A2A460039A0A5 /* TDCharacterAssembly.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFDA18296A2A009DB0F9 /* TDCollectionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D769181A2A460039A0A5 /* TDCollectionParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFDC18296A2A009DB0F9 /* TDComment.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D76B181A2A460039A0A5 /* TDComment.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFDE18296A2A009DB0F9 /* TDCommentState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D76D181A2A460039A0A5 /* TDCommentState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFE018296A2A009DB0F9 /* TDDigit.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D76F181A2A460039A0A5 /* TDDigit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFE218296A2A009DB0F9 /* TDEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D771181A2A460039A0A5 /* TDEmpty.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFE418296A2A009DB0F9 /* TDLetter.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D773181A2A460039A0A5 /* TDLetter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFE618296A2A009DB0F9 /* TDLiteral.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D775181A2A460039A0A5 /* TDLiteral.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFE818296A2A009DB0F9 /* TDLowercaseWord.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D777181A2A460039A0A5 /* TDLowercaseWord.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFEA18296A2A009DB0F9 /* TDMultiLineCommentState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D779181A2A460039A0A5 /* TDMultiLineCommentState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFEC18296A2A009DB0F9 /* TDNonReservedWord.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D77B181A2A460039A0A5 /* TDNonReservedWord.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFEE18296A2A009DB0F9 /* TDNum.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D77D181A2A460039A0A5 /* TDNum.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFF018296A2A009DB0F9 /* TDNumberState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D77F181A2A460039A0A5 /* TDNumberState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFF318296A2A009DB0F9 /* TDParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D782181A2A460039A0A5 /* TDParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFF518296A2A009DB0F9 /* TDQuotedString.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D784181A2A460039A0A5 /* TDQuotedString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFF718296A2A009DB0F9 /* TDQuoteState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D786181A2A460039A0A5 /* TDQuoteState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFF918296A2A009DB0F9 /* TDReader.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D788181A2A460039A0A5 /* TDReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFFB18296A2A009DB0F9 /* TDRepetition.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D78A181A2A460039A0A5 /* TDRepetition.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFFD18296A2A009DB0F9 /* TDReservedWord.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D78C181A2A460039A0A5 /* TDReservedWord.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FEFFF18296A2B009DB0F9 /* TDScientificNumberState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D78E181A2A460039A0A5 /* TDScientificNumberState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF00118296A2B009DB0F9 /* TDSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D790181A2A460039A0A5 /* TDSequence.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF00318296A2B009DB0F9 /* TDSingleLineCommentState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D794181A2A460039A0A5 /* TDSingleLineCommentState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF00518296A2B009DB0F9 /* TDSpecificChar.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D796181A2A460039A0A5 /* TDSpecificChar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF00718296A2B009DB0F9 /* TDSymbol.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D798181A2A460039A0A5 /* TDSymbol.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF00918296A2B009DB0F9 /* TDSymbolNode.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D79A181A2A460039A0A5 /* TDSymbolNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF00B18296A2B009DB0F9 /* TDSymbolRootNode.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D79C181A2A460039A0A5 /* TDSymbolRootNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF00D18296A2B009DB0F9 /* TDSymbolState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D79E181A2A460039A0A5 /* TDSymbolState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF00F18296A2B009DB0F9 /* TDTerminal.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7A0181A2A460039A0A5 /* TDTerminal.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF01118296A2B009DB0F9 /* TDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7A2181A2A460039A0A5 /* TDToken.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF01318296A2B009DB0F9 /* TDTokenArraySource.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7A4181A2A460039A0A5 /* TDTokenArraySource.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF01518296A2B009DB0F9 /* TDTokenAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7A6181A2A460039A0A5 /* TDTokenAssembly.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF01718296A2B009DB0F9 /* TDTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7A8181A2A460039A0A5 /* TDTokenizer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF01918296A2B009DB0F9 /* TDTokenizerState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7AA181A2A460039A0A5 /* TDTokenizerState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF01B18296A2B009DB0F9 /* TDTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7AC181A2A460039A0A5 /* TDTrack.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF01D18296A2B009DB0F9 /* TDTrackException.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7AE181A2A460039A0A5 /* TDTrackException.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF01F18296A2B009DB0F9 /* TDUppercaseWord.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7B0181A2A460039A0A5 /* TDUppercaseWord.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF02118296A2B009DB0F9 /* TDWhitespaceState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7B2181A2A460039A0A5 /* TDWhitespaceState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF02318296A2B009DB0F9 /* TDWord.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7B4181A2A460039A0A5 /* TDWord.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF02518296A2B009DB0F9 /* TDWordOrReservedState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7B6181A2A460039A0A5 /* TDWordOrReservedState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CC9FF02718296A2B009DB0F9 /* TDWordState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7B8181A2A460039A0A5 /* TDWordState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CCC5B8A50F1EFA6D00126722 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC5B8A40F1EFA6D00126722 /* JavaScriptCore.framework */; };
 		CCC5B8C70F1EFA9700126722 /* JSTDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8BA0F1EFA9700126722 /* JSTDocument.xib */; };
 		CCC5B8C90F1EFA9700126722 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8BE0F1EFA9700126722 /* MainMenu.xib */; };
 		CCC5B8CA0F1EFA9700126722 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8C00F1EFA9700126722 /* Credits.rtf */; };
+		CCF4DBE118296AB800ACB9EC /* Mocha.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D861181A2AE10039A0A5 /* Mocha.m */; };
+		CCF4DBE218296AB800ACB9EC /* MochaRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D865181A2AE10039A0A5 /* MochaRuntime.m */; };
 		CCF68F1E0F4E3E4F00925FCA /* JSTalkDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = CCF68F1D0F4E3E4F00925FCA /* JSTalkDocument.icns */; };
 /* End PBXBuildFile section */
 
@@ -1263,7 +1340,84 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCF4DBE118296AB800ACB9EC /* Mocha.m in Sources */,
+				CCF4DBE218296AB800ACB9EC /* MochaRuntime.m in Sources */,
+				CC9FEF94182969B9009DB0F9 /* MOBridgeSupportController.m in Sources */,
+				CC9FEF96182969B9009DB0F9 /* MOBridgeSupportLibrary.m in Sources */,
+				CC9FEF98182969B9009DB0F9 /* MOBridgeSupportParser.m in Sources */,
+				CC9FEF9A182969B9009DB0F9 /* MOBridgeSupportSymbol.m in Sources */,
+				CC9FEFC6182969DD009DB0F9 /* NSArray+MochaAdditions.m in Sources */,
+				CC9FEFC8182969DD009DB0F9 /* NSDictionary+MochaAdditions.m in Sources */,
+				CC9FEFCA182969DD009DB0F9 /* NSObject+MochaAdditions.m in Sources */,
+				CC9FEFCC182969DD009DB0F9 /* NSOrderedSet+MochaAdditions.m in Sources */,
+				CC9FEFA2182969D3009DB0F9 /* MOAllocator.m in Sources */,
+				CC9FEFA4182969D3009DB0F9 /* MOBox.m in Sources */,
+				CC9FEFA6182969D3009DB0F9 /* MOClassDescription.m in Sources */,
+				CC9FEFA9182969D3009DB0F9 /* MOClosure.m in Sources */,
+				CC9FEFAC182969D3009DB0F9 /* MOInstanceVariableDescription.m in Sources */,
+				CC9FEFAE182969D3009DB0F9 /* MOJavaScriptObject.m in Sources */,
+				CC9FEFB1182969D3009DB0F9 /* MOMethod.m in Sources */,
+				CC9FEFB4182969D3009DB0F9 /* MOMethodDescription.m in Sources */,
+				CC9FEFB6182969D3009DB0F9 /* MOObjCRuntime.m in Sources */,
+				CC9FEFB9182969D3009DB0F9 /* MOPointer.m in Sources */,
+				CC9FEFBB182969D3009DB0F9 /* MOPointerValue.m in Sources */,
+				CC9FEFBD182969D3009DB0F9 /* MOPropertyDescription.m in Sources */,
+				CC9FEFC0182969D3009DB0F9 /* MOProtocolDescription.m in Sources */,
+				CC9FEFC2182969D3009DB0F9 /* MOStruct.m in Sources */,
+				CC9FEFC4182969D3009DB0F9 /* MOUndefined.m in Sources */,
+				CC9FEF9C182969CE009DB0F9 /* MOFunctionArgument.m in Sources */,
+				CC9FEF9E182969CE009DB0F9 /* MOMapTable.m in Sources */,
+				CC9FEFA0182969CE009DB0F9 /* MOUtilities.m in Sources */,
 				CC66D8D8181A2FC10039A0A5 /* cocoascript_tool.m in Sources */,
+				CC9FEF8C182969A9009DB0F9 /* COScript.m in Sources */,
+				CC9FEF8E182969A9009DB0F9 /* COSExtras.m in Sources */,
+				CC9FEF90182969A9009DB0F9 /* COSListener.m in Sources */,
+				CC9FEF92182969A9009DB0F9 /* COSPreprocessor.m in Sources */,
+				CC9FEFCE18296A2A009DB0F9 /* TDAlternation.m in Sources */,
+				CC9FEFD018296A2A009DB0F9 /* TDAny.m in Sources */,
+				CC9FEFD218296A2A009DB0F9 /* TDAssembly.m in Sources */,
+				CC9FEFD418296A2A009DB0F9 /* TDCaseInsensitiveLiteral.m in Sources */,
+				CC9FEFD618296A2A009DB0F9 /* TDChar.m in Sources */,
+				CC9FEFD818296A2A009DB0F9 /* TDCharacterAssembly.m in Sources */,
+				CC9FEFDA18296A2A009DB0F9 /* TDCollectionParser.m in Sources */,
+				CC9FEFDC18296A2A009DB0F9 /* TDComment.m in Sources */,
+				CC9FEFDE18296A2A009DB0F9 /* TDCommentState.m in Sources */,
+				CC9FEFE018296A2A009DB0F9 /* TDDigit.m in Sources */,
+				CC9FEFE218296A2A009DB0F9 /* TDEmpty.m in Sources */,
+				CC9FEFE418296A2A009DB0F9 /* TDLetter.m in Sources */,
+				CC9FEFE618296A2A009DB0F9 /* TDLiteral.m in Sources */,
+				CC9FEFE818296A2A009DB0F9 /* TDLowercaseWord.m in Sources */,
+				CC9FEFEA18296A2A009DB0F9 /* TDMultiLineCommentState.m in Sources */,
+				CC9FEFEC18296A2A009DB0F9 /* TDNonReservedWord.m in Sources */,
+				CC9FEFEE18296A2A009DB0F9 /* TDNum.m in Sources */,
+				CC9FEFF018296A2A009DB0F9 /* TDNumberState.m in Sources */,
+				CC9FEFF318296A2A009DB0F9 /* TDParser.m in Sources */,
+				CC9FEFF518296A2A009DB0F9 /* TDQuotedString.m in Sources */,
+				CC9FEFF718296A2A009DB0F9 /* TDQuoteState.m in Sources */,
+				CC9FEFF918296A2A009DB0F9 /* TDReader.m in Sources */,
+				CC9FEFFB18296A2A009DB0F9 /* TDRepetition.m in Sources */,
+				CC9FEFFD18296A2A009DB0F9 /* TDReservedWord.m in Sources */,
+				CC9FEFFF18296A2B009DB0F9 /* TDScientificNumberState.m in Sources */,
+				CC9FF00118296A2B009DB0F9 /* TDSequence.m in Sources */,
+				CC9FF00318296A2B009DB0F9 /* TDSingleLineCommentState.m in Sources */,
+				CC9FF00518296A2B009DB0F9 /* TDSpecificChar.m in Sources */,
+				CC9FF00718296A2B009DB0F9 /* TDSymbol.m in Sources */,
+				CC9FF00918296A2B009DB0F9 /* TDSymbolNode.m in Sources */,
+				CC9FF00B18296A2B009DB0F9 /* TDSymbolRootNode.m in Sources */,
+				CC9FF00D18296A2B009DB0F9 /* TDSymbolState.m in Sources */,
+				CC9FF00F18296A2B009DB0F9 /* TDTerminal.m in Sources */,
+				CC9FF01118296A2B009DB0F9 /* TDToken.m in Sources */,
+				CC9FF01318296A2B009DB0F9 /* TDTokenArraySource.m in Sources */,
+				CC9FF01518296A2B009DB0F9 /* TDTokenAssembly.m in Sources */,
+				CC9FF01718296A2B009DB0F9 /* TDTokenizer.m in Sources */,
+				CC9FF01918296A2B009DB0F9 /* TDTokenizerState.m in Sources */,
+				CC9FF01B18296A2B009DB0F9 /* TDTrack.m in Sources */,
+				CC9FF01D18296A2B009DB0F9 /* TDTrackException.m in Sources */,
+				CC9FF01F18296A2B009DB0F9 /* TDUppercaseWord.m in Sources */,
+				CC9FF02118296A2B009DB0F9 /* TDWhitespaceState.m in Sources */,
+				CC9FF02318296A2B009DB0F9 /* TDWord.m in Sources */,
+				CC9FF02518296A2B009DB0F9 /* TDWordOrReservedState.m in Sources */,
+				CC9FF02718296A2B009DB0F9 /* TDWordState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
