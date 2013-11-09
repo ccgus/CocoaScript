@@ -9,9 +9,9 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>coscript</string>
 				<string>jstalk</string>
 				<string>js</string>
-				<string>coscript</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>JSTalkDocument.icns</string>

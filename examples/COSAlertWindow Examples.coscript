@@ -1,0 +1,15 @@
+
+
+var alert = [COSAlertWindow new]; 
+
+[alert setMessageText:"Pick a number"];
+[alert setInformativeText:"This is informative"];
+
+[alert addTextFieldWithValue:"Hey"];
+[alert addTextFieldWithValue:"Hello"];
+
+[alert runModal];
+
+var result = [[alert textFieldAtIndex:0] stringValue]
+
+print(result);

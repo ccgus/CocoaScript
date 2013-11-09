@@ -307,6 +307,8 @@
 		CCC5B8C70F1EFA9700126722 /* JSTDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8BA0F1EFA9700126722 /* JSTDocument.xib */; };
 		CCC5B8C90F1EFA9700126722 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8BE0F1EFA9700126722 /* MainMenu.xib */; };
 		CCC5B8CA0F1EFA9700126722 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8C00F1EFA9700126722 /* Credits.rtf */; };
+		CCE675E8182ED9C900DB1932 /* COSAlertWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CCE675E6182ED9C900DB1932 /* COSAlertWindow.h */; };
+		CCE675E9182ED9C900DB1932 /* COSAlertWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE675E7182ED9C900DB1932 /* COSAlertWindow.m */; };
 		CCF4DBE118296AB800ACB9EC /* Mocha.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D861181A2AE10039A0A5 /* Mocha.m */; };
 		CCF4DBE218296AB800ACB9EC /* MochaRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D865181A2AE10039A0A5 /* MochaRuntime.m */; };
 		CCF68F1E0F4E3E4F00925FCA /* JSTalkDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = CCF68F1D0F4E3E4F00925FCA /* JSTalkDocument.icns */; };
@@ -568,6 +570,8 @@
 		CCC5B8BB0F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = res/English.lproj/JSTDocument.xib; sourceTree = "<group>"; };
 		CCC5B8BF0F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = res/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CCC5B8C10F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = res/English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		CCE675E6182ED9C900DB1932 /* COSAlertWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSAlertWindow.h; path = src/framework/COSAlertWindow.h; sourceTree = "<group>"; };
+		CCE675E7182ED9C900DB1932 /* COSAlertWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSAlertWindow.m; path = src/framework/COSAlertWindow.m; sourceTree = "<group>"; };
 		CCF68F1D0F4E3E4F00925FCA /* JSTalkDocument.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = JSTalkDocument.icns; path = res/images/JSTalkDocument.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -854,6 +858,8 @@
 				CC66D751181A2A210039A0A5 /* NoodleLineNumberView.m */,
 				CC66D752181A2A210039A0A5 /* TETextUtils.h */,
 				CC66D753181A2A210039A0A5 /* TETextUtils.m */,
+				CCE675E6182ED9C900DB1932 /* COSAlertWindow.h */,
+				CCE675E7182ED9C900DB1932 /* COSAlertWindow.m */,
 			);
 			name = UIWidgets;
 			sourceTree = "<group>";
@@ -1052,6 +1058,7 @@
 				CC66D8BC181A2B0A0039A0A5 /* MOStruct.h in Headers */,
 				CC66D7D5181A2A470039A0A5 /* TDMultiLineCommentState.h in Headers */,
 				CC66D7BD181A2A470039A0A5 /* TDAssembly.h in Headers */,
+				CCE675E8182ED9C900DB1932 /* COSAlertWindow.h in Headers */,
 				CC66D838181A2A9B0039A0A5 /* COSImageTools.h in Headers */,
 				CC66D874181A2AF30039A0A5 /* MOMapTable.h in Headers */,
 				CC66D85A181A2ABF0039A0A5 /* NSDictionary+MochaAdditions.h in Headers */,
@@ -1310,6 +1317,7 @@
 				CC66D75B181A2A210039A0A5 /* TETextUtils.m in Sources */,
 				CC66D84D181A2AB10039A0A5 /* MOBridgeSupportParser.m in Sources */,
 				CC66D7D8181A2A470039A0A5 /* TDNonReservedWord.m in Sources */,
+				CCE675E9182ED9C900DB1932 /* COSAlertWindow.m in Sources */,
 				CC66D7E5181A2A470039A0A5 /* TDReader.m in Sources */,
 				CC66D7D6181A2A470039A0A5 /* TDMultiLineCommentState.m in Sources */,
 				CC66D8B1181A2B0A0039A0A5 /* MOObjCRuntime.m in Sources */,

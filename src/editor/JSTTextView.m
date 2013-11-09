@@ -39,6 +39,7 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 	if (self != nil) {
         [self performSelector:@selector(setupLineViewAndStuff) withObject:nil afterDelay:0];
         [self setSmartInsertDeleteEnabled:NO];
+        [self setAutomaticQuoteSubstitutionEnabled:NO];
     }
     
     return self;
@@ -51,6 +52,7 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
         // what's the right way to do this?
         [self performSelector:@selector(setupLineViewAndStuff) withObject:nil afterDelay:0];
         [self setSmartInsertDeleteEnabled:NO];
+        [self setAutomaticQuoteSubstitutionEnabled:NO];
     }
     
     return self;
