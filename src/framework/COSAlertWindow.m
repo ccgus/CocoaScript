@@ -12,7 +12,7 @@
 
 @interface COSAlertWindow ()
 
-@property (strong) NSMutableArray *textFields;
+@property (strong) NSMutableArray *views;
 
 @end
 
@@ -28,13 +28,13 @@
 	return self;
 }
 
-- (void)addToTextFields:(NSTextField*)tf {
+- (void)addAccessoryView:(NSView*)view {
     
-    if (!_textFields) {
-        _textFields = [NSMutableArray array];
+    if (!_views) {
+        _views = [NSMutableArray array];
     }
     
-    [_textFields addObject:tf];
+    [_views addObject:view];
 }
 
 - (void)addTextFieldWithValue:(NSString*)value {
@@ -45,33 +45,33 @@
         [tf setStringValue:value];
     }
     
-    [self addToTextFields:tf];
+    [self addAccessoryView:tf];
 }
 
-- (NSString*)textFieldAtIndex:(NSUInteger)idx {
-    return [_textFields objectAtIndex:idx];
+- (NSString*)viewAtIndex:(NSUInteger)idx {
+    return [_views objectAtIndex:idx];
 }
 
 - (void)layout {
     
-    if (!_textFields) {
+    if (!_views) {
         return;
     }
     
     CGFloat height = 0;
     NSView *sup = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 300, 1)];
     
-    for (NSTextField *tf in [_textFields reverseObjectEnumerator]) {
+    for (NSView *view in [_views reverseObjectEnumerator]) {
         
-        NSRect currentFrame = [tf bounds];
+        NSRect currentFrame = [view bounds];
         
         currentFrame.origin.y = height;
         
         height += currentFrame.size.height + 8;
         
-        [tf setFrame:currentFrame];
+        [view setFrame:currentFrame];
         
-        [sup addSubview:tf];
+        [sup addSubview:view];
     }
     
     NSRect viewFrame = [sup frame];

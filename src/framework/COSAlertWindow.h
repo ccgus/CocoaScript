@@ -16,7 +16,7 @@
 @property (strong) NSAlert *alert;
 
 - (void)addTextFieldWithValue:(NSString*)value;
-
+- (void)addAccessoryView:(NSView*)view;
 
 
 @end

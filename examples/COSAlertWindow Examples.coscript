@@ -10,6 +10,6 @@ var alert = [COSAlertWindow new];
 
 [alert runModal];
 
-var result = [[alert textFieldAtIndex:0] stringValue]
+var result = [[alert viewAtIndex:0] stringValue]
 
 print(result);
