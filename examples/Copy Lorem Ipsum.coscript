@@ -1,0 +1,103 @@
+/**
+ * Copy Lorem Ipsum
+ * 
+ * Created by Abhi Beckert on 2013-11-13.
+ * 
+ * 
+ * 
+ * Presents a window prompting the user to enter a number, then copies that many
+ * paragraphs of lorem ipsum.
+ *
+ * Demonstrates the use of COSTarget and [NSApp runModalForWindow] to wait for
+ * the user to finish with the window.
+ */
+
+// create a window
+var window = [[NSWindow alloc] init]
+[window setTitle:"Generate Lorem Ipsum"]
+[window setFrame:NSMakeRect(0, 0, 247, 124) display:false]
+
+// create prompt text
+var promptField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 0, 0)]
+[promptField setEditable:false]
+[promptField setBordered:false]
+[promptField setDrawsBackground:false]
+[promptField setStringValue:"How many paragraphs?"]
+[promptField sizeToFit]
+[promptField setFrame:NSMakeRect(20, 65, [promptField frame].size.width, [promptField frame].size.height)]
+[[window contentView] addSubview:promptField]
+
+// create input field
+var inputField = [[NSTextField alloc] initWithFrame:NSMakeRect([promptField frame].size.width + 30, 62, 50, 20)]
+[inputField setStringValue:"4"]
+[[window contentView] addSubview:inputField]
+
+// create OK button
+var okButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 0, 0)]
+var userClickedOK = false
+[okButton setTitle:"  Copy  "]
+[okButton setBezelStyle:NSRoundedBezelStyle]
+[okButton sizeToFit]
+[okButton setFrame:NSMakeRect([window frame].size.width - [okButton frame].size.width - 20, 14, [okButton frame].size.width, [okButton frame].size.height)]
+[okButton setKeyEquivalent:"\r"] // return key
+[okButton setTarget:[COSTarget targetWithAction:function(sender) {
+    userClickedOK = true
+    [window orderOut:nil]
+    [NSApp stopModal]
+}]]
+[okButton setAction:"callAction:"]
+[[window contentView] addSubview:okButton]
+
+// create cancel button
+var cancelButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 0, 0)]
+var userClickedOK = false
+[cancelButton setTitle:"  Cancel  "]
+[cancelButton setBezelStyle:NSRoundedBezelStyle]
+[cancelButton sizeToFit]
+[cancelButton setFrame:NSMakeRect([okButton frame].origin.x - [cancelButton frame].size.width, 14, [cancelButton frame].size.width, [cancelButton frame].size.height)]
+[cancelButton setKeyEquivalent:@"\033"] // escape key
+[cancelButton setTarget:[COSTarget targetWithAction:function(sender) {
+    [window orderOut:nil]
+    [NSApp stopModal]
+}]]
+[cancelButton setAction:"callAction:"]
+[[window contentView] addSubview:cancelButton]
+
+// get the user input
+[NSApp runModalForWindow:window]
+var paragraphCount = [[inputField stringValue] intValue]
+
+// did the user click OK or cancel?
+if (userClickedOK) {
+    // generate lorem ipsum
+    var loremIpsum = generateLoremIpsum(paragraphCount)
+    
+    // copy it
+    var pasteboard = [NSPasteboard generalPasteboard]
+    [pasteboard declareTypes:[NSArray arrayWithObjects:NSStringPboardType, nil] owner:nil]
+    [pasteboard setString:loremIpsum forType:NSStringPboardType]
+}
+
+
+
+function generateLoremIpsum(paragraphCount)
+{
+  var source = ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue rutrum luctus. Nam sit amet quam nisi. Etiam convallis semper sagittis. Pellentesque in ultricies tortor, sit amet placerat dui. Donec nec nunc tincidunt, condimentum dolor sed, ultrices sapien. Aenean ullamcorper laoreet risus, eget dictum libero dignissim sit amet. Sed dapibus interdum sapien. Praesent varius quam at ligula aliquet, nec luctus eros molestie. Praesent lacinia dignissim nisi, malesuada accumsan orci congue non. Aliquam tristique, nisi ac cursus luctus, ipsum turpis facilisis nibh, eu mattis dui massa id augue.", "Duis nisi felis, lacinia et porta at, tempor at enim. Donec commodo, mauris eget accumsan auctor, felis erat scelerisque turpis, a congue augue metus ac orci. Morbi lorem velit, dignissim a ornare vitae, aliquet a velit. Nulla ac ante nisl. Etiam suscipit ullamcorper nibh. Suspendisse nec facilisis nulla, tincidunt tincidunt lectus. Curabitur vitae laoreet lorem. Morbi accumsan vitae dui in molestie. Donec sit amet ligula ut elit rhoncus placerat. Nunc feugiat, lectus nec dapibus bibendum, ante augue gravida lorem, vitae dictum diam sapien in lectus. Donec vehicula ipsum sem. Aliquam libero lacus, facilisis sed nisl nec, porta tempus magna. Nulla eu condimentum sapien. Quisque et pretium metus.", "Mauris vehicula elit ligula, vel placerat ante malesuada bibendum. Praesent sed ipsum id purus sagittis volutpat sed ac mauris. Integer ac condimentum purus. Morbi porta felis elit, nec egestas odio commodo vulputate. Mauris a ligula a quam mattis semper at quis augue. Aliquam metus est, pharetra lobortis malesuada quis, elementum a urna. Etiam elit lectus, tincidunt tristique purus non, suscipit egestas odio. Nunc arcu arcu, consequat eu elit interdum, aliquet feugiat neque. Fusce sodales mi id viverra tristique. In auctor augue sed consequat lobortis. Ut metus quam, molestie et imperdiet quis, vulputate vel lorem. Nunc vestibulum sagittis hendrerit. Vivamus cursus cursus mauris, a ullamcorper lacus tempor in. Duis quis purus ut sem euismod ornare.", "Aliquam id magna ultricies, volutpat dui ut, egestas lacus. Mauris commodo eleifend magna, vitae dictum felis laoreet ac. Phasellus risus urna, placerat at risus nec, ornare volutpat ante. Duis tempus vulputate dui, et fermentum ipsum gravida sit amet. Curabitur tincidunt elementum tincidunt. Quisque ac lorem condimentum, porta eros a, venenatis turpis. Aliquam sagittis dui libero, vitae rhoncus urna porta mollis. Vestibulum tempus vehicula dolor sed aliquam. Pellentesque metus neque, tristique quis sem quis, dignissim rutrum turpis. Ut volutpat pharetra augue, nec tristique elit tristique in. Mauris justo mi, aliquet condimentum dignissim vel, posuere id elit. Aliquam porttitor nulla id elit suscipit, et pretium quam iaculis. Nullam viverra diam eu nibh hendrerit, eu facilisis risus hendrerit. Donec id sapien orci. Aliquam erat volutpat.", "Proin sed dolor est. Pellentesque mi mauris, ultricies id nisl ac, aliquam cursus est. Fusce in sapien tempus, convallis enim et, venenatis mi. Donec pharetra massa eget nulla ultrices, vitae faucibus purus auctor. Integer quis nisl sed urna tempor tempus. Curabitur molestie ante in metus laoreet, sit amet euismod urna aliquam. Nulla facilisi. Maecenas dignissim adipiscing metus. Donec orci sapien, suscipit feugiat dignissim sed, viverra id odio. Cras tempus sit amet urna in eleifend. Duis mollis metus vitae cursus egestas. Suspendisse a volutpat sapien. Nunc enim arcu, feugiat non lectus gravida, mattis feugiat purus. Proin tristique sit amet nunc ac ornare. Suspendisse tristique diam quis hendrerit rhoncus. Vestibulum nulla mauris, elementum tristique adipiscing at, hendrerit eu augue.", "Curabitur vitae sapien augue. Sed scelerisque tellus sit amet pretium eleifend. Maecenas ullamcorper lacus velit. Sed a elementum dolor. Praesent at nisl mi. Aenean est felis, congue et tincidunt imperdiet, consectetur non nisl. Mauris eleifend, augue in tempus mollis, libero quam interdum leo, sed vulputate nibh tortor ac odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis purus dolor. Sed libero sapien, fermentum ut lobortis a, suscipit at nibh.", "Sed ornare neque purus. Vivamus pulvinar quam rutrum, dapibus augue pretium, cursus magna. Integer in tempor nunc. Pellentesque accumsan vulputate tincidunt. Quisque eu mollis magna, eget condimentum urna. Aliquam blandit, velit sed pulvinar pulvinar, augue elit adipiscing risus, sed fermentum nisi arcu sed nibh. Nullam faucibus pulvinar nulla non tincidunt. Vivamus porttitor rhoncus viverra.", "Donec congue venenatis tempor. Duis varius suscipit bibendum. Ut convallis, sem in ultricies molestie, ante eros iaculis purus, elementum venenatis eros diam sed diam. Praesent vulputate sem id lectus varius, sed aliquam erat vulputate. Nunc molestie erat quis elit ullamcorper malesuada. Sed elit lacus, luctus non mauris ac, euismod bibendum erat. Aliquam euismod mauris sodales placerat posuere. Aliquam sit amet ipsum enim. Sed fermentum massa lorem, et sollicitudin urna adipiscing et. In ut fringilla turpis. Suspendisse potenti. Nulla iaculis augue leo, tempus fringilla nibh faucibus id.", "Nunc interdum ornare pretium. Aliquam interdum congue nunc quis dignissim. Aliquam vestibulum feugiat nibh vitae interdum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas sodales tellus non volutpat mattis. Donec sed mollis mi, quis hendrerit tellus. Nunc vulputate suscipit eros, at aliquet velit. Nam ac blandit lacus, id sodales arcu. Donec sed tristique diam. Phasellus porttitor nec eros vitae consectetur.", "Phasellus et sapien a dolor hendrerit congue. Fusce luctus eget orci at tempor. Proin sed suscipit ipsum, non interdum leo. Nunc venenatis accumsan vestibulum. Aliquam consectetur urna tellus, a suscipit nisl dictum id. Mauris enim dui, imperdiet et urna in, ultricies bibendum enim. Nam velit erat, dapibus sit amet eros eu, luctus ultricies neque. Nunc in ornare velit. Praesent convallis sit amet sem in faucibus. Cras id augue elit. Phasellus id dapibus ipsum. Nulla sit amet sem et neque vestibulum eleifend.", "Nam a porttitor dui. Pellentesque eleifend dui sit amet enim commodo, quis feugiat sem cursus. Nulla lacinia diam in elit porta, rhoncus porta massa faucibus. Sed ornare purus id erat porttitor sagittis. Quisque pulvinar bibendum tristique. Duis id libero non leo rhoncus blandit. Curabitur condimentum luctus gravida. Suspendisse viverra ut nibh non volutpat. Donec quis pellentesque tortor. Nam cursus nisl augue, vitae tempor lacus dignissim vitae. Phasellus libero mi, pellentesque nec vehicula ac, varius sed tellus. Donec orci turpis, pulvinar a congue nec, fermentum eget ante. Ut vel magna quam. Integer id imperdiet erat, id laoreet mauris. Maecenas rutrum, ipsum suscipit ullamcorper tempus, purus magna sollicitudin nulla, non condimentum augue lacus feugiat sapien.", "Maecenas mollis semper cursus. Aenean nec lacus commodo, commodo mi quis, sollicitudin velit. Phasellus a risus ante. Donec pulvinar, sapien non posuere mollis, augue enim porttitor est, sed dignissim lectus eros sed purus. Integer quis metus massa. Mauris imperdiet, quam nec elementum lacinia, orci nibh ultrices eros, id bibendum magna risus in leo. Proin quam eros, posuere at congue in, lobortis sed massa.", "Aliquam ut est at justo ultricies mollis ut ac arcu. In porta est vitae sodales elementum. Etiam vitae commodo elit. Cras ornare nibh sed purus ullamcorper, eget suscipit tortor consequat. Etiam vel ullamcorper risus. Maecenas suscipit, elit ut scelerisque sodales, justo ante ullamcorper augue, in vestibulum nulla turpis eu sem. Donec rutrum fringilla massa, eget interdum augue imperdiet sit amet. Phasellus non hendrerit libero, sed congue enim.", "Praesent molestie eleifend vehicula. Vestibulum vitae malesuada lorem, et fringilla lorem. Nam hendrerit ac erat sed elementum. Sed sit amet lorem pharetra, pretium velit quis, bibendum odio. Praesent venenatis nisl vel nisi interdum venenatis. Etiam venenatis, neque at bibendum aliquam, neque nisl ultrices orci, quis malesuada velit lorem commodo nisl. Nullam dictum molestie laoreet. Nunc mattis et sapien a gravida. Nam elit erat, adipiscing vel est sit amet, aliquet tincidunt felis. Nunc in dui lectus. Cras eget ipsum tortor.", "Aliquam varius tincidunt augue blandit suscipit. Nulla porta sit amet lorem lacinia rhoncus. Sed ac rhoncus libero, eget porta massa. Nam id est diam. Integer quis elit ut purus hendrerit aliquet pulvinar sit amet justo. In dignissim erat urna, in fermentum sapien faucibus sit amet. Vestibulum eget ultricies quam. Integer convallis sollicitudin ligula quis pretium. Mauris feugiat, est eu iaculis porta, massa tellus fringilla sapien, non vehicula turpis turpis id erat. Nulla justo odio, adipiscing eget convallis in, aliquet eget eros. Suspendisse auctor ornare varius. Aliquam egestas felis ac mi volutpat, et sollicitudin massa lacinia. Nulla aliquet lacinia ornare. Morbi arcu purus, iaculis vitae nulla ut, pulvinar dictum massa.", "Donec porta odio et porta consequat. In ornare diam a nisi fermentum porttitor. Nunc sit amet sapien est. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque at tristique sapien. Donec quis scelerisque metus. Curabitur justo quam, posuere at massa et, consectetur aliquet magna. In in ipsum gravida, blandit odio vel, dignissim purus. Vestibulum in enim ac nibh tincidunt placerat id eleifend metus. Nullam ullamcorper laoreet velit, sed tempus tellus. In ut augue et orci blandit molestie et nec turpis. Nunc nunc nibh, iaculis et felis sit amet, rutrum sodales turpis.", "Suspendisse ultricies, felis vitae porttitor euismod, eros sapien vulputate magna, euismod pulvinar magna nisi et nisi. Quisque ac enim tristique, venenatis libero feugiat, vulputate arcu. Integer id eros ullamcorper, pretium odio et, rutrum libero. Quisque magna orci, ullamcorper ac tempus vitae, porttitor et diam. Quisque feugiat erat id ullamcorper pellentesque. Nullam lacinia placerat dignissim. Ut vitae auctor quam.", "Praesent non nisi a lorem ultricies imperdiet. Maecenas et enim neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas sagittis nulla vel erat gravida malesuada. Integer condimentum sed nulla ac facilisis. Proin at eleifend turpis. Phasellus cursus, leo ultrices laoreet blandit, elit elit tincidunt tellus, ut luctus urna justo non dolor. Aliquam a consectetur lectus. Etiam dapibus id nunc quis fringilla. Vestibulum auctor in sapien at convallis. Vestibulum ac molestie neque. Nullam rutrum ante et vehicula varius. Curabitur enim tellus, molestie sed consectetur id, tempus ut magna. Praesent in est vehicula, tristique arcu aliquet, rhoncus enim. Ut eu varius arcu.", "Maecenas varius vulputate nulla vel accumsan. Quisque purus sem, malesuada nec malesuada vel, aliquam sit amet diam. Donec tempus massa in dignissim tincidunt. Mauris lobortis euismod quam vel condimentum. Phasellus nec rutrum purus. Pellentesque at orci suscipit, dignissim erat at, rutrum enim. In elementum nunc et diam posuere volutpat.", "Phasellus tristique posuere purus, sed varius augue commodo nec. Morbi blandit blandit accumsan. Praesent eu justo convallis, dictum tortor non, lacinia nisl. Aenean consectetur ut mi vel consequat. Donec faucibus eros felis. Nulla pellentesque adipiscing magna tempus gravida. Nullam at felis vitae lorem pretium rutrum. Etiam aliquet urna vel nulla tincidunt tempus. Nunc fermentum, augue eget tempus venenatis, nisi urna vulputate elit, sed laoreet dui mauris sed erat. Mauris at neque volutpat risus pharetra mollis ut et tellus."]
+  
+  var paragraphIndex = 0
+  var sourceIndex = 0
+  var output = ""
+  for (paragraphIndex = 0; paragraphIndex < paragraphCount; paragraphIndex++) {
+    if (paragraphIndex > 0) {
+      output += "\n\n"
+    }
+    
+    output += source[sourceIndex]
+    
+    sourceIndex++
+    if (sourceIndex >= source.length)
+      sourceIndex = 1 // skip first paragraph, which begins with "lorem ipsum"
+  }
+  
+  return output
+}

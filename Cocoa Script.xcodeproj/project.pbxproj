@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		384830E21832D48500B34168 /* COSTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 384830E01832D48500B34168 /* COSTarget.h */; };
+		384830E31832D48500B34168 /* COSTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 384830E11832D48500B34168 /* COSTarget.m */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		CC0EC3290F226F550094F69D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0EC3280F226F550094F69D /* ScriptingBridge.framework */; };
 		CC0EC32A0F226F550094F69D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0EC3280F226F550094F69D /* ScriptingBridge.framework */; };
@@ -343,6 +345,8 @@
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		384830E01832D48500B34168 /* COSTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSTarget.h; path = src/framework/COSTarget.h; sourceTree = "<group>"; };
+		384830E11832D48500B34168 /* COSTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSTarget.m; path = src/framework/COSTarget.m; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Cocoa Script Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cocoa Script Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0EC3280F226F550094F69D /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = /System/Library/Frameworks/ScriptingBridge.framework; sourceTree = "<absolute>"; };
 		CC1323840F24FF9D0032FEB8 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
@@ -653,8 +657,10 @@
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 			);
+			indentWidth = 4;
 			name = JSTalk;
 			sourceTree = "<group>";
+			tabWidth = 4;
 			usesTabs = 0;
 		};
 		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
@@ -860,6 +866,8 @@
 				CC66D753181A2A210039A0A5 /* TETextUtils.m */,
 				CCE675E6182ED9C900DB1932 /* COSAlertWindow.h */,
 				CCE675E7182ED9C900DB1932 /* COSAlertWindow.m */,
+				384830E01832D48500B34168 /* COSTarget.h */,
+				384830E11832D48500B34168 /* COSTarget.m */,
 			);
 			name = UIWidgets;
 			sourceTree = "<group>";
@@ -1048,6 +1056,7 @@
 				CC66D83A181A2A9B0039A0A5 /* COSOpenCLContext.h in Headers */,
 				CC66D8B3181A2B0A0039A0A5 /* MOPointer.h in Headers */,
 				CC66D7F8181A2A470039A0A5 /* TDSymbolRootNode.h in Headers */,
+				384830E21832D48500B34168 /* COSTarget.h in Headers */,
 				CC66D7EC181A2A470039A0A5 /* TDSequence.h in Headers */,
 				CC66D7D9181A2A470039A0A5 /* TDNum.h in Headers */,
 				CC66D8AD181A2B0A0039A0A5 /* MOMethodDescription_Private.h in Headers */,
@@ -1264,6 +1273,7 @@
 				CC66D759181A2A210039A0A5 /* NoodleLineNumberView.m in Sources */,
 				CC66D805181A2A470039A0A5 /* TDTokenizer.m in Sources */,
 				CC66D7DF181A2A470039A0A5 /* TDParser.m in Sources */,
+				384830E31832D48500B34168 /* COSTarget.m in Sources */,
 				CC66D86B181A2AE10039A0A5 /* MochaRuntime.m in Sources */,
 				CC66D821181A2A710039A0A5 /* COSExtras.m in Sources */,
 				CC66D83F181A2A9B0039A0A5 /* COSQuickCIFilter.m in Sources */,
