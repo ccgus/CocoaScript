@@ -12,13 +12,22 @@
 
 @interface COSTarget : NSObject
 
-@property (strong) MOJavaScriptObject *action;
+@property (strong) MOJavaScriptObject *jsFunction;
 @property NSUInteger callCount;
 
-+ (instancetype)targetWithAction:(MOJavaScriptObject *)action;
++ (instancetype)targetWithJSFunction:(MOJavaScriptObject *)jsFunction;
 
-- (instancetype)initWithAction:(MOJavaScriptObject *)action;
+- (instancetype)initWithJSFunction:(MOJavaScriptObject *)jsFunction;
 
 - (void)callAction:(id)sender;
 
+- (SEL)action;
+
 @end
+
+@interface NSObject (COSTargetAdditions)
+
+- (void)setCOSTarget:(COSTarget*)target;
+
+@end
+

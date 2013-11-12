@@ -10,27 +10,46 @@
 
 @implementation COSTarget
 
-+ (instancetype)targetWithAction:(MOJavaScriptObject *)action
-{
-    return [[[self class] alloc] initWithAction:action];
++ (instancetype)targetWithJSFunction:(MOJavaScriptObject *)jsFunction {
+    return [[[self class] alloc] initWithJSFunction:jsFunction];
 }
 
-- (instancetype)initWithAction:(MOJavaScriptObject *)action
-{
-    if (!(self = [super init]))
-        return nil;
-    
-    self.action = action;
+- (instancetype)initWithJSFunction:(MOJavaScriptObject *)jsFunction {
+	self = [super init];
+	if (self != nil) {
+		[self setJsFunction:jsFunction];
+	}
     
     return self;
 }
 
-- (void)callAction:(id)sender
-{
-    JSObjectRef actionRef = [self.action JSObject];
+- (void)callAction:(id)sender {
+    JSObjectRef actionRef = [[self jsFunction] JSObject];
+    
+    #pragma message "FIXME: we should stash a weak ref to the COScript at creation time, because who knows what other COScript might be around"
     
     COScript *script = [COScript currentCOScript];
     [script callJSFunction:actionRef withArgumentsInArray:@[sender]];
+}
+
+- (SEL)action {
+    return @selector(callAction:);
+}
+
+@end
+
+
+@implementation NSObject (COSTargetAdditions)
+
+- (void)setCOSTarget:(COSTarget*)target {
+    
+    if (!([self respondsToSelector:@selector(setTarget:)] && [self respondsToSelector:@selector(setAction:)])) {
+        NSLog(@"Could not set the target and action on %@", self);
+        return;
+    }
+    
+    [(id)self setTarget:target];
+    [(id)self setAction:[target action]];
 }
 
 @end

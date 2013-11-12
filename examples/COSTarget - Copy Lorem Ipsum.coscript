@@ -40,12 +40,12 @@ var userClickedOK = false
 [okButton sizeToFit]
 [okButton setFrame:NSMakeRect([window frame].size.width - [okButton frame].size.width - 20, 14, [okButton frame].size.width, [okButton frame].size.height)]
 [okButton setKeyEquivalent:"\r"] // return key
-[okButton setTarget:[COSTarget targetWithAction:function(sender) {
+[okButton setCOSTarget:[COSTarget targetWithJSFunction:function(sender) {
     userClickedOK = true
     [window orderOut:nil]
     [NSApp stopModal]
-}]]
-[okButton setAction:"callAction:"]
+}]];
+
 [[window contentView] addSubview:okButton]
 
 // create cancel button
@@ -56,11 +56,11 @@ var userClickedOK = false
 [cancelButton sizeToFit]
 [cancelButton setFrame:NSMakeRect([okButton frame].origin.x - [cancelButton frame].size.width, 14, [cancelButton frame].size.width, [cancelButton frame].size.height)]
 [cancelButton setKeyEquivalent:@"\033"] // escape key
-[cancelButton setTarget:[COSTarget targetWithAction:function(sender) {
+[cancelButton setCOSTarget:[COSTarget targetWithJSFunction:function(sender) {
     [window orderOut:nil]
     [NSApp stopModal]
 }]]
-[cancelButton setAction:"callAction:"]
+
 [[window contentView] addSubview:cancelButton]
 
 // get the user input
