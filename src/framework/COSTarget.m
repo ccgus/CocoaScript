@@ -7,6 +7,7 @@
 //
 
 #import "COSTarget.h"
+#import <objc/runtime.h>
 
 @implementation COSTarget
 
@@ -41,15 +42,20 @@
 
 @implementation NSObject (COSTargetAdditions)
 
-- (void)setCOSTarget:(COSTarget*)target {
+- (void)setCOSJSTargetFunction:(MOJavaScriptObject *)jsFunction {
     
     if (!([self respondsToSelector:@selector(setTarget:)] && [self respondsToSelector:@selector(setAction:)])) {
         NSLog(@"Could not set the target and action on %@", self);
         return;
     }
     
-    [(id)self setTarget:target];
-    [(id)self setAction:[target action]];
+    COSTarget *t = [COSTarget targetWithJSFunction:jsFunction];
+    
+    [(id)self setTarget:t];
+    
+    [(id)self setAction:[t action]];
+    
+    objc_setAssociatedObject(self, _cmd, t, OBJC_ASSOCIATION_RETAIN);
 }
 
 @end

@@ -27,7 +27,7 @@
 
 @interface NSObject (COSTargetAdditions)
 
-- (void)setCOSTarget:(COSTarget*)target;
+- (void)setCOSJSTargetFunction:(MOJavaScriptObject *)jsFunction;
 
 @end
 

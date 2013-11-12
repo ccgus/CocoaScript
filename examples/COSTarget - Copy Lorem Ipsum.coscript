@@ -40,11 +40,11 @@ var userClickedOK = false
 [okButton sizeToFit]
 [okButton setFrame:NSMakeRect([window frame].size.width - [okButton frame].size.width - 20, 14, [okButton frame].size.width, [okButton frame].size.height)]
 [okButton setKeyEquivalent:"\r"] // return key
-[okButton setCOSTarget:[COSTarget targetWithJSFunction:function(sender) {
+[okButton setCOSJSTargetFunction:function(sender) {
     userClickedOK = true
     [window orderOut:nil]
     [NSApp stopModal]
-}]];
+}];
 
 [[window contentView] addSubview:okButton]
 
@@ -56,10 +56,10 @@ var userClickedOK = false
 [cancelButton sizeToFit]
 [cancelButton setFrame:NSMakeRect([okButton frame].origin.x - [cancelButton frame].size.width, 14, [cancelButton frame].size.width, [cancelButton frame].size.height)]
 [cancelButton setKeyEquivalent:@"\033"] // escape key
-[cancelButton setCOSTarget:[COSTarget targetWithJSFunction:function(sender) {
+[cancelButton setCOSJSTargetFunction:function(sender) {
     [window orderOut:nil]
     [NSApp stopModal]
-}]]
+}]
 
 [[window contentView] addSubview:cancelButton]
 
