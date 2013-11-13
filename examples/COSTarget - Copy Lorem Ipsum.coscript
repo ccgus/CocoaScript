@@ -63,6 +63,7 @@ var userClickedOK = false
 
 [[window contentView] addSubview:cancelButton]
 
+
 // get the user input
 [NSApp runModalForWindow:window]
 var paragraphCount = [[inputField stringValue] intValue]
@@ -78,6 +79,10 @@ if (userClickedOK) {
     [pasteboard setString:loremIpsum forType:NSStringPboardType]
 }
 
+// let the GC gather these guys (and the targets!)
+okButton = nil;
+cancelButton = nil;
+window = nil;
 
 
 function generateLoremIpsum(paragraphCount)
