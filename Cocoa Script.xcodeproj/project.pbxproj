@@ -305,6 +305,8 @@
 		CC9FF02318296A2B009DB0F9 /* TDWord.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7B4181A2A460039A0A5 /* TDWord.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CC9FF02518296A2B009DB0F9 /* TDWordOrReservedState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7B6181A2A460039A0A5 /* TDWordOrReservedState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CC9FF02718296A2B009DB0F9 /* TDWordState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D7B8181A2A460039A0A5 /* TDWordState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CCA1A535183EA86E000159B3 /* COSInterval.h in Headers */ = {isa = PBXBuildFile; fileRef = CCA1A533183EA86E000159B3 /* COSInterval.h */; };
+		CCA1A536183EA86E000159B3 /* COSInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = CCA1A534183EA86E000159B3 /* COSInterval.m */; };
 		CCC5B8A50F1EFA6D00126722 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC5B8A40F1EFA6D00126722 /* JavaScriptCore.framework */; };
 		CCC5B8C70F1EFA9700126722 /* JSTDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8BA0F1EFA9700126722 /* JSTDocument.xib */; };
 		CCC5B8C90F1EFA9700126722 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8BE0F1EFA9700126722 /* MainMenu.xib */; };
@@ -569,6 +571,8 @@
 		CC99F0EB181A239200F0D48E /* mask3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mask3.jpg; sourceTree = "<group>"; };
 		CC99F0EC181A239200F0D48E /* mask4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask4.png; sourceTree = "<group>"; };
 		CC99F0ED181A239200F0D48E /* rail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rail.jpg; sourceTree = "<group>"; };
+		CCA1A533183EA86E000159B3 /* COSInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSInterval.h; path = src/framework/COSInterval.h; sourceTree = "<group>"; };
+		CCA1A534183EA86E000159B3 /* COSInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSInterval.m; path = src/framework/COSInterval.m; sourceTree = "<group>"; };
 		CCC5B8A40F1EFA6D00126722 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = /System/Library/Frameworks/JavaScriptCore.framework; sourceTree = "<absolute>"; };
 		CCC5B8B00F1EFA9700126722 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.xml; fileEncoding = 4; name = Info.plist; path = res/Info.plist; sourceTree = "<group>"; };
 		CCC5B8BB0F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = res/English.lproj/JSTDocument.xib; sourceTree = "<group>"; };
@@ -704,6 +708,7 @@
 		CC0EC3380F2274730094F69D /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				CCA1A532183EA838000159B3 /* helpers */,
 				CC99F0F7181A251F00F0D48E /* imagetools */,
 				CCEC369615BA5E44008D8460 /* mocha */,
 				CC5064DE0F4A155000F4A952 /* UIWidgets */,
@@ -909,6 +914,15 @@
 			path = src/imagetools;
 			sourceTree = "<group>";
 		};
+		CCA1A532183EA838000159B3 /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CCA1A533183EA86E000159B3 /* COSInterval.h */,
+				CCA1A534183EA86E000159B3 /* COSInterval.m */,
+			);
+			name = helpers;
+			sourceTree = "<group>";
+		};
 		CCEC369615BA5E44008D8460 /* mocha */ = {
 			isa = PBXGroup;
 			children = (
@@ -1064,6 +1078,7 @@
 				CC66D8AB181A2B0A0039A0A5 /* MOMethod.h in Headers */,
 				CC66D866181A2AE10039A0A5 /* Mocha.h in Headers */,
 				CC66D8B2181A2B0A0039A0A5 /* MOPointer_Private.h in Headers */,
+				CCA1A535183EA86E000159B3 /* COSInterval.h in Headers */,
 				CC66D8BC181A2B0A0039A0A5 /* MOStruct.h in Headers */,
 				CC66D7D5181A2A470039A0A5 /* TDMultiLineCommentState.h in Headers */,
 				CC66D7BD181A2A470039A0A5 /* TDAssembly.h in Headers */,
@@ -1342,6 +1357,7 @@
 				CC66D875181A2AF30039A0A5 /* MOMapTable.m in Sources */,
 				CC66D755181A2A210039A0A5 /* MarkerLineNumberView.m in Sources */,
 				CC66D877181A2AF30039A0A5 /* MOUtilities.m in Sources */,
+				CCA1A536183EA86E000159B3 /* COSInterval.m in Sources */,
 				CC66D8A7181A2B0A0039A0A5 /* MOInstanceVariableDescription.m in Sources */,
 				CC66D7E3181A2A470039A0A5 /* TDQuoteState.m in Sources */,
 				CC66D815181A2A470039A0A5 /* TDWordState.m in Sources */,

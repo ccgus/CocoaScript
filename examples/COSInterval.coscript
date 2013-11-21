@@ -1,0 +1,17 @@
+var cosi = [COSInterval scheduleWithInterval:1 jsFunction:function(cinterval) {
+    print("hi!");
+}];
+
+var idx = 0;
+
+[COSInterval scheduleWithRepeatingInterval:2 jsFunction:function(cinterval) {
+    print("hello again! (" + idx + ")");
+    
+    idx++;
+    
+    if (idx > 5) {
+        print("Canceling");
+        [cinterval cancel];
+    }
+    
+}];
