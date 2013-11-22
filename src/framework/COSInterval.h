@@ -12,10 +12,15 @@
 #import <CocoaScript/COScript.h>
 
 @interface COSInterval : NSObject {
-    COScript *_callingContext;
-    MOJavaScriptObject *_jsfunc;
+    
     NSTimer *_timer;
     BOOL _onshot;
 }
+
+@property (weak) COScript *coscript;
+@property (strong) MOJavaScriptObject *jsfunc;
+
++ (id)scheduleWithInterval:(NSTimeInterval)i cocoaScript:(COScript*)cos jsFunction:(MOJavaScriptObject *)jsFunction repeat:(BOOL)repeat;
+- (void)cancel;
 
 @end

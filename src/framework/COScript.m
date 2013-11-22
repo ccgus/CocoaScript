@@ -9,6 +9,8 @@
 #import "COScript.h"
 #import "COSListener.h"
 #import "COSPreprocessor.h"
+#import "COScript+Interval.h"
+
 #import <ScriptingBridge/ScriptingBridge.h>
 #import "MochaRuntime.h"
 #import "MOMethod.h"
@@ -64,6 +66,9 @@ static NSMutableArray *JSTalkPluginList;
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [self cleanupIntervals];
+    
 }
 
 

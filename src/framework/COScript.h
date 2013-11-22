@@ -13,8 +13,10 @@
 @class COScript;
 
 @interface COScript : NSObject {
-
+    
     Mocha *_mochaRuntime;
+    
+    NSMutableArray *_intervals;
 }
 
 @property (weak) id printController;

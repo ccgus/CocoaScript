@@ -218,6 +218,8 @@
 		CC66D8D5181A2E2F0039A0A5 /* JSTTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */; };
 		CC66D8D6181A2E2F0039A0A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8CE181A2E2F0039A0A5 /* main.m */; };
 		CC66D8D8181A2FC10039A0A5 /* cocoascript_tool.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8D7181A2FC10039A0A5 /* cocoascript_tool.m */; };
+		CC847AFC183EE02300436C38 /* COScript+Interval.h in Headers */ = {isa = PBXBuildFile; fileRef = CC847AFA183EE02300436C38 /* COScript+Interval.h */; };
+		CC847AFD183EE02300436C38 /* COScript+Interval.m in Sources */ = {isa = PBXBuildFile; fileRef = CC847AFB183EE02300436C38 /* COScript+Interval.m */; };
 		CC86430D163B29E600908427 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC86430C163B29E600908427 /* QuartzCore.framework */; };
 		CC86430F163B29F500908427 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC86430E163B29F500908427 /* OpenCL.framework */; };
 		CC94E0520F4A616300208BE0 /* JSTalk.icns in Resources */ = {isa = PBXBuildFile; fileRef = CC94E0510F4A616300208BE0 /* JSTalk.icns */; };
@@ -559,6 +561,8 @@
 		CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTTextView.m; path = src/editor/JSTTextView.m; sourceTree = "<group>"; };
 		CC66D8CE181A2E2F0039A0A5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = src/editor/main.m; sourceTree = "<group>"; };
 		CC66D8D7181A2FC10039A0A5 /* cocoascript_tool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = cocoascript_tool.m; path = src/cocoascript_tool.m; sourceTree = "<group>"; };
+		CC847AFA183EE02300436C38 /* COScript+Interval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "COScript+Interval.h"; path = "src/framework/COScript+Interval.h"; sourceTree = "<group>"; };
+		CC847AFB183EE02300436C38 /* COScript+Interval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "COScript+Interval.m"; path = "src/framework/COScript+Interval.m"; sourceTree = "<group>"; };
 		CC86430C163B29E600908427 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = ../../../../../../System/Library/Frameworks/QuartzCore.framework; sourceTree = "<group>"; };
 		CC86430E163B29F500908427 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = ../../../../../../System/Library/Frameworks/OpenCL.framework; sourceTree = "<group>"; };
 		CC94E0510F4A616300208BE0 /* JSTalk.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = JSTalk.icns; path = res/images/JSTalk.icns; sourceTree = "<group>"; };
@@ -919,6 +923,8 @@
 			children = (
 				CCA1A533183EA86E000159B3 /* COSInterval.h */,
 				CCA1A534183EA86E000159B3 /* COSInterval.m */,
+				CC847AFA183EE02300436C38 /* COScript+Interval.h */,
+				CC847AFB183EE02300436C38 /* COScript+Interval.m */,
 			);
 			name = helpers;
 			sourceTree = "<group>";
@@ -1131,6 +1137,7 @@
 				CC66D85E181A2ABF0039A0A5 /* NSOrderedSet+MochaAdditions.h in Headers */,
 				CC66D7C5181A2A470039A0A5 /* TDCollectionParser.h in Headers */,
 				CC66D7B9181A2A460039A0A5 /* TDAlternation.h in Headers */,
+				CC847AFC183EE02300436C38 /* COScript+Interval.h in Headers */,
 				CC66D8AE181A2B0A0039A0A5 /* MOMethodDescription.h in Headers */,
 				CC66D7C7181A2A470039A0A5 /* TDComment.h in Headers */,
 			);
@@ -1314,6 +1321,7 @@
 				CC66D823181A2A710039A0A5 /* COSListener.m in Sources */,
 				CC66D7C2181A2A470039A0A5 /* TDChar.m in Sources */,
 				CC66D757181A2A210039A0A5 /* NoodleLineNumberMarker.m in Sources */,
+				CC847AFD183EE02300436C38 /* COScript+Interval.m in Sources */,
 				CC66D7C6181A2A470039A0A5 /* TDCollectionParser.m in Sources */,
 				CC66D7ED181A2A470039A0A5 /* TDSequence.m in Sources */,
 				CC66D8B6181A2B0A0039A0A5 /* MOPointerValue.m in Sources */,
