@@ -315,6 +315,9 @@
 		CCC5B8CA0F1EFA9700126722 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8C00F1EFA9700126722 /* Credits.rtf */; };
 		CCE675E8182ED9C900DB1932 /* COSAlertWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CCE675E6182ED9C900DB1932 /* COSAlertWindow.h */; };
 		CCE675E9182ED9C900DB1932 /* COSAlertWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE675E7182ED9C900DB1932 /* COSAlertWindow.m */; };
+		CCF056181849A23C000C56F7 /* COSScript+Spelunking.h in Headers */ = {isa = PBXBuildFile; fileRef = CCF056161849A23C000C56F7 /* COSScript+Spelunking.h */; };
+		CCF056191849A23C000C56F7 /* COSScript+Spelunking.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF056171849A23C000C56F7 /* COSScript+Spelunking.m */; };
+		CCF0561D184A884D000C56F7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCF0561C184A884D000C56F7 /* OpenGL.framework */; };
 		CCF4DBE118296AB800ACB9EC /* Mocha.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D861181A2AE10039A0A5 /* Mocha.m */; };
 		CCF4DBE218296AB800ACB9EC /* MochaRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D865181A2AE10039A0A5 /* MochaRuntime.m */; };
 		CCF68F1E0F4E3E4F00925FCA /* JSTalkDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = CCF68F1D0F4E3E4F00925FCA /* JSTalkDocument.icns */; };
@@ -584,6 +587,9 @@
 		CCC5B8C10F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = res/English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		CCE675E6182ED9C900DB1932 /* COSAlertWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSAlertWindow.h; path = src/framework/COSAlertWindow.h; sourceTree = "<group>"; };
 		CCE675E7182ED9C900DB1932 /* COSAlertWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSAlertWindow.m; path = src/framework/COSAlertWindow.m; sourceTree = "<group>"; };
+		CCF056161849A23C000C56F7 /* COSScript+Spelunking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "COSScript+Spelunking.h"; path = "src/framework/COSScript+Spelunking.h"; sourceTree = "<group>"; };
+		CCF056171849A23C000C56F7 /* COSScript+Spelunking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "COSScript+Spelunking.m"; path = "src/framework/COSScript+Spelunking.m"; sourceTree = "<group>"; };
+		CCF0561C184A884D000C56F7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
 		CCF68F1D0F4E3E4F00925FCA /* JSTalkDocument.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = JSTalkDocument.icns; path = res/images/JSTalkDocument.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -607,6 +613,7 @@
 				CC4143500F25261000E46669 /* Carbon.framework in Frameworks */,
 				CC4143510F25261100E46669 /* ScriptingBridge.framework in Frameworks */,
 				CC4143520F25261200E46669 /* JavaScriptCore.framework in Frameworks */,
+				CCF0561D184A884D000C56F7 /* OpenGL.framework in Frameworks */,
 				CC4143530F25261300E46669 /* Cocoa.framework in Frameworks */,
 				CC86430D163B29E600908427 /* QuartzCore.framework in Frameworks */,
 				CC86430F163B29F500908427 /* OpenCL.framework in Frameworks */,
@@ -698,6 +705,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CCF0561C184A884D000C56F7 /* OpenGL.framework */,
 				CC86430E163B29F500908427 /* OpenCL.framework */,
 				CC86430C163B29E600908427 /* QuartzCore.framework */,
 				CC1323840F24FF9D0032FEB8 /* Carbon.framework */,
@@ -712,6 +720,7 @@
 		CC0EC3380F2274730094F69D /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				CCF056151849A20A000C56F7 /* Spelunking */,
 				CCA1A532183EA838000159B3 /* helpers */,
 				CC99F0F7181A251F00F0D48E /* imagetools */,
 				CCEC369615BA5E44008D8460 /* mocha */,
@@ -1032,6 +1041,15 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		CCF056151849A20A000C56F7 /* Spelunking */ = {
+			isa = PBXGroup;
+			children = (
+				CCF056161849A23C000C56F7 /* COSScript+Spelunking.h */,
+				CCF056171849A23C000C56F7 /* COSScript+Spelunking.m */,
+			);
+			name = Spelunking;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1078,6 +1096,7 @@
 				CC66D7F8181A2A470039A0A5 /* TDSymbolRootNode.h in Headers */,
 				384830E21832D48500B34168 /* COSTarget.h in Headers */,
 				CC66D7EC181A2A470039A0A5 /* TDSequence.h in Headers */,
+				CCF056181849A23C000C56F7 /* COSScript+Spelunking.h in Headers */,
 				CC66D7D9181A2A470039A0A5 /* TDNum.h in Headers */,
 				CC66D8AD181A2B0A0039A0A5 /* MOMethodDescription_Private.h in Headers */,
 				CC66D7FE181A2A470039A0A5 /* TDToken.h in Headers */,
@@ -1358,6 +1377,7 @@
 				CC66D84F181A2AB10039A0A5 /* MOBridgeSupportSymbol.m in Sources */,
 				CC66D7BA181A2A470039A0A5 /* TDAlternation.m in Sources */,
 				CC66D849181A2AB10039A0A5 /* MOBridgeSupportController.m in Sources */,
+				CCF056191849A23C000C56F7 /* COSScript+Spelunking.m in Sources */,
 				CC66D80B181A2A470039A0A5 /* TDTrackException.m in Sources */,
 				CC66D89D181A2B0A0039A0A5 /* MOAllocator.m in Sources */,
 				CC66D8B4181A2B0A0039A0A5 /* MOPointer.m in Sources */,

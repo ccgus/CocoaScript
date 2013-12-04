@@ -278,6 +278,8 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
     
     id block = nil;
     
+    #pragma message "FIXME: Check to see if function is nil or not."
+    
     // Determine the metadata for the function call
     if ([function isKindOfClass:[MOMethod class]]) {
         // ObjC method
