@@ -181,6 +181,8 @@
     return buffer;
 }
 
+#pragma message "FIXME: need to add @import 'foo/what.js' support"
+
 + (NSString*)preprocessCode:(NSString*)sourceString {
     
     sourceString = [self processMultilineStrings:sourceString];
