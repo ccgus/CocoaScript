@@ -56,7 +56,30 @@ void JSTUncaughtExceptionHandler(NSException *exception) {
     //NSUpdateDynamicServices();
     
     [COScript loadPlugins]; // some guys will setup custom UI in the app.
+    
+    
+    
+    [[NSAppleEventManager sharedAppleEventManager] setEventHandler:self andSelector:@selector(getUrl:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
+    
 }
+
+- (void)getUrl:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
+    
+    NSString *url = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+    
+    if (![url hasPrefix:@"x-coscript:"]) {
+        NSLog(@"Invalid Cocoa Script URL: %@", url);
+        return;
+    }
+    
+    url = [url substringFromIndex:11];
+    
+    // TODO: Call an open script handler?
+    
+    //debug(@"url: '%@'", url);
+}
+
+
 
 - (IBAction)showPrefs:(id)sender {
     

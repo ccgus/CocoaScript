@@ -131,8 +131,8 @@
     NSMutableString *buffer = [NSMutableString string];
     TDTokenizer *tokenizer  = [TDTokenizer tokenizerWithString:sourceString];
     
-    tokenizer.whitespaceState.reportsWhitespaceTokens = YES;
-    tokenizer.commentState.reportsCommentTokens = YES;
+    [[tokenizer whitespaceState] setReportsWhitespaceTokens:YES];
+    [[tokenizer commentState] setReportsCommentTokens:YES];
     
     TDToken *eof                    = [TDToken EOFToken];
     TDToken *tok                    = nil;
@@ -181,15 +181,100 @@
     return buffer;
 }
 
-#pragma message "FIXME: need to add @import 'foo/what.js' support"
-
-+ (NSString*)preprocessCode:(NSString*)sourceString {
++ (NSString*)processImports:(NSString*)sourceString withBaseURL:(NSURL*)base {
     
+    /*
+     
+     This is horribly wrong, and needs to be added to an overall new parser that sticks everything in a tree, makes sure we don't import the same thing twice, makes sure that spaces in front don't kill it, etc.  It's just an idea I'm playing with for now.
+     
+     */
+    
+    NSMutableString *buffer = [NSMutableString string];
+    TDTokenizer *tokenizer  = [TDTokenizer tokenizerWithString:sourceString];
+    
+    [[tokenizer whitespaceState] setReportsWhitespaceTokens:YES];
+    [[tokenizer commentState] setReportsCommentTokens:YES];
+    
+    TDToken *eof                    = [TDToken EOFToken];
+    TDToken *tok                    = nil;
+    
+    BOOL lastWasAtSym               = NO;
+    
+    
+    while ((tok = [tokenizer nextToken]) != eof) {
+        
+        if ([tok isSymbol] && [[tok stringValue] isEqualToString:@"@"]) {
+            lastWasAtSym = YES;
+        }
+        else {
+            
+            if (lastWasAtSym) {
+                lastWasAtSym = NO;
+                
+                if ([tok isWord] && [[tok stringValue] isEqualToString:@"import"]) {
+                    // OK, big assumptions here.  We're going to get some whitespace, adn then a quote, and then a newline.  And that's it.
+                    
+                    [tokenizer nextToken]; // the space
+                    NSString *pathInQuotes = [[tokenizer nextToken] stringValue];
+                    
+                    NSString *path = [pathInQuotes substringWithRange:NSMakeRange(1, [pathInQuotes length]-2)];
+                    
+                    if (base) {
+                        
+                        NSURL *importURL = [[base URLByDeletingLastPathComponent] URLByAppendingPathComponent:path];
+                        
+                        NSError *outErr = nil;
+                        NSString *s = [NSString stringWithContentsOfURL:importURL encoding:NSUTF8StringEncoding error:&outErr];
+                        
+                        if (s) {
+                            [buffer appendFormat:@"// imported from %@", [importURL path]];
+                            [buffer appendString:s];
+                        }
+                        else {
+                            [buffer appendFormat:@"'Unable to import %@ becase %@'", path, [outErr localizedFailureReason]];
+                        }
+                        
+                        
+                        //debug(@"importURL: '%@'", importURL);
+                        
+                    }
+                    else {
+                        [buffer appendFormat:@"'Unable to import %@ becase we have no base url to import from'", path];
+                    }
+                    
+                    debug(@"[tok stringValue]: '%@'", path);
+                    
+                    
+                    continue;
+                }
+                else {
+                    [buffer appendString:@"@"];
+                }
+            }
+            
+            [buffer appendString:[tok stringValue]];
+            
+        }
+    }
+    
+    
+    
+    return buffer;
+}
+
+
++ (NSString*)preprocessCode:(NSString*)sourceString withBaseURL:(NSURL*)base {
+    
+    sourceString = [self processImports:sourceString withBaseURL:(NSURL*)base];
     sourceString = [self processMultilineStrings:sourceString];
     sourceString = [self preprocessForObjCStrings:sourceString];
     sourceString = [self preprocessForObjCMessagesToJS:sourceString];
     
     return sourceString;
+}
+
++ (NSString*)preprocessCode:(NSString*)sourceString {
+    return [self preprocessCode:sourceString withBaseURL:nil];
 }
 
 @end

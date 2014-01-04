@@ -51,6 +51,19 @@
 			<string>JSTPluginMover</string>
 		</dict>
 	</array>
+    
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Cocoa Script Whatever</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-coscript</string>
+			</array>
+		</dict>
+	</array>
+    
 	<key>CFBundleExecutable</key>
 	<string>Cocoa Script Editor</string>
 	<key>CFBundleIconFile</key>
@@ -72,7 +85,7 @@
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.developer-tools</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.6</string>
+	<string>10.9</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

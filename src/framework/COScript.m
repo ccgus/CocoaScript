@@ -246,12 +246,22 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 
 - (id)executeString:(NSString*)str {
     
+    return [self executeString:str baseURL:nil];
+}
+
+- (id)executeString:(NSString*)str baseURL:(NSURL*)base {
+    
     if (!JSTalkPluginList && JSTalkShouldLoadJSTPlugins) {
         [COScript loadPlugins];
     }
     
     if ([self shouldPreprocess]) {
-        str = [COSPreprocessor preprocessCode:str];
+        
+        if (!base && [[_env objectForKey:@"scriptURL"] isKindOfClass:[NSURL class]]) {
+            base = [_env objectForKey:@"scriptURL"];
+        }
+        
+        str = [COSPreprocessor preprocessCode:str withBaseURL:base];
     }
     
     [self pushAsCurrentCOScript];

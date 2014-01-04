@@ -179,7 +179,7 @@
     [errorLabel setStringValue:@""];
     
     if ([self fileURL]) {
-        [jstalk.env setObject:[self fileURL] forKey:@"scriptURL"];
+        [[jstalk env] setObject:[self fileURL] forKey:@"scriptURL"];
     }
     
     if ([JSTPrefs boolForKey:@"clearConsoleOnRun"]) {
@@ -231,7 +231,7 @@
 
 - (void)preprocessCodeAction:(id)sender {
     
-    NSString *code = [COSPreprocessor preprocessCode:[[jsTextView textStorage] string]];
+    NSString *code = [COSPreprocessor preprocessCode:[[jsTextView textStorage] string] withBaseURL:[self fileURL]];
     
     [[[outputTextView textStorage] mutableString] setString:code];
     

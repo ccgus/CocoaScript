@@ -15,6 +15,8 @@
 
 + (NSString*)preprocessCode:(NSString*)sourceString;
 
++ (NSString*)preprocessCode:(NSString*)sourceString withBaseURL:(NSURL*)base;
+
 @end
 
 
