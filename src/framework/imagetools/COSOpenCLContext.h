@@ -2,7 +2,7 @@
 // Hacked to pieces by Gus Mueller on 2010-07-30
 
 #import <Cocoa/Cocoa.h>
-#import <OpenCL/OpenCL.h>
+#import <OpenCL/opencl.h>
 
 @class COSOpenCLProgram;
 @class JSTOpenCLBuffer;
