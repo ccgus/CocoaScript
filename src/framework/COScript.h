@@ -24,6 +24,7 @@
 @property (retain) NSMutableDictionary *env;
 @property (assign) BOOL shouldPreprocess;
 
+- (void)cleanup;
 - (id)executeString:(NSString*) str;
 - (void)pushObject:(id)obj withName:(NSString*)name;
 - (void)deleteObjectWithName:(NSString*)name;

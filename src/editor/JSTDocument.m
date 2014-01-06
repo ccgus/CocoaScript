@@ -169,35 +169,40 @@
 
 - (void)runScript:(NSString*)s {
     
-    COScript *jstalk = [[COScript alloc] init];
-    
-    [[[NSThread currentThread] threadDictionary] setObject:jstalk forKey:@"org.jstalk.currentJSTalkContext"];
-    
-    [jstalk setPrintController:self];
-    [jstalk setErrorController:self];
-    
-    [errorLabel setStringValue:@""];
-    
-    if ([self fileURL]) {
-        [[jstalk env] setObject:[self fileURL] forKey:@"scriptURL"];
-    }
-    
-    if ([JSTPrefs boolForKey:@"clearConsoleOnRun"]) {
-        [self clearConsole:nil];
-    }
-    
-    id result = [jstalk executeString:s];
-    
-    if (result) {
-        [self print:[result description]];
-    }
-    
-    [[[NSThread currentThread] threadDictionary] removeObjectForKey:@"org.jstalk.currentJSTalkContext"];
-    
-    
-    if ([jstalk hasFunctionNamed:@"fmain"]) {
-        debug(@"HEY THERE'S A MAIN FUNCTION.");
-        [jstalk callFunctionNamed:@"fmain" withArguments:nil];
+    @autoreleasepool {
+        
+        COScript *jstalk = [[COScript alloc] init];
+        
+        [[[NSThread currentThread] threadDictionary] setObject:jstalk forKey:@"org.jstalk.currentJSTalkContext"];
+        
+        [jstalk setPrintController:self];
+        [jstalk setErrorController:self];
+        
+        [errorLabel setStringValue:@""];
+        
+        if ([self fileURL]) {
+            [[jstalk env] setObject:[self fileURL] forKey:@"scriptURL"];
+        }
+        
+        if ([JSTPrefs boolForKey:@"clearConsoleOnRun"]) {
+            [self clearConsole:nil];
+        }
+        
+        id result = [jstalk executeString:s];
+        
+        if (result) {
+            [self print:[result description]];
+        }
+        
+        [[[NSThread currentThread] threadDictionary] removeObjectForKey:@"org.jstalk.currentJSTalkContext"];
+        
+        
+        if ([jstalk hasFunctionNamed:@"main"]) {
+            [jstalk callFunctionNamed:@"main" withArguments:nil];
+        }
+        
+        [jstalk cleanup];
+        
     }
 }
 

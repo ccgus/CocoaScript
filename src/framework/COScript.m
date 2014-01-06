@@ -65,9 +65,23 @@ static NSMutableArray *JSTalkPluginList;
 
 
 - (void)dealloc {
+
+    debug(@"%s:%d", __FUNCTION__, __LINE__);
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [self cleanupIntervals];
+    
+}
+
+- (void)cleanup {
+    [self deleteObjectWithName:@"jstalk"];
+    [self deleteObjectWithName:@"coscript"];
+    [self deleteObjectWithName:@"__mocha__"];
+    
+    [_mochaRuntime removeBuiltins];
+    [_mochaRuntime setNilValueForKey:@"print"];
+    [_mochaRuntime garbageCollect];
     
 }
 
@@ -80,6 +94,7 @@ static NSMutableArray *JSTalkPluginList;
     
     [self pushObject:self withName:@"jstalk"];
     [self pushObject:self withName:@"coscript"];
+    
     [_mochaRuntime evalString:@"var nil=null;\n"];
     [_mochaRuntime setValue:[MOMethod methodWithTarget:self selector:@selector(print:)] forKey:@"print"];
     

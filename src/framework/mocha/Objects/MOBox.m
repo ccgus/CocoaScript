@@ -15,4 +15,9 @@
 @synthesize JSObject=_JSObject;
 @synthesize runtime=_runtime;
 
+- (void)dealloc {
+    // debug(@"MOBox dealloc releasing: '%@'", _representedObject);
+}
+
+
 @end

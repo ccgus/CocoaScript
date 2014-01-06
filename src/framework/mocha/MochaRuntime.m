@@ -224,6 +224,7 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
 }
 
 - (void)dealloc {
+    debug(@"%s:%d", __FUNCTION__, __LINE__);
     [self cleanUp];
     
     JSGlobalContextRelease(_ctx);
@@ -881,6 +882,15 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
     [self setValue:[MOObjCRuntime sharedRuntime] forKey:@"objc"];
 }
 
+- (void)removeBuiltins {
+    
+    [self setNilValueForKey:@"framework"];
+    [self setNilValueForKey:@"addFrameworkSearchPath"];
+    [self setNilValueForKey:@"objc"];
+    [self setNilValueForKey:@"print"];
+    
+}
+
 - (void)print:(id)o {
     if (!o) {
         printf("null\n");
@@ -1087,6 +1097,8 @@ static void MOObject_initialize(JSContextRef ctx, JSObjectRef object) {
 static void MOObject_finalize(JSObjectRef object) {
     MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
     id o = [private representedObject];
+    
+    debug(@"finalizing %@", o);
     
     // Give the object a chance to finalize itself
     if ([o respondsToSelector:@selector(finalizeForMochaScript)]) {
