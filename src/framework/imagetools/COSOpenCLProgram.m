@@ -203,8 +203,6 @@ static int FloorPow2(int n)
     size = _bytesPerRow * _height;
     _bitmapData = calloc(1, size);
     
-    NSLog(@"allocating %ld bytes", size);
-    
     if (!_bitmapData) {
         NSLog(@"%s:%d", __FUNCTION__, __LINE__);
 		NSLog(@"creating the bitmap data failed!");
@@ -219,15 +217,14 @@ static int FloorPow2(int n)
     format.image_channel_data_type = CL_FLOAT;
     
     cl_image_desc imageDescription;
+    memset(&imageDescription, 0, sizeof(cl_image_desc));
+    
     imageDescription.image_type = CL_MEM_OBJECT_IMAGE2D;
     imageDescription.image_width = _width;
     imageDescription.image_height = _height;
     imageDescription.image_array_size = 1;
     imageDescription.image_row_pitch = _bytesPerRow;
     imageDescription.image_slice_pitch = _height;
-    imageDescription.num_mip_levels = 0;
-    imageDescription.num_samples = 0;
-    imageDescription.image_depth = 0;
     
     computeBuffer = clCreateImage(context.computeContext, attributes, &format, &imageDescription, _bitmapData, &err);
     
@@ -363,18 +360,6 @@ static int FloorPow2(int n)
     clEnqueueNDRangeKernel(program.context.computeCommands, computeKernel, workDimension, NULL, global, local, 0, NULL, NULL);
 }
 
-
-
-- (void)foo {
-    
-    //clCreateImage2D
-    //CL_FLOAT
-    
-    //memobjs[0] = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(cl_float4) * n, srcA, NULL);
-    
-    //memobjs[2] = clCreateBuffer(context, CL_MEM_READ_WRITE, sizeof(cl_float) * n, NULL, NULL);
-    
-}
 
 
 @end
