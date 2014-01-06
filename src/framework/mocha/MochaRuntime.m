@@ -263,6 +263,7 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
 }
 
 + (id)objectForJSValue:(JSValueRef)value inContext:(JSContextRef)ctx unboxObjects:(BOOL)unboxObjects {
+    
     if (value == NULL || JSValueIsUndefined(ctx, value)) {
         return [MOUndefined undefined];
     }
@@ -537,6 +538,8 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
 - (BOOL)removeObjectWithName:(NSString *)name {
     JSValueRef exception = NULL;
     
+    debug(@"removing: '%@'", name);
+    
     // Delete
     JSStringRef jsName = JSStringCreateWithUTF8CString([name UTF8String]);
     JSObjectDeleteProperty(_ctx, JSContextGetGlobalObject(_ctx), jsName, &exception);
@@ -651,9 +654,11 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
         }
     }
     
+    assert((JSValueGetType(_ctx, jsFunction) == kJSTypeObject));
     JSValueRef exception = NULL;
+    //debug(@"calling function");
     JSValueRef returnValue = JSObjectCallAsFunction(_ctx, jsFunction, NULL, argumentsCount, jsArguments, &exception);
-    
+    //debug(@"called");
     if (jsArguments != NULL) {
         free(jsArguments);
     }
@@ -889,6 +894,8 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
     [self setNilValueForKey:@"objc"];
     [self setNilValueForKey:@"print"];
     
+    [self removeObjectWithName:@"__mocha__"];
+    
 }
 
 - (void)print:(id)o {
@@ -971,6 +978,9 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
     }
     
     Mocha *runtime = [Mocha runtimeWithContext:ctx];
+    
+    assert([runtime isKindOfClass:[Mocha class]]);
+    
     
     //
     // Exported objects
@@ -1092,13 +1102,24 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 static void MOObject_initialize(JSContextRef ctx, JSObjectRef object) {
     MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
     CFRetain((__bridge CFTypeRef)private);
+    
+    if (class_isMetaClass(object_getClass([private representedObject]))) {
+        debug(@"inited a class object %@ - going to keep it protected", [private representedObject]);
+        JSValueProtect(ctx, [private JSObject]);
+    }
+    
+    
 }
 
 static void MOObject_finalize(JSObjectRef object) {
     MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
     id o = [private representedObject];
     
-    debug(@"finalizing %@", o);
+    //debug(@"finalizing %@ o: %p", o, object);
+    
+    if (class_isMetaClass(object_getClass(o))) {
+        // debug(@"Finalizing class method: %@", o);
+    }
     
     // Give the object a chance to finalize itself
     if ([o respondsToSelector:@selector(finalizeForMochaScript)]) {
@@ -1129,6 +1150,11 @@ static bool MOBoxedObject_hasProperty(JSContextRef ctx, JSObjectRef objectJS, JS
     
     // String conversion
     if ([propertyName isEqualToString:@"toString"]) {
+        return YES;
+    }
+    
+    
+    if ([object isKindOfClass:[Mocha class]] && [propertyName isEqualToString:@"protect"]) {
         return YES;
     }
     
@@ -1247,6 +1273,7 @@ static JSValueRef MOBoxedObject_getProperty(JSContextRef ctx, JSObjectRef object
     NSString *propertyName = (NSString *)CFBridgingRelease(JSStringCopyCFString(NULL, propertyNameJS));
     
     Mocha *runtime = [Mocha runtimeWithContext:ctx];
+    
     
     id private = (__bridge id)(JSObjectGetPrivate(objectJS));
     id object = [private representedObject];
@@ -1581,6 +1608,19 @@ static JSValueRef MOFunction_callAsFunction(JSContextRef ctx, JSObjectRef functi
     MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(functionJS));
     id function = [private representedObject];
     JSValueRef value = NULL;
+    
+//    if ([function isKindOfClass:[MOMethod class]]) {
+//    
+//        MOMethod *method = function;
+//        
+//        if ([method target] == runtime && [function selector] == @selector(protect:)) {
+//            
+//        }
+//    
+//        target = [function target];
+//        selector = [function selector];
+//        Class klass = [target class];
+//    }
     
     // Perform the invocation
     @try {

@@ -30,7 +30,7 @@
 
 @property (retain) JSTFileWatcher *externalEditorFileWatcher;
 @property (retain) NSDictionary *previousOutputTypingAttributes;
-
+@property (assign) BOOL shouldCleanupAfterRun;
 
 - (void) executeScript:(id)sender;
 - (void) clearConsole:(id)sender;

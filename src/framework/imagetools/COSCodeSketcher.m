@@ -28,12 +28,6 @@
 @synthesize nsContext = _nsContext;
 @synthesize size = _size;
 
-@synthesize drawRect = _drawRect;
-@synthesize setup = _setup;
-@synthesize mouseMoved = _mouseMoved;
-@synthesize mouseUp = _mouseUp;
-@synthesize mouseDown = _mouseDown;
-@synthesize mouseDragged = _mouseDragged;
 
 static NSMutableDictionary *JSTSketchers = nil;
 
@@ -61,6 +55,9 @@ static NSMutableDictionary *JSTSketchers = nil;
         [cs start];
     });
     
+    debug(@"my class: %p", self);
+    debug(@"made cs: %@", cs);
+    
     return cs;
 }
 
@@ -80,6 +77,15 @@ static NSMutableDictionary *JSTSketchers = nil;
     if (_context) {
         CGContextRelease(_context);
     }
+}
+
+- (void)setDrawRect:(MOJavaScriptObject *)drawRect {
+    _drawRect = drawRect;
+    
+    debug(@"drawRect: '%@'", drawRect);
+    
+    
+    
 }
 
 - (void)resizeContext {

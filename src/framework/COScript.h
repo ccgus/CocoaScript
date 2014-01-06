@@ -25,6 +25,7 @@
 @property (assign) BOOL shouldPreprocess;
 
 - (void)cleanup;
+- (void)garbageCollect;
 - (id)executeString:(NSString*) str;
 - (void)pushObject:(id)obj withName:(NSString*)name;
 - (void)deleteObjectWithName:(NSString*)name;

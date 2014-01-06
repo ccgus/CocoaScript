@@ -77,12 +77,15 @@ static NSMutableArray *JSTalkPluginList;
 - (void)cleanup {
     [self deleteObjectWithName:@"jstalk"];
     [self deleteObjectWithName:@"coscript"];
-    [self deleteObjectWithName:@"__mocha__"];
     
     [_mochaRuntime removeBuiltins];
     [_mochaRuntime setNilValueForKey:@"print"];
     [_mochaRuntime garbageCollect];
     
+}
+
+- (void)garbageCollect {
+    [_mochaRuntime garbageCollect];
 }
 
 
@@ -367,6 +370,48 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
     }
     
     return nil;
+}
+
+- (void)unprotect:(id)o {
+    
+    debug(@"COS unprotecting %@", o);
+    
+    JSValueRef value = [_mochaRuntime JSValueForObject:o];
+    
+    assert(value);
+    
+    if (value) {
+        
+        JSObjectRef jsObject = JSValueToObject([_mochaRuntime context], value, NULL);
+        id private = (__bridge id)JSObjectGetPrivate(jsObject);
+        
+        assert([private representedObject] == o);
+        
+        JSValueUnprotect([_mochaRuntime context], value);
+    }
+}
+
+- (void)protect:(id)o {
+    
+    
+    JSValueRef value = [_mochaRuntime JSValueForObject:o];
+    
+    
+    assert(value);
+    
+    if (value) {
+        
+        JSObjectRef jsObject = JSValueToObject([_mochaRuntime context], value, NULL);
+        
+        
+        debug(@"COS protecting %@ / v: %p o: %p", o, value, jsObject);
+        
+        id private = (__bridge id)JSObjectGetPrivate(jsObject);
+        
+        assert([private representedObject] == o);
+        
+        JSValueProtect([_mochaRuntime context], value);
+    }
 }
 
 // JavaScriptCore isn't safe for recursion.  So calling this function from

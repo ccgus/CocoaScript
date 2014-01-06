@@ -22,6 +22,7 @@
 
 - (void)dealloc {
     if (_JSObject != NULL) {
+        debug(@"unprotecting %@", self);
         JSValueUnprotect(_JSContext, _JSObject);
     }
 }
@@ -37,6 +38,7 @@
     _JSObject = JSObject;
     _JSContext = JSContext;
     if (_JSObject != NULL) {
+        debug(@"protecting %@", self);
         JSValueProtect(_JSContext, _JSObject);
     }
 }

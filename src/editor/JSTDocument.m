@@ -128,6 +128,8 @@
 
 - (void)print:(NSString*)s {
     
+    printf("%s\n", [[s description] UTF8String]);
+    
     BOOL needToSetAtts = [[outputTextView textStorage] length] == 0;
     
     [[[outputTextView textStorage] mutableString] appendFormat:@"%@\n", s];
@@ -171,6 +173,8 @@
     
     @autoreleasepool {
         
+        _shouldCleanupAfterRun = YES;
+        
         COScript *jstalk = [[COScript alloc] init];
         
         [[[NSThread currentThread] threadDictionary] setObject:jstalk forKey:@"org.jstalk.currentJSTalkContext"];
@@ -184,6 +188,8 @@
             [[jstalk env] setObject:[self fileURL] forKey:@"scriptURL"];
         }
         
+        [[jstalk env] setObject:self forKey:@"document"];
+        
         if ([JSTPrefs boolForKey:@"clearConsoleOnRun"]) {
             [self clearConsole:nil];
         }
@@ -196,15 +202,18 @@
         
         [[[NSThread currentThread] threadDictionary] removeObjectForKey:@"org.jstalk.currentJSTalkContext"];
         
-        
         if ([jstalk hasFunctionNamed:@"main"]) {
             [jstalk callFunctionNamed:@"main" withArguments:nil];
         }
         
-        [jstalk cleanup];
-        
+        if (_shouldCleanupAfterRun) {
+            [jstalk cleanup];
+        }
     }
 }
+
+
+
 
 - (void)executeScript:(id)sender {
     [self runScript:[[jsTextView textStorage] string]];

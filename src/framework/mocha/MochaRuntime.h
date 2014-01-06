@@ -318,6 +318,7 @@
 - (void)setObject:(id)obj forKeyedSubscript:(NSString *)key;
 
 - (void)removeBuiltins;
+- (JSValueRef)JSValueForObject:(id)object;
 
 @end
 

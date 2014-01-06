@@ -1,11 +1,24 @@
+coscript.env()['document'].setShouldCleanupAfterRun(false);
+
 var sketcher = [COSCodeSketcher codeSketcherWithName:"Code Sketcher - New Time"];
 [sketcher setFrameRate:60];
 
+[coscript protect:sketcher];
+
+var idx = 0;
+
 var drawFunction = function() {
     
+    //print(++idx);
     
+    [coscript garbageCollect];
     
-    var date = [NSDate date]
+    var date = [NSDate date];
+    
+    //print(idx + " out");
+    
+    [coscript garbageCollect];
+
     var c = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSWeekOfYearCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit) fromDate:date];
     
     var tm_hour   = [c hour];
@@ -52,9 +65,7 @@ var drawFunction = function() {
     [NSBezierPath fillRect:r];
     
     
-    /*
-        Above was with calls using Cocoa, below is how to use with CGContext* stuff.
-    */
+    // Above was with calls using Cocoa, below is how to use with CGContext* stuff.
     
     // hour
     
@@ -134,10 +145,12 @@ var drawFunction = function() {
     CGContextAddArc(context, offset ,base-12, 5, 0, 2*Math.PI, 0);
     CGContextClosePath(context);
     CGContextStrokePath(context);
+
+
 };
 
 
 [sketcher setDrawRect:drawFunction];
 
-
+[coscript garbageCollect];
 
