@@ -68,6 +68,7 @@ static JSValueRef MOJSPrototypeForOBJCInstance(JSContextRef ctx, id instance, NS
 NSString * const MORuntimeException = @"MORuntimeException";
 NSString * const MOJavaScriptException = @"MOJavaScriptException";
 
+NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 
 #pragma mark -
 #pragma mark Runtime
@@ -1029,6 +1030,13 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
     id exportedObj = [runtime valueForKey:propertyName];
     if (exportedObj != nil) {
         JSValueRef ret = [runtime JSValueForObject:exportedObj];
+        
+        if (!objc_getAssociatedObject(exportedObj, &MOAlreadyProtectedKey)) {
+            debug(@"protecting an exported object: %@ %p", propertyName, ret);
+            objc_setAssociatedObject(exportedObj, &MOAlreadyProtectedKey, @(1), OBJC_ASSOCIATION_RETAIN);
+            JSValueProtect(ctx, ret);
+        }
+        
         return ret;
     }
     
@@ -1039,11 +1047,9 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
     if (objCClass && ![propertyName isEqualToString:@"Object"]) {
         JSValueRef ret = [runtime JSValueForObject:objCClass];
         
-        static char *moAlreadyProtectedKey = "moAlreadyProtectedKey";
-        
-        if (!objc_getAssociatedObject(objCClass, &moAlreadyProtectedKey)) {
+        if (!objc_getAssociatedObject(objCClass, &MOAlreadyProtectedKey)) {
             debug(@"inited a global class object %@ - going to keep it protected %p", propertyName, ret);
-            objc_setAssociatedObject(objCClass, &moAlreadyProtectedKey, @(1), OBJC_ASSOCIATION_RETAIN);
+            objc_setAssociatedObject(objCClass, &MOAlreadyProtectedKey, @(1), OBJC_ASSOCIATION_RETAIN);
             JSValueProtect(ctx, ret);
         }
         

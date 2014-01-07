@@ -1,25 +1,12 @@
-
 // add a hint to whomever is instantiating us, that we'd like to stick around for a while.
 [coscript setShouldKeepAround:true];
 
 var sketcher = [COSCodeSketcher codeSketcherWithName:"Code Sketcher - New Time"];
 [sketcher setFrameRate:60];
 
-[coscript protect:sketcher];
-
-var idx = 0;
-
 var drawFunction = function() {
     
-    print(++idx);
-    
-    //[coscript garbageCollect];
-    
     var date = [NSDate date];
-    
-    //print(idx + " out");
-    
-    // [coscript garbageCollect];
     
     var c = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSWeekOfYearCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit) fromDate:date];
     
@@ -45,13 +32,13 @@ var drawFunction = function() {
     [[NSColor whiteColor] set];
     
     // minute tics
-    for (alpha=0; alpha < 60; alpha++) {
+    for (var alpha=0; alpha < 60; alpha++) {
         var r = NSMakeRect(Math.floor(m_width * alpha), base, 1, 5);
         [NSBezierPath fillRect:r];
     }
     
     // hour tics
-    for (alpha=0; alpha < 24; alpha++) {
+    for (var alpha=0; alpha < 24; alpha++) {
         var r = NSMakeRect(Math.floor(h_width*alpha), base-30, 1, 5);
         [NSBezierPath fillRect:r];
     }
