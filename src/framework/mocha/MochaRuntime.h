@@ -317,7 +317,8 @@
  */
 - (void)setObject:(id)obj forKeyedSubscript:(NSString *)key;
 
-- (void)removeBuiltins;
+- (void)shutdown;
+
 - (JSValueRef)JSValueForObject:(id)object;
 
 @end

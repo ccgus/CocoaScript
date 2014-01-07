@@ -206,7 +206,7 @@
             [jstalk callFunctionNamed:@"main" withArguments:nil];
         }
         
-        if (_shouldCleanupAfterRun) {
+        if (![jstalk shouldKeepAround]) {
             [jstalk cleanup];
         }
     }

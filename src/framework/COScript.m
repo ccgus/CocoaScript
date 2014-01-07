@@ -67,7 +67,7 @@ static NSMutableArray *JSTalkPluginList;
 - (void)dealloc {
 
     debug(@"%s:%d", __FUNCTION__, __LINE__);
-
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [self cleanupIntervals];
@@ -78,14 +78,17 @@ static NSMutableArray *JSTalkPluginList;
     [self deleteObjectWithName:@"jstalk"];
     [self deleteObjectWithName:@"coscript"];
     
-    [_mochaRuntime removeBuiltins];
-    [_mochaRuntime setNilValueForKey:@"print"];
-    [_mochaRuntime garbageCollect];
+    [_mochaRuntime shutdown];
     
 }
 
 - (void)garbageCollect {
+    
+    NSTimeInterval start = [NSDate timeIntervalSinceReferenceDate];
+    
     [_mochaRuntime garbageCollect];
+    
+    debug(@"gc took %f seconds", [NSDate timeIntervalSinceReferenceDate] - start);
 }
 
 
@@ -353,6 +356,9 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 
 - (id)callJSFunction:(JSObjectRef)jsFunction withArgumentsInArray:(NSArray *)arguments {
     [self pushAsCurrentCOScript];
+    
+    //[self garbageCollect];
+    
     JSValueRef r = nil;
     @try {
         r = [_mochaRuntime callJSFunction:jsFunction withArgumentsInArray:arguments];
@@ -374,7 +380,7 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 
 - (void)unprotect:(id)o {
     
-    debug(@"COS unprotecting %@", o);
+    
     
     JSValueRef value = [_mochaRuntime JSValueForObject:o];
     
@@ -387,6 +393,7 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
         
         assert([private representedObject] == o);
         
+        debug(@"COS unprotecting %@", o);
         JSValueUnprotect([_mochaRuntime context], value);
     }
 }

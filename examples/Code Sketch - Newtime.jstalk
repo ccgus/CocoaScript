@@ -1,4 +1,6 @@
-coscript.env()['document'].setShouldCleanupAfterRun(false);
+
+// add a hint to whomever is instantiating us, that we'd like to stick around for a while.
+[coscript setShouldKeepAround:true];
 
 var sketcher = [COSCodeSketcher codeSketcherWithName:"Code Sketcher - New Time"];
 [sketcher setFrameRate:60];
@@ -9,16 +11,16 @@ var idx = 0;
 
 var drawFunction = function() {
     
-    //print(++idx);
+    print(++idx);
     
-    [coscript garbageCollect];
+    //[coscript garbageCollect];
     
     var date = [NSDate date];
     
     //print(idx + " out");
     
-    [coscript garbageCollect];
-
+    // [coscript garbageCollect];
+    
     var c = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSWeekOfYearCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit) fromDate:date];
     
     var tm_hour   = [c hour];
@@ -146,11 +148,9 @@ var drawFunction = function() {
     CGContextClosePath(context);
     CGContextStrokePath(context);
 
-
 };
 
 
 [sketcher setDrawRect:drawFunction];
 
-[coscript garbageCollect];
 

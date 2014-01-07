@@ -23,6 +23,8 @@
 @property (weak) id errorController;
 @property (retain) NSMutableDictionary *env;
 @property (assign) BOOL shouldPreprocess;
+@property (assign) BOOL shouldKeepAround;
+
 
 - (void)cleanup;
 - (void)garbageCollect;

@@ -44,6 +44,8 @@ static JSClassRef MOFunctionClass = NULL;
 
 // Global object
 static JSValueRef   Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef propertyName, JSValueRef *exception);
+//static void         Mocha_initialize(JSContextRef ctx, JSObjectRef object);
+//static void         Mocha_finalize(JSObjectRef object);
 
 // Private Cocoa object callbacks
 static void         MOObject_initialize(JSContextRef ctx, JSObjectRef object);
@@ -87,6 +89,8 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
         JSClassDefinition MochaClassDefinition      = kJSClassDefinitionEmpty;
         MochaClassDefinition.className              = "Mocha";
         MochaClassDefinition.getProperty            = Mocha_getProperty;
+        //MochaClassDefinition.initialize             = Mocha_initialize;
+        //MochaClassDefinition.finalize               = Mocha_finalize;
         MochaClass                                  = JSClassCreate(&MochaClassDefinition);
         
         // Mocha object
@@ -225,9 +229,11 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
 
 - (void)dealloc {
     debug(@"%s:%d", __FUNCTION__, __LINE__);
-    [self cleanUp];
+    //[self cleanUp];
     
-    JSGlobalContextRelease(_ctx);
+    if (_ctx) {
+        JSGlobalContextRelease(_ctx);
+    }
 }
 
 - (JSGlobalContextRef)context {
@@ -887,7 +893,7 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
     [self setValue:[MOObjCRuntime sharedRuntime] forKey:@"objc"];
 }
 
-- (void)removeBuiltins {
+- (void)shutdown {
     
     [self setNilValueForKey:@"framework"];
     [self setNilValueForKey:@"addFrameworkSearchPath"];
@@ -895,6 +901,13 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
     [self setNilValueForKey:@"print"];
     
     [self removeObjectWithName:@"__mocha__"];
+    
+    
+    JSGlobalContextRelease(_ctx);
+    
+    _ctx = nil;
+    
+    //[_mochaRuntime garbageCollect];
     
 }
 
@@ -970,6 +983,34 @@ NSString * const MOJavaScriptException = @"MOJavaScriptException";
 #pragma mark -
 #pragma mark Global Object
 
+//static void Mocha_initialize(JSContextRef ctx, JSObjectRef object) {
+//    MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
+//    
+//    if (private) {
+//        
+//        CFRetain((__bridge CFTypeRef)private);
+//        
+////        if (class_isMetaClass(object_getClass([private representedObject]))) {
+////            debug(@"inited a global class object %@ - going to keep it protected", [private representedObject]);
+////            JSValueProtect(ctx, [private JSObject]);
+////        }
+//    }
+//    
+//    
+//}
+//
+//static void Mocha_finalize(JSObjectRef object) {
+//    MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
+//    id o = [private representedObject];
+//    
+//    //debug(@"finalizing %@ o: %p", o, object);
+//    
+//    if (class_isMetaClass(object_getClass(o))) {
+//        debug(@"Finalizing global class: %@ %p", o, object);
+//    }
+//}
+
+
 JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef propertyNameJS, JSValueRef *exception) {
     NSString *propertyName = (NSString *)CFBridgingRelease(JSStringCopyCFString(kCFAllocatorDefault, propertyNameJS));
     
@@ -995,8 +1036,17 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
     // ObjC class
     //
     Class objCClass = NSClassFromString(propertyName);
-    if (objCClass != Nil && ![propertyName isEqualToString:@"Object"]) {
+    if (objCClass && ![propertyName isEqualToString:@"Object"]) {
         JSValueRef ret = [runtime JSValueForObject:objCClass];
+        
+        static char *moAlreadyProtectedKey = "moAlreadyProtectedKey";
+        
+        if (!objc_getAssociatedObject(objCClass, &moAlreadyProtectedKey)) {
+            debug(@"inited a global class object %@ - going to keep it protected %p", propertyName, ret);
+            objc_setAssociatedObject(objCClass, &moAlreadyProtectedKey, @(1), OBJC_ASSOCIATION_RETAIN);
+            JSValueProtect(ctx, ret);
+        }
+        
         return ret;
     }
     
@@ -1104,10 +1154,9 @@ static void MOObject_initialize(JSContextRef ctx, JSObjectRef object) {
     CFRetain((__bridge CFTypeRef)private);
     
     if (class_isMetaClass(object_getClass([private representedObject]))) {
-        debug(@"inited a class object %@ - going to keep it protected", [private representedObject]);
-        JSValueProtect(ctx, [private JSObject]);
+        //debug(@"inited a local class object %@ - going to keep it protected %p", [private representedObject], object);
+//        JSValueProtect(ctx, [private JSObject]);
     }
-    
     
 }
 
@@ -1117,9 +1166,9 @@ static void MOObject_finalize(JSObjectRef object) {
     
     //debug(@"finalizing %@ o: %p", o, object);
     
-    if (class_isMetaClass(object_getClass(o))) {
-        // debug(@"Finalizing class method: %@", o);
-    }
+//    if (class_isMetaClass(object_getClass(o))) {
+//        debug(@"Finalizing local class: %@ %p", o, object);
+//    }
     
     // Give the object a chance to finalize itself
     if ([o respondsToSelector:@selector(finalizeForMochaScript)]) {
@@ -1273,7 +1322,6 @@ static JSValueRef MOBoxedObject_getProperty(JSContextRef ctx, JSObjectRef object
     NSString *propertyName = (NSString *)CFBridgingRelease(JSStringCopyCFString(NULL, propertyNameJS));
     
     Mocha *runtime = [Mocha runtimeWithContext:ctx];
-    
     
     id private = (__bridge id)(JSObjectGetPrivate(objectJS));
     id object = [private representedObject];

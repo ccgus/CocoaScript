@@ -33,8 +33,6 @@ static NSMutableDictionary *JSTSketchers = nil;
 
 + (id)codeSketcherWithName:(NSString*)name {
     
-    
-    
     if (!JSTSketchers) {
         JSTSketchers = [NSMutableDictionary dictionary];
     }
@@ -54,9 +52,6 @@ static NSMutableDictionary *JSTSketchers = nil;
     dispatch_async(dispatch_get_main_queue(),^ {
         [cs start];
     });
-    
-    debug(@"my class: %p", self);
-    debug(@"made cs: %@", cs);
     
     return cs;
 }
@@ -81,11 +76,6 @@ static NSMutableDictionary *JSTSketchers = nil;
 
 - (void)setDrawRect:(MOJavaScriptObject *)drawRect {
     _drawRect = drawRect;
-    
-    debug(@"drawRect: '%@'", drawRect);
-    
-    
-    
 }
 
 - (void)resizeContext {
