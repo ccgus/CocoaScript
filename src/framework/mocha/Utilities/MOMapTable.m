@@ -12,7 +12,7 @@
 // Note: This file must be compiled with the -fno-objc-arc compiler setting.
 //
 
-
+/*
 static const void * MOObjectRetain(CFAllocatorRef allocator, const void * value) {
     return (const void *)[(id)value retain];
 }
@@ -24,15 +24,21 @@ static void MOObjectRelease(CFAllocatorRef allocator, const void * value) {
 static CFStringRef MOObjectCopyDescription(const void * value) {
     return (CFStringRef)[[(id)value description] copy];
 }
+*/
 
+#pragma message "FIXME: Gus- check and see if kCFTypeDictionaryValueCallBacks.equal is still good with the DO stuff."
+/*
 static Boolean MOObjectEqual(const void * value1, const void * value2) {
     
-    if ([[(id)value1 class] isSubclassOfClass:[NSDistantObject class]]) {
+    
+    if ([(id)value1 isProxy]) {
         return NO;
     }
     
-    return (Boolean)[(id)value1 isEqual:(id)value2];
+    return CFEqual(value1, value2);
+    //return (Boolean)[(id)value1 isEqual:(id)value2];
 }
+*/
 
 static CFHashCode MOObjectHash(const void * value) {
     return (CFHashCode)[(id)value hash];
@@ -42,32 +48,32 @@ static CFHashCode MOObjectHash(const void * value) {
 @implementation MOMapTable
 
 + (MOMapTable *)mapTableWithStrongToStrongObjects {
-    CFDictionaryKeyCallBacks keyCallBacks = { 0, MOObjectRetain, MOObjectRelease, MOObjectCopyDescription, MOObjectEqual, MOObjectHash };
-    CFDictionaryValueCallBacks valueCallBacks = { 0, MOObjectRetain, MOObjectRelease, MOObjectCopyDescription, MOObjectEqual };
+    CFDictionaryKeyCallBacks keyCallBacks = { 0, kCFTypeDictionaryValueCallBacks.retain, kCFTypeDictionaryValueCallBacks.release, kCFTypeDictionaryValueCallBacks.copyDescription, kCFTypeDictionaryValueCallBacks.equal, MOObjectHash };
+    CFDictionaryValueCallBacks valueCallBacks = { 0, kCFTypeDictionaryValueCallBacks.retain, kCFTypeDictionaryValueCallBacks.release, kCFTypeDictionaryValueCallBacks.copyDescription, kCFTypeDictionaryValueCallBacks.equal };
     CFMutableDictionaryRef dictionary = CFDictionaryCreateMutable(NULL, 0, &keyCallBacks, &valueCallBacks);
     MOMapTable *mapTable = [[self alloc] initWithOwnedDictionary:dictionary];
 	return [mapTable autorelease];
 }
 
 + (MOMapTable *)mapTableWithStrongToUnretainedObjects {
-    CFDictionaryKeyCallBacks keyCallBacks = { 0, MOObjectRetain, MOObjectRelease, MOObjectCopyDescription, MOObjectEqual, MOObjectHash };
-    CFDictionaryValueCallBacks valueCallBacks = { 0, NULL, NULL, MOObjectCopyDescription, MOObjectEqual };
+    CFDictionaryKeyCallBacks keyCallBacks = { 0, kCFTypeDictionaryValueCallBacks.retain, kCFTypeDictionaryValueCallBacks.release, kCFTypeDictionaryValueCallBacks.copyDescription, kCFTypeDictionaryValueCallBacks.equal, MOObjectHash };
+    CFDictionaryValueCallBacks valueCallBacks = { 0, NULL, NULL, kCFTypeDictionaryValueCallBacks.copyDescription, kCFTypeDictionaryValueCallBacks.equal };
     CFMutableDictionaryRef dictionary = CFDictionaryCreateMutable(NULL, 0, &keyCallBacks, &valueCallBacks);
     MOMapTable *mapTable = [[self alloc] initWithOwnedDictionary:dictionary];
 	return [mapTable autorelease];
 }
 
 + (MOMapTable *)mapTableWithUnretainedToStrongObjects {
-    CFDictionaryKeyCallBacks keyCallBacks = { 0, NULL, NULL, MOObjectCopyDescription, MOObjectEqual, MOObjectHash };
-    CFDictionaryValueCallBacks valueCallBacks = { 0, MOObjectRetain, MOObjectRelease, MOObjectCopyDescription, MOObjectEqual };
+    CFDictionaryKeyCallBacks keyCallBacks = { 0, NULL, NULL, kCFTypeDictionaryValueCallBacks.copyDescription, kCFTypeDictionaryValueCallBacks.equal, MOObjectHash };
+    CFDictionaryValueCallBacks valueCallBacks = { 0, kCFTypeDictionaryValueCallBacks.retain, kCFTypeDictionaryValueCallBacks.release, kCFTypeDictionaryValueCallBacks.copyDescription, kCFTypeDictionaryValueCallBacks.equal };
     CFMutableDictionaryRef dictionary = CFDictionaryCreateMutable(NULL, 0, &keyCallBacks, &valueCallBacks);
     MOMapTable *mapTable = [[self alloc] initWithOwnedDictionary:dictionary];
 	return [mapTable autorelease];
 }
 
 + (MOMapTable *)mapTableWithUnretainedToUnretainedObjects {
-    CFDictionaryKeyCallBacks keyCallBacks = { 0, NULL, NULL, MOObjectCopyDescription, MOObjectEqual, MOObjectHash };
-    CFDictionaryValueCallBacks valueCallBacks = { 0, NULL, NULL, MOObjectCopyDescription, MOObjectEqual };
+    CFDictionaryKeyCallBacks keyCallBacks = { 0, NULL, NULL, kCFTypeDictionaryValueCallBacks.copyDescription, kCFTypeDictionaryValueCallBacks.equal, MOObjectHash };
+    CFDictionaryValueCallBacks valueCallBacks = { 0, NULL, NULL, kCFTypeDictionaryValueCallBacks.copyDescription, kCFTypeDictionaryValueCallBacks.equal };
     CFMutableDictionaryRef dictionary = CFDictionaryCreateMutable(NULL, 0, &keyCallBacks, &valueCallBacks);
     MOMapTable *mapTable = [[self alloc] initWithOwnedDictionary:dictionary];
 	return [mapTable autorelease];
