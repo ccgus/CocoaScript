@@ -2,6 +2,8 @@
 This a sample on how to use the COSCodeSketcher class, which add experimental processing.org like functionality to Cocoa Script.
 */
 
+coscript.shouldKeepAround = true;
+
 var sketcher = [COSCodeSketcher codeSketcherWithName:"Bezier"];
 [sketcher setFlipped:false];
 
@@ -96,3 +98,4 @@ sketcher.mouseDragged = function(event) {
     }
 };
 
+[sketcher setFrameRate:30]
