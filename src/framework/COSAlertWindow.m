@@ -37,6 +37,22 @@
     [_views addObject:view];
 }
 
+- (void)addTextLabelWithValue:(NSString*)value {
+    
+    NSTextField *tf = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 300, 16)];
+    
+    [tf setDrawsBackground:NO];
+    [tf setEditable:NO];
+    [tf setBezeled:NO];
+    [tf setSelectable:YES];
+    
+    if (value) {
+        [tf setStringValue:value];
+    }
+    
+    [self addAccessoryView:tf];
+}
+
 - (void)addTextFieldWithValue:(NSString*)value {
     
     NSTextField *tf = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 300, 24)];
@@ -49,8 +65,17 @@
 }
 
 - (NSString*)viewAtIndex:(NSUInteger)idx {
+    
+    if (idx >= [_views count]) {
+        NSBeep();
+        NSLog(@"Asking for index %ld when we only go up to %ld", idx, [_views count] -1);
+        return nil;
+    }
+
+
     return [_views objectAtIndex:idx];
 }
+
 
 - (void)layout {
     
