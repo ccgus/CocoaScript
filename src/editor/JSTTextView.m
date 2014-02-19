@@ -11,6 +11,7 @@
 #import "TDParseKit.h"
 #import "NoodleLineNumberView.h"
 #import "TETextUtils.h"
+#import <Carbon/Carbon.h>
 
 static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 
@@ -639,6 +640,13 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 #pragma mark - NSResponder methods
 
 - (void)mouseMoved:(NSEvent *)theEvent {
+    
+    // only do this if only the command key is down.
+    if ((GetCurrentKeyModifiers() != cmdKey)) {
+        [super mouseMoved:theEvent];
+        return;
+    }
+    
     [[self textStorage] removeAttribute:NSBackgroundColorAttributeName range:self.currentlyHighlightedRange];
     NSUInteger character = [self characterIndexForPoint:[NSEvent mouseLocation]];
     
@@ -668,6 +676,11 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
         return;
     }
     
+    if ((GetCurrentKeyModifiers() != cmdKey)) {
+        [super mouseDown:theEvent];
+        return;
+    }
+    
     self.initialDragPoint = [NSEvent mouseLocation];
     NSString *initialString = [[self string] substringWithRange:self.currentlyHighlightedRange];
     self.initialNumber = [self numberFromString:initialString];
@@ -685,6 +698,12 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
     
     // Skip it if we're not currently dragging a number
     if (self.currentlyHighlightedRange.location == NSNotFound) {
+        [super mouseDragged:theEvent];
+        return;
+    }
+    
+    
+    if ((GetCurrentKeyModifiers() != cmdKey)) {
         [super mouseDragged:theEvent];
         return;
     }
@@ -725,6 +744,11 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 - (void)mouseUp:(NSEvent *)theEvent {
     // Skip it if we're not currently dragging a word
     if (self.currentlyHighlightedRange.location == NSNotFound) {
+        [super mouseUp:theEvent];
+        return;
+    }
+    
+    if ((GetCurrentKeyModifiers() != cmdKey)) {
         [super mouseUp:theEvent];
         return;
     }

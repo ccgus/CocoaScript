@@ -35,13 +35,41 @@
 
  */
 
+@interface CIKernel (ApplePrivate)
++ (NSArray *)kernelsWithString:(NSString *)s messageLog:(NSMutableArray*)a;
+@end
+
 @implementation COSQuickCIFilter
 
 + (id)quickFilterWithKernel:(NSString*)kernel {
     
     COSQuickCIFilter *f = [COSQuickCIFilter new];
     
-    [f setTheKernel:[[CIKernel kernelsWithString:kernel] objectAtIndex:0]];
+    NSMutableArray *messageLog = nil;
+    NSArray *kerns = nil;
+    
+    if ([[CIKernel class] respondsToSelector:@selector(kernelsWithString:messageLog:)]) {
+        messageLog = [NSMutableArray array];
+        kerns = [CIKernel kernelsWithString:kernel messageLog:messageLog];
+    }
+    else {
+        kerns = [CIKernel kernelsWithString:kernel];
+    }
+    
+    if ([messageLog count]) {
+        
+        COScript *cos = [COScript currentCOScript];
+        
+        for (NSDictionary *d in messageLog) {
+            [cos print:[d description]];
+        }
+    }
+    
+    if (![kerns count]) {
+        return nil;
+    }
+    
+    [f setTheKernel:[kerns firstObject]];
     [f setKernelArgs:[NSMutableArray array]];
     return f;
 }

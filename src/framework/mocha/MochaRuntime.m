@@ -233,6 +233,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     //[self cleanUp];
     
     if (_ctx) {
+        debug(@"releasing _ctx");
         JSGlobalContextRelease(_ctx);
     }
 }
@@ -544,8 +545,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 
 - (BOOL)removeObjectWithName:(NSString *)name {
     JSValueRef exception = NULL;
-    
-    debug(@"removing: '%@'", name);
     
     // Delete
     JSStringRef jsName = JSStringCreateWithUTF8CString([name UTF8String]);
@@ -903,7 +902,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     
     [self removeObjectWithName:@"__mocha__"];
     
-    
+    debug(@"shutting down.");
     JSGlobalContextRelease(_ctx);
     
     _ctx = nil;

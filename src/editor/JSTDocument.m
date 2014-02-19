@@ -171,28 +171,30 @@
 
 - (void)runScript:(NSString*)s {
     
+    _shouldCleanupAfterRun = YES;
+    
+    COScript *jstalk = [[COScript alloc] init];
+    
+    [[[NSThread currentThread] threadDictionary] setObject:jstalk forKey:@"org.jstalk.currentJSTalkContext"];
+    
+    [jstalk setPrintController:self];
+    [jstalk setErrorController:self];
+    
+    [errorLabel setStringValue:@""];
+    
+    if ([self fileURL]) {
+        [[jstalk env] setObject:[self fileURL] forKey:@"scriptURL"];
+    }
+    
+    [[jstalk env] setObject:self forKey:@"document"];
+    
+    if ([JSTPrefs boolForKey:@"clearConsoleOnRun"]) {
+        [self clearConsole:nil];
+    }
+    
+    
+    
     @autoreleasepool {
-        
-        _shouldCleanupAfterRun = YES;
-        
-        COScript *jstalk = [[COScript alloc] init];
-        
-        [[[NSThread currentThread] threadDictionary] setObject:jstalk forKey:@"org.jstalk.currentJSTalkContext"];
-        
-        [jstalk setPrintController:self];
-        [jstalk setErrorController:self];
-        
-        [errorLabel setStringValue:@""];
-        
-        if ([self fileURL]) {
-            [[jstalk env] setObject:[self fileURL] forKey:@"scriptURL"];
-        }
-        
-        [[jstalk env] setObject:self forKey:@"document"];
-        
-        if ([JSTPrefs boolForKey:@"clearConsoleOnRun"]) {
-            [self clearConsole:nil];
-        }
         
         id result = [jstalk executeString:s];
         
@@ -205,11 +207,12 @@
         if ([jstalk hasFunctionNamed:@"main"]) {
             [jstalk callFunctionNamed:@"main" withArguments:nil];
         }
-        
-        if (![jstalk shouldKeepAround]) {
-            [jstalk cleanup];
-        }
     }
+    
+    if (![jstalk shouldKeepAround]) {
+        [jstalk cleanup];
+    }
+    
 }
 
 

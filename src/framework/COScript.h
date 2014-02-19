@@ -31,6 +31,7 @@
 - (id)executeString:(NSString*) str;
 - (void)pushObject:(id)obj withName:(NSString*)name;
 - (void)deleteObjectWithName:(NSString*)name;
+- (void)print:(NSString*)s;
 
 - (JSGlobalContextRef)context;
 - (id)callFunctionNamed:(NSString*)name withArguments:(NSArray*)args;

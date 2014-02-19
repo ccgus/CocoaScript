@@ -39,8 +39,6 @@
         return;
     }
     
-    debug(@"removing %@", interval);
-    
     [_intervals removeObject:interval];
 }
 

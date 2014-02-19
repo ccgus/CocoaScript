@@ -31,7 +31,7 @@ static NSMutableArray *JSTalkPluginList;
 @end
 
 @interface COScript (Private)
-- (void) print:(NSString*)s;
+
 @end
 
 
