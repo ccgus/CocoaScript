@@ -20,6 +20,7 @@ DerivedData
 *.hmap
 *.xccheckout
 *.xcuserstate
+*.xcscheme
 Cocoa Script.xcodeproj/xcuserdata/*
 
 # CocoaPods
