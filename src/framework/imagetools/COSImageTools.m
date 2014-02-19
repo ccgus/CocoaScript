@@ -224,6 +224,9 @@ static BOOL JSTImageToolsCISWRender = NO;
 + (void)setShouldUseCISofwareRenderer:(BOOL)b {
     JSTImageToolsCISWRender = b;
 }
++ (void)setShouldUseCICPURenderer:(BOOL)b {
+    [self setShouldUseCISofwareRenderer:b];;
+}
 
 
 + (NSString*)pathOfImageNamed:(NSString*)imageName {

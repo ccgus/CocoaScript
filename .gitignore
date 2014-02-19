@@ -20,7 +20,8 @@ DerivedData
 *.hmap
 *.xccheckout
 *.xcuserstate
+Cocoa Script.xcodeproj/xcuserdata/*
 
 # CocoaPods
 Pods
-Cocoa Script.xcodeproj/xcuserdata/gus.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+
