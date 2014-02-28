@@ -45,7 +45,10 @@ do
         esac
 done
 
-
+function signPath {
+    echo "Developer ID sign $1"
+    /usr/bin/codesign -f -s "Developer ID Application: Flying Meat Inc." "$1"
+}
 
 
 if [ "$echoversion" != "" ]; then
@@ -121,8 +124,8 @@ buildTarget "Cocoa Script Editor"
 
 cd /tmp/coscript/build/Release/
 
-#mkdir -p /tmp/coscript/build/Release/Cocoa\ Script\ Editor.app/Contents/Library/Automator
-mv /tmp/coscript/build/Release/JSTalk.action /tmp/coscript/build/Release/Cocoa\ Script\ Editor.app/Contents/Library/Automator/.
+# mkdir -p /tmp/coscript/build/Release/Cocoa\ Script\ Editor.app/Contents/Library/Automator
+# mv /tmp/coscript/build/Release/JSTalk.action /tmp/coscript/build/Release/Cocoa\ Script\ Editor.app/Contents/Library/Automator/.
 
 if [ ! -d  ~/cvsbuilds ]; then
     mkdir ~/cvsbuilds
@@ -139,8 +142,8 @@ mv "Cocoa Script Editor.app" CocoaScriptFoo/.
 #cp -R /tmp/coscript/example_scripts CocoaScriptFoo/examples
 #cp -R /tmp/coscript/plugins/sqlite-fmdb-jstplugin/fmdb.jstalk CocoaScriptFoo/examples/.
 
-mkdir CocoaScriptFoo/plugins
-mkdir -p CocoaScriptFoo/Cocoa\ Script\ Editor.app/Contents/PlugIns
+#mkdir CocoaScriptFoo/plugins
+#mkdir -p CocoaScriptFoo/Cocoa\ Script\ Editor.app/Contents/PlugIns
 
 # cp -r JSTalk.acplugin       CocoaScriptFoo/plugins/.
 # cp -r JSTalk.vpplugin       CocoaScriptFoo/plugins/.
@@ -154,6 +157,10 @@ mv CocoaScriptFoo CocoaScript
 mv CocoaScript ~/cvsbuilds/.
 
 cd ~/cvsbuilds
+
+signPath CocoaScript/Cocoa\ Script\ Editor.app/Contents/Frameworks/CocoaScript.framework
+signPath CocoaScript/Cocoa\ Script\ Editor.app
+
 
 ditto -c -k --sequesterRsrc --keepParent CocoaScript CocoaScript.zip
 
