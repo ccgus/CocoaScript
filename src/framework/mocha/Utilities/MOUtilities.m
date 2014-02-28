@@ -86,6 +86,9 @@ JSValueRef MOSelectorInvoke(id target, SEL selector, JSContextRef ctx, size_t ar
     
     NSMethodSignature *methodSignature = [target methodSignatureForSelector:selector];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
+    
+    [invocation retainArguments]; // need to do this for release builds, because it seems ARC likes to let go of our strings early otherwise.
+    
     [invocation setTarget:target];
     [invocation setSelector:selector];
     
