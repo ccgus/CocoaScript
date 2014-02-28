@@ -15,8 +15,6 @@
 
 @implementation COSListener
 
-@synthesize rootObject=_rootObject;
-
 + (id)sharedListener {
     static COSListener *me = nil;
     if (!me) {

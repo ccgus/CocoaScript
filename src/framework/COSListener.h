@@ -15,11 +15,9 @@
     
     NSConnection *_conn;
     
-    __unsafe_unretained id _rootObject;
-    
 }
 
-@property (assign) id rootObject;
+@property (weak) id rootObject;
 
 + (COSListener*)sharedListener;
 

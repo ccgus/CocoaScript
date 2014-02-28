@@ -125,7 +125,7 @@
     SetFrontProcess( &xpsn );
 }
 
-- (NSInteger)displayDialog:(NSString*)msg withTitle:(NSString*) title {
+- (NSInteger)displayDialog:(NSString*)msg withTitle:(NSString*)title {
     
     NSAlert *alert = [NSAlert alertWithMessageText:title defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"%@", msg];
     

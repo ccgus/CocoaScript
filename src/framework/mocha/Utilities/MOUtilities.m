@@ -102,14 +102,16 @@ JSValueRef MOSelectorInvoke(id target, SEL selector, JSContextRef ctx, size_t ar
     // Build arguments
     for (size_t i=0; i<argumentCount; i++) {
         JSValueRef argument = arguments[i];
-        __unsafe_unretained id object = [runtime objectForJSValue:argument unboxObjects:NO];
+        id object = [runtime objectForJSValue:argument unboxObjects:NO];
         
         NSUInteger argIndex = i + 2;
         const char * argType = [methodSignature getArgumentTypeAtIndex:argIndex];
         
+        debug(@"argIndex: %ld", argIndex);
+        
         // MOBox
         if ([object isKindOfClass:[MOBox class]]) {
-            __unsafe_unretained id value = [object representedObject];
+            id value = [object representedObject];
             [invocation setArgument:&value atIndex:argIndex];
         }
         
@@ -183,7 +185,7 @@ JSValueRef MOSelectorInvoke(id target, SEL selector, JSContextRef ctx, size_t ar
     // id
     else if (strcmp(returnType, @encode(id)) == 0
              || strcmp(returnType, @encode(Class)) == 0) {
-        __unsafe_unretained id object = nil;
+        id object = nil;
         [invocation getReturnValue:&object];
         returnValue = [runtime JSValueForObject:object];
     }
@@ -279,6 +281,8 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
     id block = nil;
     
     #pragma message "FIXME: Check to see if function is nil or not."
+    
+    NSLog(@"function: %@", function);
     
     // Determine the metadata for the function call
     if ([function isKindOfClass:[MOMethod class]]) {
