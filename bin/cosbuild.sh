@@ -137,6 +137,8 @@ mkdir CocoaScriptFoo
 mv coscript CocoaScriptFoo/.
 mv "Cocoa Script Editor.app" CocoaScriptFoo/.
 
+mv /tmp/coscript/examples CocoaScriptFoo/.
+
 # I do a cp here, since I rely on this framework being here for other builds...
 #cp -R JSTalk.framework CocoaScriptFoo/.
 #cp -R /tmp/coscript/example_scripts CocoaScriptFoo/examples
