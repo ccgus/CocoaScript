@@ -77,6 +77,8 @@ static NSMutableArray *JSTalkPluginList;
 - (void)cleanup {
     [self deleteObjectWithName:@"jstalk"];
     [self deleteObjectWithName:@"coscript"];
+    [self deleteObjectWithName:@"print"];
+    [self deleteObjectWithName:@"log"];
     
     [_mochaRuntime shutdown];
     
@@ -103,6 +105,7 @@ static NSMutableArray *JSTalkPluginList;
     
     [_mochaRuntime evalString:@"var nil=null;\n"];
     [_mochaRuntime setValue:[MOMethod methodWithTarget:self selector:@selector(print:)] forKey:@"print"];
+    [_mochaRuntime setValue:[MOMethod methodWithTarget:self selector:@selector(print:)] forKey:@"log"];
     
     [_mochaRuntime loadFrameworkWithName:@"AppKit"];
     [_mochaRuntime loadFrameworkWithName:@"Foundation"];
