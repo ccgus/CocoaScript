@@ -12,6 +12,9 @@
 
 #import <objc/runtime.h>
 
+@interface NSObject(DeclaredToKeepTheCompilerHappy)
++ (MOClassDescription *)mocha;
+@end
 
 @implementation NSObject (MochaAdditions)
 
