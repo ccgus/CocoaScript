@@ -273,7 +273,6 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
     BOOL objCCall = NO;
     BOOL blockCall = NO;
     NSMutableArray *argumentEncodings = nil;
-    MOFunctionArgument *returnValue = nil;
     void* callAddress = NULL;
     NSUInteger callAddressArgumentCount = 0;
     BOOL variadic = NO;
@@ -549,8 +548,8 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
                     [arg setPointer:object];
                     
                     id objValue = [(MOPointer *)object value];
-                    JSValueRef jsValue = [runtime JSValueForObject:objValue];
-                    [arg setValueAsJSValue:jsValue context:ctx dereference:YES];
+                    JSValueRef objJSValue = [runtime JSValueForObject:objValue];
+                    [arg setValueAsJSValue:objJSValue context:ctx dereference:YES];
                 }
                 else {
                     [arg setValueAsJSValue:jsValue context:ctx];
@@ -566,7 +565,7 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
     }
     
     // Get return value holder
-    returnValue = [argumentEncodings objectAtIndex:0];
+    MOFunctionArgument *returnValue = [argumentEncodings objectAtIndex:0];
     
     // Prep
     ffi_status prep_status = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (unsigned int)effectiveArgumentCount, [returnValue ffiType], args);
@@ -609,8 +608,8 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
     for (MOFunctionArgument *arg in argumentEncodings) {
         if ([arg pointer] != nil) {
             MOPointer *pointer = [arg pointer];
-            JSValueRef value = [arg getValueAsJSValueInContext:ctx dereference:YES];
-            id object = [runtime objectForJSValue:value];
+            JSValueRef contextValue = [arg getValueAsJSValueInContext:ctx dereference:YES];
+            id object = [runtime objectForJSValue:contextValue];
             pointer.value = object;
         }
     }
@@ -880,10 +879,10 @@ NSString * MOPropertyNameToSetterName(NSString *propertyName) {
 typedef id (^MOJavaScriptClosureBlock)(id obj, ...);
 
 id MOGetBlockForJavaScriptFunction(MOJavaScriptObject *function, NSUInteger *argCount) {
-    JSObjectRef jsFunction = [function JSObject];
-    JSContextRef ctx = [function JSContext];
-    
+
     if (argCount != NULL) {
+        JSObjectRef jsFunction = [function JSObject];
+        JSContextRef ctx = [function JSContext];
         JSStringRef lengthString = JSStringCreateWithCFString(CFSTR("length"));
         JSValueRef value = JSObjectGetProperty(ctx, jsFunction, lengthString, NULL);
         JSStringRelease(lengthString);
@@ -901,7 +900,7 @@ id MOGetBlockForJavaScriptFunction(MOJavaScriptObject *function, NSUInteger *arg
         JSValueRef value = JSObjectGetProperty(ctx, jsFunction, lengthString, NULL);
         JSStringRelease(lengthString);
         
-        NSUInteger argCount = (NSUInteger)JSValueToNumber(ctx, value, NULL);
+        NSUInteger functionArgCount = (NSUInteger)JSValueToNumber(ctx, value, NULL);
         
         JSValueRef exception = NULL;
         
@@ -916,17 +915,17 @@ id MOGetBlockForJavaScriptFunction(MOJavaScriptObject *function, NSUInteger *arg
             return nil;
         }
         
-        JSValueRef *jsArguments = (JSValueRef *)malloc(sizeof(JSValueRef) * (argCount - 1));
+        JSValueRef *jsArguments = (JSValueRef *)malloc(sizeof(JSValueRef) * (functionArgCount - 1));
         
         // Handle passed arguments
-        for (NSUInteger i=0; i<argCount; i++) {
+        for (NSUInteger i=0; i<functionArgCount; i++) {
             arg = va_arg(args, id);
             jsArguments[i] = [runtime JSValueForObject:arg];
         }
         
         va_end(args);
         
-        JSValueRef jsReturnValue = JSObjectCallAsFunction(ctx, jsFunction, jsObject, argCount, jsArguments, &exception);
+        JSValueRef jsReturnValue = JSObjectCallAsFunction(ctx, jsFunction, jsObject, functionArgCount, jsArguments, &exception);
         id returnValue = [runtime objectForJSValue:jsReturnValue];
         
         if (jsArguments != NULL) {

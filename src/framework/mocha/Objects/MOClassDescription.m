@@ -305,44 +305,44 @@
             objc_property_attribute_t * attributes = property_copyAttributeList(property, &attributeCount);
             
             if (attributes != NULL) {
-                for (NSUInteger i=0; i<attributeCount; i++) {
-                    objc_property_attribute_t attribute = attributes[i];
-                    const char *name = attribute.name;
+                for (NSUInteger ai=0; ai<attributeCount; ai++) {
+                    objc_property_attribute_t attribute = attributes[ai];
+                    const char *attributeName = attribute.name;
                     const char *value = attribute.value;
                     
-                    if (strcmp(name, "R") == 0) {
+                    if (strcmp(attributeName, "R") == 0) {
                         propertyDesc.readOnly = YES;
                     }
-                    else if (strcmp(name, "C") == 0) {
+                    else if (strcmp(attributeName, "C") == 0) {
                         propertyDesc.ownershipRule = MOObjCOwnershipRuleCopy;
                     }
-                    else if (strcmp(name, "&") == 0) {
+                    else if (strcmp(attributeName, "&") == 0) {
                         propertyDesc.ownershipRule = MOObjCOwnershipRuleRetain;
                     }
-                    else if (strcmp(name, "N") == 0) {
+                    else if (strcmp(attributeName, "N") == 0) {
                         propertyDesc.nonAtomic = YES;
                     }
-                    else if (strcmp(name, "D") == 0) {
+                    else if (strcmp(attributeName, "D") == 0) {
                         propertyDesc.dynamic = YES;
                     }
-                    else if (strcmp(name, "W") == 0) {
+                    else if (strcmp(attributeName, "W") == 0) {
                         propertyDesc.weak = YES;
                     }
-                    else if (strcmp(name, "G") == 0) {
+                    else if (strcmp(attributeName, "G") == 0) {
                         NSString *selectorName = [NSString stringWithUTF8String:value];
                         SEL selector = NSSelectorFromString(selectorName);
                         propertyDesc.getterSelector = selector;
                     }
-                    else if (strcmp(name, "S") == 0) {
+                    else if (strcmp(attributeName, "S") == 0) {
                         NSString *selectorName = [NSString stringWithUTF8String:value];
                         SEL selector = NSSelectorFromString(selectorName);
                         propertyDesc.getterSelector = selector;
                     }
-                    else if (strcmp(name, "T") == 0) {
+                    else if (strcmp(attributeName, "T") == 0) {
                         NSString *typeEncoding = [NSString stringWithUTF8String:value];
                         propertyDesc.typeEncoding = typeEncoding;
                     }
-                    else if (strcmp(name, "V") == 0) {
+                    else if (strcmp(attributeName, "V") == 0) {
                         NSString *variableName = [NSString stringWithUTF8String:value];
                         propertyDesc.ivarName = variableName;
                     }
