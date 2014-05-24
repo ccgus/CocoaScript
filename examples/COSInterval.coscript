@@ -1,3 +1,5 @@
+[coscript setShouldKeepAround:true];
+
 var cosi = [coscript scheduleWithInterval:1 jsFunction:function(cinterval) {
     print("hi!");
 }];
