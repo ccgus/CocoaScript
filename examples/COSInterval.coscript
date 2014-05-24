@@ -1,3 +1,5 @@
+// NOTE: This example only works in the CocoaScript Editor.
+
 [coscript setShouldKeepAround:true];
 
 var cosi = [coscript scheduleWithInterval:1 jsFunction:function(cinterval) {
