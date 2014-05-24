@@ -35,6 +35,10 @@
 
  */
 
+@protocol ROISelector
+- (CGRect)regionOf:(int)samplerIndex destRect:(CGRect)r userInfo:obj;
+@end
+
 @interface CIKernel (ApplePrivate)
 + (NSArray *)kernelsWithString:(NSString *)s messageLog:(NSMutableArray*)a;
 @end
