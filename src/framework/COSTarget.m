@@ -9,6 +9,11 @@
 #import "COSTarget.h"
 #import <objc/runtime.h>
 
+@interface COSTarget ()
+
+@property (weak) COScript *cosContext;
+@end
+
 @implementation COSTarget
 
 + (instancetype)targetWithJSFunction:(MOJavaScriptObject *)jsFunction {
@@ -19,18 +24,24 @@
 	self = [super init];
 	if (self != nil) {
 		[self setJsFunction:jsFunction];
+        
+        [self setCosContext:[COScript currentCOScript]];
+        
 	}
     
     return self;
 }
 
 - (void)callAction:(id)sender {
+    
+    if (!_cosContext) {
+        NSLog(@"%s:%d", __FUNCTION__, __LINE__);
+        NSLog(@"_cosContext is nil when calling.  Did it dealloc or was it never set?");
+    }
+    
     JSObjectRef actionRef = [[self jsFunction] JSObject];
     
-    #pragma message "FIXME: we should stash a weak ref to the COScript at creation time, because who knows what other COScript might be around"
-    
-    COScript *script = [COScript currentCOScript];
-    [script callJSFunction:actionRef withArgumentsInArray:@[sender]];
+    [_cosContext callJSFunction:actionRef withArgumentsInArray:@[sender]];
 }
 
 - (SEL)action {

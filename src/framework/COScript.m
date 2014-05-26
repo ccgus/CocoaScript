@@ -247,6 +247,8 @@ static NSMutableArray *JSTalkPluginList;
 
 NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 
+#pragma message "FIXME: Change currentCOScript and friends to use a stack in the thread dictionary, instead of just overwriting what might already be there."
+
 + (COScript*)currentCOScript {
     return [[[NSThread currentThread] threadDictionary] objectForKey:currentCOScriptThreadIdentifier];
 }
