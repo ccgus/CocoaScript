@@ -902,7 +902,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     
     [self removeObjectWithName:@"__mocha__"];
     
-    debug(@"shutting down.");
+    debug(@"shutting down & releasing %p.", _ctx);
     JSGlobalContextRelease(_ctx);
     
     _ctx = nil;
