@@ -1087,9 +1087,9 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
             }
             
             // Grab symbol
-            void *symbol = dlsym(RTLD_DEFAULT, [propertyName UTF8String]);
-            if (!symbol) {
-                NSException *e = [NSException exceptionWithName:MORuntimeException reason:[NSString stringWithFormat:@"Symbol not found: %@", symbol] userInfo:nil];
+            void *dlsymbol = dlsym(RTLD_DEFAULT, [propertyName UTF8String]);
+            if (!dlsymbol) {
+                NSException *e = [NSException exceptionWithName:MORuntimeException reason:[NSString stringWithFormat:@"Symbol not found: %@", dlsymbol] userInfo:nil];
                 if (exception != NULL) {
                     *exception = [runtime JSValueForObject:e];
                 }
@@ -1100,18 +1100,18 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
             MOFunctionArgument *argument = [[MOFunctionArgument alloc] init];
             
             if (typeEncodingChar == _C_STRUCT_B) {
-                [argument setStructureTypeEncoding:type withCustomStorage:symbol];
+                [argument setStructureTypeEncoding:type withCustomStorage:dlsymbol];
             }
             else if (typeEncodingChar == _C_PTR) {
                 if ([type isEqualToString:@"^{__CFString=}"]) {
-                    [argument setTypeEncoding:_C_ID withCustomStorage:symbol];
+                    [argument setTypeEncoding:_C_ID withCustomStorage:dlsymbol];
                 }
                 else {
-                    [argument setPointerTypeEncoding:type withCustomStorage:symbol];
+                    [argument setPointerTypeEncoding:type withCustomStorage:dlsymbol];
                 }
             }
             else {
-                [argument setTypeEncoding:typeEncodingChar withCustomStorage:symbol];
+                [argument setTypeEncoding:typeEncodingChar withCustomStorage:dlsymbol];
             }
             
             JSValueRef valueJS = [argument getValueAsJSValueInContext:ctx];
@@ -1408,20 +1408,20 @@ static JSValueRef MOBoxedObject_getProperty(JSContextRef ctx, JSObjectRef object
         // Property
         objc_property_t property = class_getProperty(objectClass, [propertyName UTF8String]);
         if (property != NULL) {
-            SEL selector = NULL;
+            SEL getterSelector = NULL;
             char * getterValue = property_copyAttributeValue(property, "G");
             if (getterValue != NULL) {
-                selector = NSSelectorFromString([NSString stringWithUTF8String:getterValue]);
+                getterSelector = NSSelectorFromString([NSString stringWithUTF8String:getterValue]);
                 free(getterValue);
             }
             else {
-                selector = NSSelectorFromString(propertyName);
+                getterSelector = NSSelectorFromString(propertyName);
             }
             
-            if ([object respondsToSelector:selector] && ![objectClass isSelectorExcludedFromMochaScript:selector]) {
+            if ([object respondsToSelector:getterSelector] && ![objectClass isSelectorExcludedFromMochaScript:getterSelector]) {
                 MOMethod *method = [MOMethod methodWithTarget:object selector:selector];
-                JSValueRef value = MOFunctionInvoke(method, ctx, 0, NULL, exception);
-                return value;
+                JSValueRef invocationValue = MOFunctionInvoke(method, ctx, 0, NULL, exception);
+                return invocationValue;
             }
         }
         
@@ -1430,18 +1430,18 @@ static JSValueRef MOBoxedObject_getProperty(JSContextRef ctx, JSObjectRef object
             NSScanner *scanner = [NSScanner scannerWithString:propertyName];
             NSInteger integerValue;
             if ([scanner scanInteger:&integerValue]) {
-                id value = [object objectForIndexedSubscript:integerValue];
-                if (value != nil) {
-                    return [runtime JSValueForObject:value];
+                id indexedValue = [object objectForIndexedSubscript:integerValue];
+                if (indexedValue != nil) {
+                    return [runtime JSValueForObject:indexedValue];
                 }
             }
         }
         
         // Keyed subscript
         if ([object respondsToSelector:@selector(objectForKeyedSubscript:)]) {
-            id value = [object objectForKeyedSubscript:propertyName];
-            if (value != nil) {
-                return [runtime JSValueForObject:value];
+            id subscriptValue = [object objectForKeyedSubscript:propertyName];
+            if (subscriptValue != nil) {
+                return [runtime JSValueForObject:subscriptValue];
             }
             else {
                 return JSValueMakeNull(ctx);
