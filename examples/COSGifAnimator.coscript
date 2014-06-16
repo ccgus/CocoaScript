@@ -1,0 +1,19 @@
+var gifer =  [COSGifAnimator new];
+
+[gifer setFps:30];
+[gifer setSeconds:10];
+[gifer setSize:NSMakeSize(300, 300)];
+
+[gifer drawInBlock:function(t) {
+    
+    t *= 10;
+    
+    var r = NSMakeRect(t, t, t*2, t*2);
+    var b = [NSBezierPath bezierPathWithOvalInRect:r];
+    
+    [[NSColor blackColor] set]
+    [b fill];
+    
+}];
+
+[coscript system:"Open -a Safari /tmp/foo.gif")]
