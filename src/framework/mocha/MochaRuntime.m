@@ -568,6 +568,15 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     return [self objectForJSValue:jsValue];
 }
 
+- (id)evalString:(NSString *)string atURL:(NSURL *)url {
+    NSString* name = url ? [[url lastPathComponent] stringByDeletingPathExtension] : @"Untitled Script";
+    JSStringRef jsName = JSStringCreateWithUTF8CString([name UTF8String]);
+    JSGlobalContextSetName(_ctx, jsName);
+    JSStringRelease(jsName);
+    JSValueRef jsValue = [self evalJSString:string scriptPath:[url path]];
+    return [self objectForJSValue:jsValue];
+}
+
 - (JSValueRef)evalJSString:(NSString *)string {
     return [self evalJSString:string scriptPath:nil];
 }
