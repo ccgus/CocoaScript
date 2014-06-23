@@ -44,7 +44,7 @@ void COScriptDebug(NSString* format, ...) {
     if (CODebugController == nil) {
         NSLogv(format, args);
     } else {
-        [CODebugController debug:format args:args];
+        [CODebugController output:format args:args];
     }
 
     va_end(args);
