@@ -17,11 +17,15 @@
 #import "MOUndefined.h"
 #import "MOBridgeSupportController.h"
 
+#import <stdarg.h>
+
 extern int *_NSGetArgc(void);
 extern char ***_NSGetArgv(void);
 
 static BOOL JSTalkShouldLoadJSTPlugins = YES;
 static NSMutableArray *JSTalkPluginList;
+
+static id<CODebugController> CODebugController = nil;
 
 @interface Mocha (Private)
 - (JSValueRef)setObject:(id)object withName:(NSString *)name;
@@ -34,8 +38,25 @@ static NSMutableArray *JSTalkPluginList;
 
 @end
 
+void COScriptDebug(NSString* format, ...) {
+    va_list args;
+    va_start(args, format);
+    if (CODebugController == nil) {
+        NSLogv(format, args);
+    } else {
+        [CODebugController debug:format args:args];
+    }
+
+    va_end(args);
+}
 
 @implementation COScript
+
++ (id)setDebugController:(id)debugController {
+    id oldController = CODebugController;
+    CODebugController = debugController;
+    return oldController;
+}
 
 + (void)listen {
     [COSListener listen];
