@@ -14,7 +14,7 @@
 
 
 @protocol CODebugController
-- (void)debug:(NSString*)format args:(va_list)args;
+- (void)output:(NSString*)format args:(va_list)args;
 @end
 
 @interface COScript : NSObject {
