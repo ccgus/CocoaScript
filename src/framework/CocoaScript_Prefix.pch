@@ -9,7 +9,8 @@
 #endif
 
 #ifdef DEBUG
-    #define debug(...) NSLog(__VA_ARGS__)
+    extern void COScriptDebug(NSString* format, ...) NS_FORMAT_FUNCTION(1,2);
+    #define debug(...) COScriptDebug
 #else
     #define debug(...)
 #endif

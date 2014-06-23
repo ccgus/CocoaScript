@@ -12,6 +12,11 @@
 @class Mocha;
 @class COScript;
 
+
+@protocol CODebugController
+- (void)debug:(NSString*)format args:(va_list)args;
+@end
+
 @interface COScript : NSObject {
     
     Mocha *_mochaRuntime;
@@ -24,7 +29,6 @@
 @property (retain) NSMutableDictionary *env;
 @property (assign) BOOL shouldPreprocess;
 @property (assign) BOOL shouldKeepAround;
-
 
 - (void)cleanup;
 - (void)garbageCollect;
@@ -47,6 +51,8 @@
 + (id)application:(NSString*)app;
 + (id)app:(NSString*)app;
 + (COScript*)currentCOScript;
+
++ (id)setDebugController:(id<CODebugController>)debugController;
 
 @end
 
