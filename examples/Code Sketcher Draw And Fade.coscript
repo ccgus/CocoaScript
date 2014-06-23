@@ -41,3 +41,4 @@ sketcher.mouseDragged = function() {
 
 
 [sketcher setFrameRate:30]
+[sketcher start];

@@ -14,6 +14,8 @@
 		CC0EC32A0F226F550094F69D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0EC3280F226F550094F69D /* ScriptingBridge.framework */; };
 		CC1323850F24FF9D0032FEB8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1323840F24FF9D0032FEB8 /* Carbon.framework */; };
 		CC1324300F2504F00032FEB8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1323840F24FF9D0032FEB8 /* Carbon.framework */; };
+		CC16652E193B989500F7364A /* COSGifAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = CC16652C193B989500F7364A /* COSGifAnimator.h */; };
+		CC16652F193B989500F7364A /* COSGifAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = CC16652D193B989500F7364A /* COSGifAnimator.m */; };
 		CC1C7E400F48C34D007A2941 /* Play.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CC1C7E3F0F48C34D007A2941 /* Play.tiff */; };
 		CC1C7E580F48C76B007A2941 /* Clear.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CC1C7E570F48C76B007A2941 /* Clear.tiff */; };
 		CC4143500F25261000E46669 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1323840F24FF9D0032FEB8 /* Carbon.framework */; };
@@ -357,6 +359,8 @@
 		8D15AC370486D014006FF6A4 /* Cocoa Script Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cocoa Script Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0EC3280F226F550094F69D /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = /System/Library/Frameworks/ScriptingBridge.framework; sourceTree = "<absolute>"; };
 		CC1323840F24FF9D0032FEB8 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		CC16652C193B989500F7364A /* COSGifAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSGifAnimator.h; path = src/framework/COSGifAnimator.h; sourceTree = SOURCE_ROOT; };
+		CC16652D193B989500F7364A /* COSGifAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSGifAnimator.m; path = src/framework/COSGifAnimator.m; sourceTree = SOURCE_ROOT; };
 		CC1C7E3F0F48C34D007A2941 /* Play.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Play.tiff; path = res/images/Play.tiff; sourceTree = "<group>"; };
 		CC1C7E570F48C76B007A2941 /* Clear.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Clear.tiff; path = res/images/Clear.tiff; sourceTree = "<group>"; };
 		CC41431A0F25254200E46669 /* CocoaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -922,6 +926,8 @@
 				CC66D831181A2A9B0039A0A5 /* COSOpenCLProgram.m */,
 				CC66D832181A2A9B0039A0A5 /* COSQuickCIFilter.h */,
 				CC66D833181A2A9B0039A0A5 /* COSQuickCIFilter.m */,
+				CC16652C193B989500F7364A /* COSGifAnimator.h */,
+				CC16652D193B989500F7364A /* COSGifAnimator.m */,
 			);
 			name = imagetools;
 			path = src/imagetools;
@@ -1062,6 +1068,7 @@
 				CC66D80E181A2A470039A0A5 /* TDWhitespaceState.h in Headers */,
 				CC66D812181A2A470039A0A5 /* TDWordOrReservedState.h in Headers */,
 				CC66D868181A2AE10039A0A5 /* MochaDefines.h in Headers */,
+				CC16652E193B989500F7364A /* COSGifAnimator.h in Headers */,
 				CC66D7F2181A2A470039A0A5 /* TDSpecificChar.h in Headers */,
 				CC66D8B5181A2B0A0039A0A5 /* MOPointerValue.h in Headers */,
 				CC66D820181A2A710039A0A5 /* COSExtras.h in Headers */,
@@ -1343,6 +1350,7 @@
 				CC847AFD183EE02300436C38 /* COScript+Interval.m in Sources */,
 				CC66D7C6181A2A470039A0A5 /* TDCollectionParser.m in Sources */,
 				CC66D7ED181A2A470039A0A5 /* TDSequence.m in Sources */,
+				CC16652F193B989500F7364A /* COSGifAnimator.m in Sources */,
 				CC66D8B6181A2B0A0039A0A5 /* MOPointerValue.m in Sources */,
 				CC66D8A4181A2B0A0039A0A5 /* MOClosure.m in Sources */,
 				CC66D80F181A2A470039A0A5 /* TDWhitespaceState.m in Sources */,
