@@ -1,0 +1,215 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+<function_alias name='FMDBReturnAutoreleased' original='CFAutorelease'/>
+<class name='COSDatabase'>
+<method selector='beginDeferredTransaction'>
+<retval type='B'/>
+</method>
+<method selector='beginTransaction'>
+<retval type='B'/>
+</method>
+<method selector='boolForQuery:' variadic='true'>
+<retval type='B'/>
+</method>
+<method selector='checkedOut'>
+<retval type='B'/>
+</method>
+<method selector='close'>
+<retval type='B'/>
+</method>
+<method selector='columnExists:columnName:'>
+<retval type='B'/>
+</method>
+<method selector='columnExists:inTableWithName:'>
+<retval type='B'/>
+</method>
+<method selector='commit'>
+<retval type='B'/>
+</method>
+<method selector='crashOnErrors'>
+<retval type='B'/>
+</method>
+<method selector='executeQueryWithFormat:' variadic='true'/>
+<method selector='executeStatements:'>
+<retval type='B'/>
+</method>
+<method selector='executeStatements:withResultBlock:'>
+<arg function_pointer='true' index='1' type='@?'>
+<arg type='@'/>
+<retval type='i'/>
+</arg>
+<retval type='B'/>
+</method>
+<method selector='executeUpdate:' variadic='true'>
+<retval type='B'/>
+</method>
+<method selector='executeUpdate:withArgumentsInArray:'>
+<retval type='B'/>
+</method>
+<method selector='executeUpdate:withErrorAndBindings:' variadic='true'>
+<retval type='B'/>
+</method>
+<method selector='executeUpdate:withParameterDictionary:'>
+<retval type='B'/>
+</method>
+<method selector='executeUpdate:withVAList:'>
+<retval type='B'/>
+</method>
+<method selector='executeUpdateWithFormat:' variadic='true'>
+<retval type='B'/>
+</method>
+<method selector='goodConnection'>
+<retval type='B'/>
+</method>
+<method selector='hadError'>
+<retval type='B'/>
+</method>
+<method selector='hasDateFormatter'>
+<retval type='B'/>
+</method>
+<method selector='hasOpenResultSets'>
+<retval type='B'/>
+</method>
+<method selector='inSavePoint:'>
+<arg function_pointer='true' index='0' type='@?'>
+<arg type='^B'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='inTransaction'>
+<retval type='B'/>
+</method>
+<method class_method='true' selector='isSQLiteThreadSafe'>
+<retval type='B'/>
+</method>
+<method selector='logsErrors'>
+<retval type='B'/>
+</method>
+<method selector='makeFunctionNamed:maximumArguments:withBlock:'>
+<arg function_pointer='true' index='2' type='@?'>
+<arg type='^{sqlite3_context=}'/>
+<arg type='i'/>
+<arg type='^^{Mem}'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='open'>
+<retval type='B'/>
+</method>
+<method selector='openWithFlags:'>
+<retval type='B'/>
+</method>
+<method selector='rekey:'>
+<retval type='B'/>
+</method>
+<method selector='rekeyWithData:'>
+<retval type='B'/>
+</method>
+<method selector='releaseSavePointWithName:error:'>
+<retval type='B'/>
+</method>
+<method selector='rollback'>
+<retval type='B'/>
+</method>
+<method selector='rollbackToSavePointWithName:error:'>
+<retval type='B'/>
+</method>
+<method selector='setCheckedOut:'>
+<arg index='0' type='B'/>
+</method>
+<method selector='setCrashOnErrors:'>
+<arg index='0' type='B'/>
+</method>
+<method selector='setKey:'>
+<retval type='B'/>
+</method>
+<method selector='setKeyWithData:'>
+<retval type='B'/>
+</method>
+<method selector='setLogsErrors:'>
+<arg index='0' type='B'/>
+</method>
+<method selector='setShouldCacheStatements:'>
+<arg index='0' type='B'/>
+</method>
+<method selector='setTraceExecution:'>
+<arg index='0' type='B'/>
+</method>
+<method selector='shouldCacheStatements'>
+<retval type='B'/>
+</method>
+<method selector='startSavePointWithName:error:'>
+<retval type='B'/>
+</method>
+<method selector='tableExists:'>
+<retval type='B'/>
+</method>
+<method selector='traceExecution'>
+<retval type='B'/>
+</method>
+<method selector='update:withErrorAndBindings:' variadic='true'>
+<retval type='B'/>
+</method>
+<method selector='validateSQL:error:'>
+<retval type='B'/>
+</method>
+</class>
+<class name='COSDatabaseQueue'>
+<method selector='inDatabase:'>
+<arg function_pointer='true' index='0' type='@?'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='inDeferredTransaction:'>
+<arg function_pointer='true' index='0' type='@?'>
+<arg type='@'/>
+<arg type='^B'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='inSavePoint:'>
+<arg function_pointer='true' index='0' type='@?'>
+<arg type='@'/>
+<arg type='^B'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='inTransaction:'>
+<arg function_pointer='true' index='0' type='@?'>
+<arg type='@'/>
+<arg type='^B'/>
+<retval type='v'/>
+</arg>
+</method>
+</class>
+<class name='COSResultSet'>
+<method selector='boolForColumn:'>
+<retval type='B'/>
+</method>
+<method selector='boolForColumnIndex:'>
+<retval type='B'/>
+</method>
+<method selector='columnIndexIsNull:'>
+<retval type='B'/>
+</method>
+<method selector='columnIsNull:'>
+<retval type='B'/>
+</method>
+<method selector='hasAnotherRow'>
+<retval type='B'/>
+</method>
+<method selector='next'>
+<retval type='B'/>
+</method>
+</class>
+<class name='COSStatement'>
+<method selector='inUse'>
+<retval type='B'/>
+</method>
+<method selector='setInUse:'>
+<arg index='0' type='B'/>
+</method>
+</class>
+</signatures>

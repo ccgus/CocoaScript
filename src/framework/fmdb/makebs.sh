@@ -1,0 +1,1 @@
+gen_bridge_metadata -c '-lsqlite3 -I.' *.h -o FMDB.bridgesupport
