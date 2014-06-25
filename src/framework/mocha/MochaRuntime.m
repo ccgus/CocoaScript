@@ -569,6 +569,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 }
 
 - (id)evalString:(NSString *)string atURL:(NSURL *)url {
+#ifdef MAC_OS_X_VERSION_10_10
     if (JSGlobalContextSetName != NULL)
     {
         NSString* name = url ? [[url lastPathComponent] stringByDeletingPathExtension] : @"Untitled Script";
@@ -576,6 +577,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         JSGlobalContextSetName(_ctx, jsName);
         JSStringRelease(jsName);
     }
+#endif
     JSValueRef jsValue = [self evalJSString:string scriptPath:[url path]];
     return [self objectForJSValue:jsValue];
 }
