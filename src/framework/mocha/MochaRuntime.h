@@ -54,6 +54,21 @@
 
 
 /*!
+ * @method evalString:
+ * @abstract Evalutates the specified JavaScript expression, returning the result
+ *
+ * @param string
+ * The JavaScript expression to evaluate
+ *
+ * @param url
+ * The location of the script - used for error reporting and interactive debugging.
+ *
+ * @result An object, or nil
+ */
+- (id)evalString:(NSString *)string atURL:(NSURL*)url;
+
+
+/*!
  * @method callFunctionWithName:
  * @abstract Calls a JavaScript function in the global context
  * 
