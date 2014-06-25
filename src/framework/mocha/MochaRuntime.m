@@ -569,9 +569,9 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 }
 
 - (id)evalString:(NSString *)string atURL:(NSURL *)url {
-    NSString* name = url ? [[url lastPathComponent] stringByDeletingPathExtension] : @"Untitled Script";
     if (JSGlobalContextSetName != NULL)
     {
+        NSString* name = url ? [[url lastPathComponent] stringByDeletingPathExtension] : @"Untitled Script";
         JSStringRef jsName = JSStringCreateWithUTF8CString([name UTF8String]);
         JSGlobalContextSetName(_ctx, jsName);
         JSStringRelease(jsName);
