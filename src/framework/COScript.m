@@ -316,9 +316,9 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
     id resultObj = nil;
     
     @try {
-        
-        resultObj = [_mochaRuntime evalString:str];
-        
+
+        resultObj = [_mochaRuntime evalString:str atURL:base];
+
         if (resultObj == [MOUndefined undefined]) {
             resultObj = nil;
         }
