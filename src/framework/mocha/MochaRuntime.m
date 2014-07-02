@@ -916,7 +916,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     
     [self removeObjectWithName:@"__mocha__"];
     
-    debug(@"shutting down & releasing %p.", _ctx);
     JSGlobalContextRelease(_ctx);
     
     _ctx = nil;
@@ -1045,7 +1044,7 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
         JSValueRef ret = [runtime JSValueForObject:exportedObj];
         
         if (!objc_getAssociatedObject(exportedObj, &MOAlreadyProtectedKey)) {
-            debug(@"protecting an exported object: %@ %p", propertyName, ret);
+            //debug(@"protecting an exported object: %@ %p", propertyName, ret);
             objc_setAssociatedObject(exportedObj, &MOAlreadyProtectedKey, @(1), OBJC_ASSOCIATION_RETAIN);
             JSValueProtect(ctx, ret);
         }
@@ -1061,7 +1060,7 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
         JSValueRef ret = [runtime JSValueForObject:objCClass];
         
         if (!objc_getAssociatedObject(objCClass, &MOAlreadyProtectedKey)) {
-            debug(@"inited a global class object %@ - going to keep it protected %p", propertyName, ret);
+            // debug(@"inited a global class object %@ - going to keep it protected %p", propertyName, ret);
             objc_setAssociatedObject(objCClass, &MOAlreadyProtectedKey, @(1), OBJC_ASSOCIATION_RETAIN);
             JSValueProtect(ctx, ret);
         }

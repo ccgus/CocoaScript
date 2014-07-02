@@ -15,8 +15,10 @@
 #define STRINGIZE2(x) STRINGIZE(x)
 #define SQLCode(text) @ STRINGIZE2(text)
 
+static NSString *COSUTTypeNumber = @"R.number";
+static NSString *COSUTTypeTable = @"R.table";
+
 @interface COSR ()
-@property (strong) NSMutableDictionary *table;
 @property (strong) NSString *tablePath;
 @property (strong) COSDatabaseQueue *q;
 @end
@@ -26,7 +28,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _table = [NSMutableDictionary dictionary];
+        // _table = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -86,11 +88,9 @@
 
 - (instancetype)makeTable:(NSString*)tableName {
     
-    COSR *sub = [_table objectForKey:tableName];
-    if (!sub) {
-        sub = [self subTableWithName:tableName];
-        [_table setObject:sub forKey:tableName];
-    }
+    COSR *sub = [self subTableWithName:tableName];
+    
+    [self setObject:sub forKeyedSubscript:tableName];
     
     return sub;
 }
@@ -98,13 +98,11 @@
 
 - (id)objectForKeyedSubscript:(NSString *)key {
     
-    /*
-    This code is commented out, just because I wanted to see if the basics could be done.  It can.  It needs to be fancier for the future though.
     __block id value = nil;
     
     [_q inDatabase:^(COSDatabase *db) {
         NSString *query = @"select data, uti from R where name = ? and parentID = ?";
-     
+        
         COSResultSet *rs = [db executeQuery:query, key, _tablePath];
         
         if ([rs next]) {
@@ -114,34 +112,39 @@
             if (UTTypeConformsTo(uti, kUTTypeText)) {
                 value = [rs stringForColumn:@"data"];
             }
+            else if ([(__bridge id)uti isEqualToString:COSUTTypeNumber]) {
+                value = [rs objectForColumnName:@"data"];
+                assert([value isKindOfClass:[NSNumber class]]);
+            }
+            else if ([(__bridge id)uti isEqualToString:COSUTTypeTable]) {
+                
+                debug(@"yay");
+                
+                value = [self subTableWithName:key];
+                
+            }
             else {
                 value = [rs dataForColumn:@"data"];
             }
             
             [rs close];
         }
-        else {
-            NSLog(@"Could not find value for %@ in table %@", key, _tablePath);
-        }
+        
         
     }];
     
-    
-    if (value) {
-        return value;
+    if (!value) {
+        NSLog(@"Could not find value for %@ in table %@", key, _tablePath);
     }
-    */
     
-    return [_table objectForKey:key];
+    return value;
 }
 
-- (void)setObject:(id)obj forKeyedSubscript:(NSString *)key {
+- (void)setObject:(id)theObj forKeyedSubscript:(NSString *)key {
     
-    /*
+    __block id obj = theObj;
     
     [_q inDatabase:^(COSDatabase *db) {
-        NSString *sql = @"insert into R (uniqueID, name, data, uti, parentID) values (?, ?, ?, ?, ?)";
-        
         
         NSString *uuid = [NSString stringWithUUID];
         NSString *uti = (id)kUTTypeData;
@@ -149,20 +152,67 @@
         if ([obj isKindOfClass:[NSString class]]) {
             uti = (id)kUTTypeUTF8PlainText;
         }
+        else if ([obj isKindOfClass:[NSNumber class]]) {
+            uti = COSUTTypeNumber;
+        }
+        else if ([obj isKindOfClass:[COSR class]]) {
+            uti = COSUTTypeTable;
+            obj = [NSNull null];
+        }
         
-        if (![db executeUpdate:sql, uuid, key, obj, uti, _tablePath]) {
-            NSLog(@"Could not set value '%@' for '%@' in table '%@'", obj, key, _tablePath);
+        NSString *delete = @"delete from R where name = ? and parentID = ?";
+        
+        if (!_tablePath) {
+            delete = @"delete from R where name = ? and parentID is null";
+        }
+        
+        [db executeUpdate:delete, key, _tablePath];
+        
+        if (obj) {
+            NSString *sql = @"insert into R (uniqueID, name, data, uti, parentID) values (?, ?, ?, ?, ?)";
+            if (![db executeUpdate:sql, uuid, key, obj, uti, _tablePath]) {
+                NSLog(@"Could not set value '%@' for '%@' in table '%@'", obj, key, _tablePath ? _tablePath : [NSNull null]);
+            }
         }
         
     }];
-    */
-    
-    if (!obj) {
-        [_table removeObjectForKey:key];
-        return;
-    }
-    
-    [_table setObject:obj forKey:key];
 }
+
+- (NSArray*)subTables {
+    
+    NSMutableArray *subTables = [NSMutableArray array];
+    
+    [_q inDatabase:^(COSDatabase *db) {
+        
+        NSString *query = @"select name from R where uti = ? and parentID = ?";
+        
+        #pragma message "FIXME: why do we have to do 'is null' instead of passing a null value for parentID?  FMDB bug?"
+        
+        if (!_tablePath) {
+            query = @"select name from R where uti = ? and parentID is null";
+        }
+        
+        COSResultSet *rs = [db executeQuery:query, COSUTTypeTable, _tablePath];
+        while ([rs next]) {
+            
+            COSR *sub = [self subTableWithName:[rs stringForColumn:@"name"]];
+            
+            [subTables addObject:sub];
+        }
+        
+    }];
+    
+    
+    return subTables;
+}
+
+
+- (NSString*)description {
+    
+    return [[super description] stringByAppendingFormat:@" (%@)", _tablePath];
+    
+    
+}
+
 
 @end
