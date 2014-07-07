@@ -10,6 +10,7 @@
 #import "COSDatabaseQueue.h"
 #import "COSDatabaseAdditions.h"
 #import "COSExtras.h"
+#import "COScript.h"
 
 #define STRINGIZE(x) #x
 #define STRINGIZE2(x) STRINGIZE(x)
@@ -29,7 +30,7 @@ static NSString *COSUTTypeTable = @"R.table";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        // _table = [NSMutableDictionary dictionary];
+        // _modules = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -100,6 +101,66 @@ static NSString *COSUTTypeTable = @"R.table";
 }
 
 
+- (id)fsObjectWithKey:(NSString*)key {
+    
+    debug(@"key: '%@'", key);
+    
+    NSString *basePath = [[_q path] stringByDeletingLastPathComponent];
+    
+    
+    // FIXME: is this too fragile?
+    NSString *subFolder = [_tablePath stringByReplacingOccurrencesOfString:@"." withString:@"/"];
+    
+    basePath = [basePath stringByAppendingPathComponent:subFolder];
+    
+    NSString *filePath   = [basePath stringByAppendingPathComponent:key];
+    NSString *lookupPath = filePath;
+    
+    BOOL found = [[NSFileManager defaultManager] fileExistsAtPath:lookupPath];
+    
+    if (!found) {
+        
+        NSArray *extensions = @[@"js", @"coscript"];
+        
+        for (NSString *ext in extensions) {
+            
+            lookupPath = [filePath stringByAppendingPathExtension:ext];
+            
+            debug(@"lookupPath: '%@'", lookupPath);
+            
+            if ([[NSFileManager defaultManager] fileExistsAtPath:lookupPath]) {
+                found = YES;
+                break;
+            }
+        }
+    }
+    
+    if (found) {
+        
+        NSError *outErr = nil;
+        NSString *script = [NSString stringWithContentsOfFile:lookupPath encoding:NSUTF8StringEncoding error:&outErr];
+        if (!script) {
+            NSLog(@"Error reading path '%@'", lookupPath);
+            NSLog(@"%@", outErr);
+            return nil;
+        }
+        
+        
+        NSString *rep = [NSString stringWithFormat:@"R.%@.%@", _tablePath, key];
+        script = [script stringByReplacingOccurrencesOfString:@"$R" withString:rep];
+        
+        COScript *cos = [COScript currentCOScript];
+        
+        id r = [cos executeString:script baseURL:[NSURL fileURLWithPath:lookupPath]];
+        
+        return r;
+    }
+    
+    
+    return nil;
+    
+}
+
 - (id)objectForKeyedSubscript:(NSString *)key {
     
     __block id value = nil;
@@ -134,15 +195,14 @@ static NSString *COSUTTypeTable = @"R.table";
             
             [rs close];
         }
-        
-        
     }];
     
     if (!value) {
-        NSLog(@"Could not find value for %@ in table %@ / ", key, _tablePath, _tableID);
+        value = [self fsObjectWithKey:key];
     }
-    else {
-        debug(@"Found %@ for key %@", value, key);
+    
+    if (!value) {
+        NSLog(@"Could not find value for key '%@' in table %@ / %@", key, _tablePath, _tableID);
     }
     
     return value;
@@ -201,8 +261,6 @@ static NSString *COSUTTypeTable = @"R.table";
     [_q inDatabase:^(COSDatabase *db) {
         
         NSString *query = @"select name from R where uti = ? and parentID = ?";
-        
-        #pragma message "FIXME: why do we have to do 'is null' instead of passing a null value for parentID?  FMDB bug?"
         
         if (!_tablePath) {
             query = @"select name, uniqueID from R where uti = ? and parentID is null";
