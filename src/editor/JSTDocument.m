@@ -314,8 +314,8 @@
 
 - (void)updateFont:(id)sender {
     
-    [[jsTextView textStorage] addAttribute:NSFontAttributeName value:[[NSApp delegate] defaultEditorFont] range:NSMakeRange(0, [[jsTextView textStorage] length])];
-    [[outputTextView textStorage] addAttribute:NSFontAttributeName value:[[NSApp delegate] defaultEditorFont] range:NSMakeRange(0, [[outputTextView textStorage] length])];
+    [[jsTextView textStorage] addAttribute:NSFontAttributeName value:[(JSTAppDelegate*)[NSApp delegate] defaultEditorFont] range:NSMakeRange(0, [[jsTextView textStorage] length])];
+    [[outputTextView textStorage] addAttribute:NSFontAttributeName value:[(JSTAppDelegate*)[NSApp delegate] defaultEditorFont] range:NSMakeRange(0, [[outputTextView textStorage] length])];
     
     
 }

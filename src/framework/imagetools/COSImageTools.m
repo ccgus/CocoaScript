@@ -236,13 +236,12 @@ static BOOL JSTImageToolsCISWRender = NO;
 
 + (void)setMainDisplayTransferUsingRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b {
     CGDisplayErr  err;
-    CGDirectDisplayID dspys[1];
     CGDisplayCount  dspyCnt;
     
     float red[256];
     float green[256];
     float blue[256];
-
+    
     red[0] = 0.0;
     red[1] = r;
     
@@ -252,19 +251,55 @@ static BOOL JSTImageToolsCISWRender = NO;
     blue[0] = 0.0;
     blue[1] = b;
     
-    err = CGGetDisplaysWithPoint(CGPointMake(1, 1), 1, dspys, &dspyCnt);
+    err =  CGSetDisplayTransferByTable( CGMainDisplayID(), 2, red, green, blue);
+    
+    if (err != CGDisplayNoErr) {
+        NSLog(@"CGSetDisplayTransferByTable failed: %d", err);
+    }
+}
+
+
++ (void)setDisplayTransferUsingRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b {
+
+#define setDisplayTransferMaxDisplays 10
+
+    CGDisplayErr  err;
+    CGDirectDisplayID dspys[setDisplayTransferMaxDisplays];
+    CGDisplayCount  dspyCnt;
+    
+    float red[256];
+    float green[256];
+    float blue[256];
+    
+    red[0] = 0.0;
+    red[1] = r;
+    
+    green[0] = 0.0;
+    green[1] = g;
+    
+    blue[0] = 0.0;
+    blue[1] = b;
+    
+    err = CGGetActiveDisplayList(setDisplayTransferMaxDisplays, dspys, &dspyCnt);
+
     if (err == CGDisplayNoErr) {
-        err =  CGSetDisplayTransferByTable( dspys[0], 2, red, green, blue);
         
-        if (err != CGDisplayNoErr) {
-            NSLog(@"CGSetDisplayTransferByTable failed: %d", err);
+        
+        for (CGDisplayCount i = 0; i < dspyCnt; i++) {
+            
+            err =  CGSetDisplayTransferByTable( dspys[i], 2, red, green, blue);
+            
+            if (err != CGDisplayNoErr) {
+                NSLog(@"CGSetDisplayTransferByTable failed: %d", err);
+            }
         }
         
     }
     else {
-        NSLog(@"Could not find didsplay at 1,1: %d", err);
+        NSLog(@"CGGetActiveDisplayList failed: %d", err);
     }
 }
+
 
 @end
 
