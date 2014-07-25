@@ -10,6 +10,10 @@
 		384830E21832D48500B34168 /* COSTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 384830E01832D48500B34168 /* COSTarget.h */; };
 		384830E31832D48500B34168 /* COSTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 384830E11832D48500B34168 /* COSTarget.m */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		CC07AF481982C2BC001CCA93 /* libMultiMarkdown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC07AF471982C2BC001CCA93 /* libMultiMarkdown.a */; };
+		CC07AF4C1982C310001CCA93 /* COSMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = CC07AF4A1982C310001CCA93 /* COSMarkdown.h */; };
+		CC07AF4D1982C310001CCA93 /* COSMarkdown.m in Sources */ = {isa = PBXBuildFile; fileRef = CC07AF4B1982C310001CCA93 /* COSMarkdown.m */; };
+		CC07AF4F1982C3F1001CCA93 /* libMultiMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = CC07AF4E1982C3F1001CCA93 /* libMultiMarkdown.h */; };
 		CC0EC3290F226F550094F69D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0EC3280F226F550094F69D /* ScriptingBridge.framework */; };
 		CC0EC32A0F226F550094F69D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0EC3280F226F550094F69D /* ScriptingBridge.framework */; };
 		CC1323850F24FF9D0032FEB8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1323840F24FF9D0032FEB8 /* Carbon.framework */; };
@@ -376,6 +380,10 @@
 		384830E01832D48500B34168 /* COSTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSTarget.h; path = src/framework/COSTarget.h; sourceTree = "<group>"; };
 		384830E11832D48500B34168 /* COSTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSTarget.m; path = src/framework/COSTarget.m; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Cocoa Script Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cocoa Script Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC07AF471982C2BC001CCA93 /* libMultiMarkdown.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMultiMarkdown.a; path = lib/libMultiMarkdown.a; sourceTree = "<group>"; };
+		CC07AF4A1982C310001CCA93 /* COSMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSMarkdown.h; path = src/framework/COSMarkdown.h; sourceTree = "<group>"; };
+		CC07AF4B1982C310001CCA93 /* COSMarkdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSMarkdown.m; path = src/framework/COSMarkdown.m; sourceTree = "<group>"; };
+		CC07AF4E1982C3F1001CCA93 /* libMultiMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libMultiMarkdown.h; path = lib/libMultiMarkdown.h; sourceTree = "<group>"; };
 		CC0EC3280F226F550094F69D /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = /System/Library/Frameworks/ScriptingBridge.framework; sourceTree = "<absolute>"; };
 		CC1323840F24FF9D0032FEB8 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		CC1C7E3F0F48C34D007A2941 /* Play.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Play.tiff; path = res/images/Play.tiff; sourceTree = "<group>"; };
@@ -649,6 +657,7 @@
 				CC4143510F25261100E46669 /* ScriptingBridge.framework in Frameworks */,
 				CC4143520F25261200E46669 /* JavaScriptCore.framework in Frameworks */,
 				CCF0561D184A884D000C56F7 /* OpenGL.framework in Frameworks */,
+				CC07AF481982C2BC001CCA93 /* libMultiMarkdown.a in Frameworks */,
 				CC4143530F25261300E46669 /* Cocoa.framework in Frameworks */,
 				CC86430D163B29E600908427 /* QuartzCore.framework in Frameworks */,
 				CCD38353195A457800C436B9 /* libsqlite3.0.dylib in Frameworks */,
@@ -742,6 +751,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CC07AF471982C2BC001CCA93 /* libMultiMarkdown.a */,
 				CCD38351195A457800C436B9 /* libsqlite3.0.dylib */,
 				CCF0561C184A884D000C56F7 /* OpenGL.framework */,
 				CC86430E163B29F500908427 /* OpenCL.framework */,
@@ -755,9 +765,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CC07AF491982C2FB001CCA93 /* Markdown */ = {
+			isa = PBXGroup;
+			children = (
+				CC07AF4E1982C3F1001CCA93 /* libMultiMarkdown.h */,
+				CC07AF4A1982C310001CCA93 /* COSMarkdown.h */,
+				CC07AF4B1982C310001CCA93 /* COSMarkdown.m */,
+			);
+			name = Markdown;
+			sourceTree = "<group>";
+		};
 		CC0EC3380F2274730094F69D /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				CC07AF491982C2FB001CCA93 /* Markdown */,
 				CCD38338195A454F00C436B9 /* fmdb */,
 				CCF056151849A20A000C56F7 /* Spelunking */,
 				CCA1A532183EA838000159B3 /* helpers */,
@@ -1150,6 +1171,7 @@
 				CC66D85C181A2ABF0039A0A5 /* NSObject+MochaAdditions.h in Headers */,
 				CC66D7DB181A2A470039A0A5 /* TDNumberState.h in Headers */,
 				CC66D827181A2A810039A0A5 /* CocoaScript_Prefix.pch in Headers */,
+				CC07AF4C1982C310001CCA93 /* COSMarkdown.h in Headers */,
 				CC66D7E4181A2A470039A0A5 /* TDReader.h in Headers */,
 				CC66D7C1181A2A470039A0A5 /* TDChar.h in Headers */,
 				CC66D83A181A2A9B0039A0A5 /* COSOpenCLContext.h in Headers */,
@@ -1217,6 +1239,7 @@
 				CC66D7F6181A2A470039A0A5 /* TDSymbolNode.h in Headers */,
 				CC66D80A181A2A470039A0A5 /* TDTrackException.h in Headers */,
 				CC66D8A0181A2B0A0039A0A5 /* MOClassDescription.h in Headers */,
+				CC07AF4F1982C3F1001CCA93 /* libMultiMarkdown.h in Headers */,
 				CC66D7FC181A2A470039A0A5 /* TDTerminal.h in Headers */,
 				CC66D85E181A2ABF0039A0A5 /* NSOrderedSet+MochaAdditions.h in Headers */,
 				CC66D7C5181A2A470039A0A5 /* TDCollectionParser.h in Headers */,
@@ -1443,6 +1466,7 @@
 				CC66D7E5181A2A470039A0A5 /* TDReader.m in Sources */,
 				CC66D7D6181A2A470039A0A5 /* TDMultiLineCommentState.m in Sources */,
 				CC66D8B1181A2B0A0039A0A5 /* MOObjCRuntime.m in Sources */,
+				CC07AF4D1982C310001CCA93 /* COSMarkdown.m in Sources */,
 				CC66D807181A2A470039A0A5 /* TDTokenizerState.m in Sources */,
 				CC66D84F181A2AB10039A0A5 /* MOBridgeSupportSymbol.m in Sources */,
 				CCD3835D195A45AB00C436B9 /* COSGifAnimator.m in Sources */,
@@ -1705,6 +1729,10 @@
 				GCC_WARN_SHADOW = YES;
 				INFOPLIST_FILE = "res/JSTalkFramework-Info.plist";
 				INSTALL_PATH = "@rpath";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				OTHER_CFLAGS = "-DDEBUG";
 				OTHER_LDFLAGS = (
 					"-lffi",
@@ -1735,6 +1763,10 @@
 				GCC_WARN_SHADOW = YES;
 				INFOPLIST_FILE = "res/JSTalkFramework-Info.plist";
 				INSTALL_PATH = "@rpath";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
