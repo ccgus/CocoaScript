@@ -282,7 +282,7 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
     
     id block = nil;
     
-    #pragma message "FIXME: Check to see if function is nil or not."
+    // FIXME: Check to see if function is nil or not."
     
     debug(@"function: %@", function);
     
