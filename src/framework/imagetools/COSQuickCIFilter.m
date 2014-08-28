@@ -78,7 +78,7 @@
     return f;
 }
 
-- (CGRect)xregionOf:(int)sampler destRect:(CGRect)rect userInfo:(id)ui {
+- (CGRect)regionOf:(int)sampler destRect:(CGRect)rect userInfo:(id)ui {
     return CGRectInfinite;
 }
 
@@ -109,16 +109,27 @@
 - (CIImage *)outputImage {
     
     if (_roiMethod && [COScript currentCOScript]) {
-        [_theKernel setROISelector:@selector(regionOf:destRect:userInfo:)];
+        [_theKernel setROISelector:@selector(xxregionOf:destRect:userInfo:)];
     }
+    
+    [_theKernel setROISelector:@selector(regionOf:destRect:userInfo:)];
     
     if (_outputImageMethod && [COScript currentCOScript]) {
         CIImage *i = [[COScript currentCOScript] callJSFunction:[_outputImageMethod JSObject] withArgumentsInArray:nil];
         return i;
     }
     
-	return [self apply:_theKernel arguments:_kernelArgs options:[NSDictionary dictionary]];
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
+    
+    
+    if (_applyDefinitionShape) {
+        [options setObject:_applyDefinitionShape forKey:kCIApplyOptionDefinition];
+    }
+    
+	return [self apply:_theKernel arguments:_kernelArgs options:options];
 }
+
+
 
 @end
 

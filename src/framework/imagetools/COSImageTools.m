@@ -329,11 +329,13 @@ static BOOL JSTImageToolsCISWRender = NO;
     
     CIContext *cictx = [CIContext contextWithCGContext:[[NSGraphicsContext currentContext] graphicsPort] options:contextOptions];
     
+    [cictx clearCaches];
+    
     [cictx drawImage:[kCheckerFilter valueForKey:@"outputImage"]
               inRect:[self bounds]
             fromRect:[self bounds]];
     
-    [cictx drawImage:_theImage inRect:r fromRect:r];
+    [cictx drawImage:_theImage inRect:[self bounds] fromRect:[self bounds]];
     
 }
 
