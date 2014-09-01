@@ -1644,6 +1644,7 @@
 					"-lexpat",
 				);
 				PRODUCT_NAME = CocoaScript;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -1673,6 +1674,7 @@
 					"-lffi",
 				);
 				PRODUCT_NAME = CocoaScript;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
