@@ -111,7 +111,7 @@ void COScriptDebug(NSString* format, ...) {
     
     [_mochaRuntime garbageCollect];
     
-    debug(@"gc took %f seconds", [NSDate timeIntervalSinceReferenceDate] - start);
+    debug(@"gc took %f seconds", [NSDate timeIntervalSinceReferenceDate] - start); (void)start;
 }
 
 
