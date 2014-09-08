@@ -10,6 +10,7 @@
 #import "COSOpenCLProgram.h"
 #import "COSCodeSketcher.h"
 #import <QuartzCore/QuartzCore.h>
+#import <CocoaScript/COScript.h>
 
 @implementation NSImage (JSTExtras)
 + (id)imageWithSize:(NSSize)s {
@@ -219,6 +220,11 @@ static NSMutableDictionary *JSTCIWindows = 0x00;
     
 }
 
++ (void)viewCIImage:(CIImage*)img {
+    
+    return [self viewCIImage:img inWindowNamed:@"Untitled" extent:[img extent]];
+    
+}
 
 static BOOL JSTImageToolsCISWRender = NO;
 + (void)setShouldUseCISofwareRenderer:(BOOL)b {

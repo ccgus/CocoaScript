@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="12F45" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.9" systemVersion="14A343f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1050" defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4511"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.9"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -11,7 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="AMainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
                 <menuItem title="Cocoa Script Editor" id="56">
@@ -519,6 +519,11 @@
                             <menuItem title="Run Script" keyEquivalent="r" id="496">
                                 <connections>
                                     <action selector="executeScript:" target="-1" id="501"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Run As JS For Automation" keyEquivalent="R" id="cLY-Sk-2nG">
+                                <connections>
+                                    <action selector="executeScriptAsJSAutomation:" target="-1" id="AtQ-5N-GQq"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Run Selected Script" id="497">

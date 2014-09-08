@@ -20,6 +20,7 @@
 		CC1324300F2504F00032FEB8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1323840F24FF9D0032FEB8 /* Carbon.framework */; };
 		CC1C7E400F48C34D007A2941 /* Play.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CC1C7E3F0F48C34D007A2941 /* Play.tiff */; };
 		CC1C7E580F48C76B007A2941 /* Clear.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CC1C7E570F48C76B007A2941 /* Clear.tiff */; };
+		CC239E9419BE64B0006F9837 /* CocoaScript.bridgesupport in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC239E9319BE64AD006F9837 /* CocoaScript.bridgesupport */; };
 		CC4143500F25261000E46669 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1323840F24FF9D0032FEB8 /* Carbon.framework */; };
 		CC4143510F25261100E46669 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0EC3280F226F550094F69D /* ScriptingBridge.framework */; };
 		CC4143520F25261200E46669 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC5B8A40F1EFA6D00126722 /* JavaScriptCore.framework */; };
@@ -317,6 +318,7 @@
 		CCC5B8C70F1EFA9700126722 /* JSTDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8BA0F1EFA9700126722 /* JSTDocument.xib */; };
 		CCC5B8C90F1EFA9700126722 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8BE0F1EFA9700126722 /* MainMenu.xib */; };
 		CCC5B8CA0F1EFA9700126722 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CCC5B8C00F1EFA9700126722 /* Credits.rtf */; };
+		CCC8338B19BE4D380074183E /* OSAKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC8338A19BE4D380074183E /* OSAKit.framework */; };
 		CCD38343195A454F00C436B9 /* COSDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = CCD38339195A454F00C436B9 /* COSDatabase.h */; };
 		CCD38344195A454F00C436B9 /* COSDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD3833A195A454F00C436B9 /* COSDatabase.m */; };
 		CCD38345195A454F00C436B9 /* COSDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD3833A195A454F00C436B9 /* COSDatabase.m */; };
@@ -359,6 +361,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		CC239E9219BE6479006F9837 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = BridgeSupport;
+			dstSubfolderSpec = 7;
+			files = (
+				CC239E9419BE64B0006F9837 /* CocoaScript.bridgesupport in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CC41437B0F2527F200E46669 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -388,6 +400,7 @@
 		CC1323840F24FF9D0032FEB8 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		CC1C7E3F0F48C34D007A2941 /* Play.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Play.tiff; path = res/images/Play.tiff; sourceTree = "<group>"; };
 		CC1C7E570F48C76B007A2941 /* Clear.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Clear.tiff; path = res/images/Clear.tiff; sourceTree = "<group>"; };
+		CC239E9319BE64AD006F9837 /* CocoaScript.bridgesupport */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = CocoaScript.bridgesupport; path = lib/CocoaScript.bridgesupport; sourceTree = "<group>"; };
 		CC41431A0F25254200E46669 /* CocoaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC41440F0F252D0700E46669 /* JSTalkFramework-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "JSTalkFramework-Info.plist"; path = "res/JSTalkFramework-Info.plist"; sourceTree = "<group>"; };
 		CC43C11D0F4BBDF40044BA41 /* main.jstalk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jstalk; path = res/main.jstalk; sourceTree = "<group>"; };
@@ -614,6 +627,7 @@
 		CCC5B8BB0F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = res/English.lproj/JSTDocument.xib; sourceTree = "<group>"; };
 		CCC5B8BF0F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = res/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CCC5B8C10F1EFA9700126722 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = res/English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		CCC8338A19BE4D380074183E /* OSAKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSAKit.framework; path = ../../../../../../System/Library/Frameworks/OSAKit.framework; sourceTree = "<group>"; };
 		CCD38339195A454F00C436B9 /* COSDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = COSDatabase.h; sourceTree = "<group>"; };
 		CCD3833A195A454F00C436B9 /* COSDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = COSDatabase.m; sourceTree = "<group>"; };
 		CCD3833B195A454F00C436B9 /* COSDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = COSDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -642,6 +656,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
+				CCC8338B19BE4D380074183E /* OSAKit.framework in Frameworks */,
 				CCC5B8A50F1EFA6D00126722 /* JavaScriptCore.framework in Frameworks */,
 				CC0EC3290F226F550094F69D /* ScriptingBridge.framework in Frameworks */,
 				CC1323850F24FF9D0032FEB8 /* Carbon.framework in Frameworks */,
@@ -736,6 +751,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CC239E9319BE64AD006F9837 /* CocoaScript.bridgesupport */,
 				CC43C11D0F4BBDF40044BA41 /* main.jstalk */,
 				CC1C7E3E0F48C2F3007A2941 /* images */,
 				CC41440F0F252D0700E46669 /* JSTalkFramework-Info.plist */,
@@ -757,6 +773,7 @@
 				CC86430E163B29F500908427 /* OpenCL.framework */,
 				CC86430C163B29E600908427 /* QuartzCore.framework */,
 				CC1323840F24FF9D0032FEB8 /* Carbon.framework */,
+				CCC8338A19BE4D380074183E /* OSAKit.framework */,
 				CC0EC3280F226F550094F69D /* ScriptingBridge.framework */,
 				CCC5B8A40F1EFA6D00126722 /* JavaScriptCore.framework */,
 				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
@@ -1282,6 +1299,7 @@
 				CC4143160F25254200E46669 /* Resources */,
 				CC4143170F25254200E46669 /* Sources */,
 				CC4143180F25254200E46669 /* Frameworks */,
+				CC239E9219BE6479006F9837 /* CopyFiles */,
 			);
 			buildRules = (
 			);

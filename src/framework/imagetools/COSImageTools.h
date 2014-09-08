@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <CocoaScript/COScript.h>
+
 
 @interface COSImageTools : NSObject {
     
