@@ -125,7 +125,7 @@ return ret;
     
     uint32_t r = 0;
     
-    FMResultSet *rs = [self executeQuery:@"pragma application_id"];
+    COSResultSet *rs = [self executeQuery:@"pragma application_id"];
     
     if ([rs next]) {
         r = (uint32_t)[rs longLongIntForColumnIndex:0];
@@ -138,7 +138,7 @@ return ret;
 
 - (void)setApplicationID:(uint32_t)appID {
     NSString *query = [NSString stringWithFormat:@"pragma application_id=%d", appID];
-    FMResultSet *rs = [self executeQuery:query];
+    COSResultSet *rs = [self executeQuery:query];
     [rs next];
     [rs close];
 }

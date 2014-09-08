@@ -1720,7 +1720,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = src/framework/CocoaScript_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;

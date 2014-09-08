@@ -149,7 +149,6 @@
             
             nextGroup.parent            = currentGroup;
             currentGroup                = nextGroup;
-
         }
         else if ([tok isSymbol] && [self isCloseSymbol:tok.stringValue]) {
             
