@@ -56,6 +56,10 @@ static NSString *COSUTTypeTable = @"R.table";
     return me;
 }
 
++ (instancetype)rootWithPath:(NSString*)filePath {
+    return [self rootWithURL:[NSURL fileURLWithPath:filePath]];
+}
+
 - (void)setupDatabase {
     
     [_q inDatabase:^(COSDatabase *db) {
@@ -208,7 +212,17 @@ static NSString *COSUTTypeTable = @"R.table";
     return value;
 }
 
+/*
+- (void)_dynamicContextEvaluation:(id)e patternString:(NSString*)s {
+    debug(@"s: '%@'", s);
+    debug(@"e: '%@' (%@)", e, NSStringFromClass([e class]));
+}
+*/
+
 - (void)setObject:(id)theObj forKeyedSubscript:(NSString *)key {
+    
+    
+    debug(@"%@: '%@'", key, theObj);
     
     __block id obj = theObj;
     
@@ -307,6 +321,11 @@ static NSString *COSUTTypeTable = @"R.table";
     return [[super description] stringByAppendingFormat:@" (%@ id:%@)", _tablePath, _tableID];
     
     
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector {
+    debug(@"-[%@ %@]?", NSStringFromClass([self class]), NSStringFromSelector(aSelector));
+    return [super respondsToSelector:aSelector];
 }
 
 

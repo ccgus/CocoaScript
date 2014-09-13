@@ -224,11 +224,10 @@
     
     NSString *script = [[jsTextView textStorage] string];
     
-    NSString *importLine = [NSString stringWithFormat:@"ObjC.import('%@');\n", fwPath];
+    //NSString *importLine = [NSString stringWithFormat:@"ObjC.import('%@');\n", fwPath];
+    //script = [importLine stringByAppendingString:script];
     
-    script = [importLine stringByAppendingString:script];
-    
-    debug(@"script: '%@'", script);
+    NSString *importLine = @"";
     
     OSAScript *osa = [[OSAScript alloc] initWithSource:script language:[OSALanguage languageForName:@"JavaScript"]];
     
@@ -238,6 +237,8 @@
         //NSAppleEventDescriptor *desc = [osa executeAndReturnError:&outDict];
         NSAppleEventDescriptor *desc = [osa executeHandlerWithName:@"main" arguments:@[] error:&outDict];
         (void)desc;
+        
+        debug(@"outDict: '%@'", outDict);
         
         if (outDict) {
             NSLog(@"Error running: %@", outDict);

@@ -231,7 +231,7 @@ void COScriptDebug(NSString* format, ...) {
         
         for (NSString *bundle in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folder error:nil]) {
             
-            if (!([bundle hasSuffix:@".jstplugin"])) {
+            if (!([bundle hasSuffix:@".jstplugin"] || [bundle hasSuffix:@".cosplugin"])) {
                 continue;
             }
             
