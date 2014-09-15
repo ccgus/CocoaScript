@@ -199,7 +199,7 @@ void COScriptDebug(NSString* format, ...) {
         
         NSString *a = [NSString stringWithUTF8String:argv[i]];
         
-        if ([@"-jstplugin" isEqualToString:a]) {
+        if ([@"-jstplugin" isEqualToString:a] || [@"-cosplugin" isEqualToString:a]) {
             i++;
             NSLog(@"Loading plugin at: [%@]", [NSString stringWithUTF8String:argv[i]]);
             [self loadExtraAtPath:[NSString stringWithUTF8String:argv[i]]];
@@ -270,16 +270,35 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 
 #pragma message "FIXME: Change currentCOScript and friends to use a stack in the thread dictionary, instead of just overwriting what might already be there."
 
++ (NSMutableArray*)currentCOSThreadStack {
+    
+    NSMutableArray *ar = [[[NSThread currentThread] threadDictionary] objectForKey:currentCOScriptThreadIdentifier];
+    
+    if (!ar) {
+        ar = [NSMutableArray array];
+        [[[NSThread currentThread] threadDictionary] setObject:ar forKey:currentCOScriptThreadIdentifier];
+    }
+    
+    return ar;
+}
+
 + (COScript*)currentCOScript {
-    return [[[NSThread currentThread] threadDictionary] objectForKey:currentCOScriptThreadIdentifier];
+    
+    return [[self currentCOSThreadStack] lastObject];
 }
 
 - (void)pushAsCurrentCOScript {
-    [[[NSThread currentThread] threadDictionary] setObject:self forKey:currentCOScriptThreadIdentifier];
+    [[[self class] currentCOSThreadStack] addObject:self];
 }
 
 - (void)popAsCurrentCOScript {
-    [[[NSThread currentThread] threadDictionary] removeObjectForKey:currentCOScriptThreadIdentifier];
+    
+    if ([[[self class] currentCOSThreadStack] count]) {
+        [[[self class] currentCOSThreadStack] removeLastObject];
+    }
+    else {
+        NSLog(@"popAsCurrentCOScript - currentCOSThreadStack is empty");
+    }
 }
 
 - (void)pushObject:(id)obj withName:(NSString*)name  {
