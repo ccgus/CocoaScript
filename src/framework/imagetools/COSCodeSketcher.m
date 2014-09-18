@@ -120,7 +120,8 @@ static NSMutableDictionary *JSTSketchers = nil;
 - (void)start {
     
     if (_setup) {
-        [_jstalk callJSFunction:[_setup JSObject] withArgumentsInArray:nil];
+        #pragma message "FIXME: fixme"
+        // [_jstalk callJSFunction:[_setup JSObject] withArgumentsInArray:nil];
     }
     
     [self setupWindow];
@@ -220,8 +221,8 @@ static NSMutableDictionary *JSTSketchers = nil;
     
     if (_drawRect) {
         [self pushContext];
-        
-        [_jstalk callJSFunction:[_drawRect JSObject] withArgumentsInArray:nil];
+        #pragma message "FIXME: fixme"
+        //[_jstalk callJSFunction:[_drawRect JSObject] withArgumentsInArray:nil];
         [self popContext];
     }
     
@@ -248,7 +249,8 @@ static NSMutableDictionary *JSTSketchers = nil;
     
     if (_mouseDown) {
         [self pushContext];
-        [_jstalk callJSFunction:[_mouseDown JSObject] withArgumentsInArray:[NSArray arrayWithObject:event]];
+        #pragma message "FIXME: fixme"
+        //[_jstalk callJSFunction:[_mouseDown JSObject] withArgumentsInArray:[NSArray arrayWithObject:event]];
         [self popContext];
         [self setNeedsDisplay:YES];
     }
@@ -261,7 +263,8 @@ static NSMutableDictionary *JSTSketchers = nil;
     
     if (_mouseUp) {
         [self pushContext];
-        [_jstalk callJSFunction:[_mouseUp JSObject] withArgumentsInArray:[NSArray arrayWithObject:event]];
+        #pragma message "FIXME: fixme"
+        //[_jstalk callJSFunction:[_mouseUp JSObject] withArgumentsInArray:[NSArray arrayWithObject:event]];
         [self popContext];
         [self setNeedsDisplay:YES];
     }
@@ -274,7 +277,8 @@ static NSMutableDictionary *JSTSketchers = nil;
     
     if (_mouseDragged) {
         [self pushContext];
-        [_jstalk callJSFunction:[_mouseDragged JSObject] withArgumentsInArray:[NSArray arrayWithObject:event]];
+        #pragma message "FIXME: fixme"
+        //[_jstalk callJSFunction:[_mouseDragged JSObject] withArgumentsInArray:[NSArray arrayWithObject:event]];
         [self popContext];
         [self setNeedsDisplay:YES];
     }
@@ -287,7 +291,8 @@ static NSMutableDictionary *JSTSketchers = nil;
     
     if (_mouseMoved) {
         [self pushContext];
-        [_jstalk callJSFunction:[_mouseMoved JSObject] withArgumentsInArray:[NSArray arrayWithObject:event]];
+        #pragma message "FIXME: fixme"
+        //[_jstalk callJSFunction:[_mouseMoved JSObject] withArgumentsInArray:[NSArray arrayWithObject:event]];
         [self popContext];
         [self setNeedsDisplay:YES];
     }

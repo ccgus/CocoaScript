@@ -33,6 +33,6 @@
  * 
  * @result An object, or nil
  */
-@property (strong, readonly) id value;
+@property (strong) id value;
 
 @end

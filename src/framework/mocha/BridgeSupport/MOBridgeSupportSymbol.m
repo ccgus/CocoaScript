@@ -11,8 +11,6 @@
 
 @implementation MOBridgeSupportSymbol
 
-@synthesize name=_name;
-
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@: %p : name=%@>", [self class], self, self.name];
 }
@@ -22,59 +20,30 @@
 
 @implementation MOBridgeSupportStruct
 
-@synthesize type=_type;
-@synthesize type64=_type64;
-@synthesize opaque=_opaque;
-
 @end
 
 
 @implementation MOBridgeSupportCFType
-
-@synthesize type=_type;
-@synthesize type64=_type64;
-
-@synthesize tollFreeBridgedClassName=_tollFreeBridgedClassName;
-@synthesize getTypeIDFunctionName=_getTypeIDFunctionName;
 
 @end
 
 
 @implementation MOBridgeSupportOpaque
 
-@synthesize type=_type;
-@synthesize type64=_type64;
-
-@synthesize hasMagicCookie=_hasMagicCookie;
-
 @end
 
 
 @implementation MOBridgeSupportConstant
-
-@synthesize type=_type;
-@synthesize type64=_type64;
-
-@synthesize hasMagicCookie=_hasMagicCookie;
 
 @end
 
 
 @implementation MOBridgeSupportStringConstant
 
-@synthesize value=_value;
-@synthesize hasNSString=_hasNSString;
-
 @end
 
 
 @implementation MOBridgeSupportEnum
-
-@synthesize value=_value;
-@synthesize value64=_value64;
-
-@synthesize ignored=_ignored;
-@synthesize suggestion=_suggestion;
 
 @end
 
@@ -82,12 +51,6 @@
 @implementation MOBridgeSupportFunction {
     NSMutableArray *_arguments;
 }
-
-@synthesize variadic=_variadic;
-@synthesize sentinel=_sentinel;
-@synthesize inlineFunction=_inlineFunction;
-
-@synthesize returnValue=_returnValue;
 
 - (id)init {
     self = [super init];
@@ -154,8 +117,6 @@
 
 
 @implementation MOBridgeSupportFunctionAlias
-
-@synthesize original=_original;
 
 @end
 
@@ -262,21 +223,6 @@
     NSMutableArray *_arguments;
 }
 
-@synthesize selector=_selector;
-
-@synthesize type=_type;
-@synthesize type64=_type64;
-
-@synthesize returnValue=_returnValue;
-
-@synthesize classMethod=_classMethod;
-
-@synthesize variadic=_variadic;
-@synthesize sentinel=_sentinel;
-
-@synthesize ignored=_ignored;
-@synthesize suggestion=_suggestion;
-
 - (id)init {
     self = [super init];
     if (self) {
@@ -315,30 +261,6 @@
 @implementation MOBridgeSupportArgument {
     NSMutableArray *_arguments;
 }
-
-@synthesize type=_type;
-@synthesize type64=_type64;
-
-@synthesize typeModifier=_typeModifier;
-
-@synthesize signature=_signature;
-@synthesize signature64=_signature64;
-
-@synthesize cArrayLengthInArg=_cArrayLengthInArg;
-@synthesize cArrayOfFixedLength=_cArrayOfFixedLength;
-@synthesize cArrayDelimitedByNull=_cArrayDelimitedByNull;
-@synthesize cArrayOfVariableLength=_cArrayOfVariableLength;
-@synthesize cArrayLengthInReturnValue=_cArrayLengthInReturnValue;
-
-@synthesize index=_index;
-
-@synthesize acceptsNull=_acceptsNull;
-@synthesize acceptsPrintfFormat=_acceptsPrintfFormat;
-
-@synthesize alreadyRetained=_alreadyRetained;
-@synthesize functionPointer=_functionPointer;
-
-@synthesize returnValue=_returnValue;
 
 - (id)init {
     self = [super init];

@@ -11,8 +11,27 @@
 
 @implementation NSArray (MochaAdditions)
 
++ (id)constructWithArguments:(NSArray *)arguments {
+    return [[self alloc] initWithArray:arguments];
+}
+
 - (id)mo_objectForIndexedSubscript:(NSUInteger)idx {
     return [self objectAtIndex:idx];
+}
+
+- (NSArray *)mo_objectsByApplyingBlock:(id (^)(id obj, NSUInteger idx, BOOL *stop))block {
+    __block NSMutableArray *objects = [NSMutableArray arrayWithCapacity:[self count]];
+    [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BOOL localStop = NO;
+        id value = block(obj, idx, &localStop);
+        if (value != nil) {
+            [objects addObject:value];
+        }
+        if (localStop == YES) {
+            *stop = YES;
+        }
+    }];
+    return objects;
 }
 
 @end

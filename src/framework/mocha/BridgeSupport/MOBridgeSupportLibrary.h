@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-
-@class MOBridgeSupportSymbol;
+#import "MOBridgeSupportSymbol.h"
 
 
 @interface MOBridgeSupportLibrary : NSObject
@@ -21,9 +19,9 @@
 - (void)addDependency:(NSString *)dependency;
 - (void)removeDependency:(NSString *)dependency;
 
-@property (copy) NSDictionary *symbols;
-- (MOBridgeSupportSymbol *)symbolWithName:(NSString *)name;
-- (void)setSymbol:(MOBridgeSupportSymbol *)symbol forName:(NSString *)name;
-- (void)removeSymbolForName:(NSString *)name;
+- (NSDictionary *)symbolsWithName:(NSString *)name;
+- (NSDictionary *)symbolsWithName:(NSString *)name types:(NSArray *)types;
+- (NSDictionary *)symbolsOfType:(NSString *)type;
+- (void)addSymbol:(MOBridgeSupportSymbol *)symbol;
 
 @end

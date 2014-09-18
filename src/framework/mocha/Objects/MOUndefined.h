@@ -14,7 +14,8 @@
  * @abstract Represents an "undefined" value, as passed from JavaScript to Objective-C
  * 
  * @discussion
- * Syntactically, the undefined value represents the return value of a function that returns 'void' in C.
+ * Syntactically, the undefined value represents the absence of a result,
+ * such as the return value of a function that returns 'void' in C.
  */
 @interface MOUndefined : NSObject
 

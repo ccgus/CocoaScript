@@ -11,10 +11,4 @@
 
 @implementation MOAllocator
 
-@synthesize objectClass=_objectClass;
-
-+ (MOAllocator *)allocator {
-    return [[self alloc] init];
-}
-
 @end

@@ -7,19 +7,12 @@
 //
 
 #import "MOStruct.h"
-#import "MochaRuntime.h"
+#import "MORuntime.h"
 
 
 @implementation MOStruct {
     NSArray *_memberNames;
     NSMutableDictionary *_memberValues;
-}
-
-@synthesize name=_name;
-@synthesize memberNames=_memberNames;
-
-+ (MOStruct *)structureWithName:(NSString *)name memberNames:(NSArray *)memberNames {
-    return [[self alloc] initWithName:name memberNames:memberNames];
 }
 
 - (id)initWithName:(NSString *)name memberNames:(NSArray *)memberNames {

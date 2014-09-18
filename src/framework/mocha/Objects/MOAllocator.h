@@ -20,18 +20,10 @@
  * its initialization message.
  * 
  * Any unimplemented message sent to this class will be forwarded to
- * the target object class. This will always be something along the lines
+ * the target object class. This should always be something along the lines
  * of -init or -initWith*:
  */
 @interface MOAllocator : NSObject
-
-/*!
- * @method allocator
- * @abstract Creates a new allocator
- * 
- * @result An MOAllocator object
- */
-+ (MOAllocator *)allocator;
 
 /*!
  * @property objectClass

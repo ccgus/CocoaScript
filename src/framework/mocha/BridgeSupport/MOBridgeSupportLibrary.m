@@ -11,17 +11,14 @@
 
 @implementation MOBridgeSupportLibrary {
     NSMutableArray *_dependencies;
-    NSMutableDictionary *_symbols;
+    NSMutableDictionary *_symbolsByType;
 }
-
-@synthesize name=_name;
-@synthesize URL=_URL;
 
 - (id)init {
     self = [super init];
     if (self) {
         _dependencies = [[NSMutableArray alloc] init];
-        _symbols = [[NSMutableDictionary alloc] init];
+        _symbolsByType = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -54,24 +51,42 @@
 #pragma mark -
 #pragma mark Symbols
 
-- (NSDictionary *)symbols {
-    return _symbols;
+- (NSDictionary *)symbolsWithName:(NSString *)name {
+    return [self symbolsWithName:name types:nil];
 }
 
-- (void)setSymbols:(NSDictionary *)symbols {
-    [_symbols setDictionary:symbols];
+- (NSDictionary *)symbolsWithName:(NSString *)name types:(NSArray *)types {
+    if (types == nil) {
+        types = [_symbolsByType allKeys];
+    }
+    
+    NSMutableDictionary *symbols = [NSMutableDictionary dictionaryWithCapacity:[_symbolsByType count]];
+    
+    for (NSString *className in types) {
+        NSDictionary *typeSymbols = _symbolsByType[className];
+        MOBridgeSupportSymbol *symbol = [typeSymbols objectForKey:name];
+        if (symbol != nil) {
+            [symbols setObject:symbol forKey:className];
+        }
+    }
+    
+    return symbols;
 }
 
-- (MOBridgeSupportSymbol *)symbolWithName:(NSString *)name {
-    return [_symbols objectForKey:name];
+- (NSDictionary *)symbolsOfType:(NSString *)type {
+    return [_symbolsByType objectForKey:type];
 }
 
-- (void)setSymbol:(MOBridgeSupportSymbol *)symbol forName:(NSString *)name {
-    [_symbols setObject:symbol forKey:name];
-}
-
-- (void)removeSymbolForName:(NSString *)name {
-    [_symbols removeObjectForKey:name];
+- (void)addSymbol:(MOBridgeSupportSymbol *)symbol {
+    NSString *name = symbol.name;
+    
+    NSMutableDictionary *symbolSet = [_symbolsByType objectForKey:NSStringFromClass([symbol class])];
+    if (symbolSet == nil) {
+        symbolSet = [NSMutableDictionary dictionary];
+        [_symbolsByType setObject:symbolSet forKey:NSStringFromClass([symbol class])];
+    }
+    
+    [symbolSet setObject:symbol forKey:name];
 }
 
 @end

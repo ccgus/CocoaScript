@@ -19,9 +19,6 @@
 
 @implementation MOPointerValue
 
-@synthesize pointerValue=_pointerValue;
-@synthesize typeEncoding=_typeEncoding;
-
 - (id)initWithPointerValue:(void *)pointerValue typeEncoding:(NSString *)typeEncoding {
     self = [super init];
     if (self) {

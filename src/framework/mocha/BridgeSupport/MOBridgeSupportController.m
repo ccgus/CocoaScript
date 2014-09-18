@@ -13,11 +13,13 @@
 
 #import "MOBridgeSupportParser.h"
 
+#import "NSArray+MochaAdditions.h"
+
 
 @implementation MOBridgeSupportController {
     NSMutableArray *_loadedURLs;
     NSMutableArray *_loadedLibraries;
-    NSMutableDictionary *_symbols;
+    NSLock *_loadedLibrariesLock;
     MOBridgeSupportParser *_parser;
 }
 
@@ -35,7 +37,7 @@
     if (self) {
         _loadedURLs = [[NSMutableArray alloc] init];
         _loadedLibraries = [[NSMutableArray alloc] init];
-        _symbols = [[NSMutableDictionary alloc] init];
+        _loadedLibrariesLock = [[NSLock alloc] init];
         _parser = [[MOBridgeSupportParser alloc] init];
     }
     return self;
@@ -59,18 +61,10 @@
         return NO;
     }
     
+    [_loadedLibrariesLock lock];
     [_loadedURLs addObject:aURL];
     [_loadedLibraries addObject:library];
-    
-    for (NSString *name in library.symbols) {
-        MOBridgeSupportSymbol *symbol = [library.symbols objectForKey:name];
-        if ([_symbols objectForKey:name] == nil) {
-            [_symbols setObject:symbol forKey:name];
-        }
-        else {
-            //NSLog(@"Symbol with name \"%@\" is already loaded.", name);
-        }
-    }
+    [_loadedLibrariesLock unlock];
     
     return YES;
 }
@@ -79,32 +73,50 @@
 #pragma mark -
 #pragma mark Queries
 
-- (NSDictionary *)symbols {
-    return _symbols;
+- (NSDictionary *)symbolsOfType:(Class)type {
+    NSMutableDictionary *symbols = [NSMutableDictionary dictionary];
+    
+    [_loadedLibrariesLock lock];
+    NSArray *loadedLibraries = [_loadedLibraries copy];
+    [_loadedLibrariesLock unlock];
+    
+    for (MOBridgeSupportLibrary *library in loadedLibraries) {
+        NSDictionary *librarySymbols = [library symbolsOfType:NSStringFromClass(type)];
+        [symbols addEntriesFromDictionary:librarySymbols];
+    }
+    
+    return symbols;
 }
 
-- (NSDictionary *)performQueryForSymbolsOfType:(NSArray *)classes {
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:[_symbols count]];
-    for (NSString *key in _symbols) {
-        MOBridgeSupportSymbol *symbol = [_symbols objectForKey:key];
-        for (Class klass in classes) {
-            if ([symbol isKindOfClass:klass]) {
-                [dictionary setObject:symbol forKey:[symbol name]];
-            }
+- (NSDictionary *)symbolsWithName:(NSString *)name types:(NSArray *)types {
+    NSMutableDictionary *symbols = [NSMutableDictionary dictionary];
+    
+    [_loadedLibrariesLock lock];
+    NSArray *loadedLibraries = [_loadedLibraries copy];
+    [_loadedLibrariesLock unlock];
+    
+    for (MOBridgeSupportLibrary *library in loadedLibraries) {
+        NSDictionary *librarySymbols = [library symbolsWithName:name types:[types mo_objectsByApplyingBlock:^id(id obj, NSUInteger idx, BOOL *stop) {
+            return NSStringFromClass(obj);
+        }]];
+        [symbols addEntriesFromDictionary:librarySymbols];
+    }
+    
+    return symbols;
+}
+
+- (id)symbolWithName:(NSString *)name type:(Class)type {
+    [_loadedLibrariesLock lock];
+    NSArray *loadedLibraries = [_loadedLibraries copy];
+    [_loadedLibrariesLock unlock];
+    
+    for (MOBridgeSupportLibrary *library in loadedLibraries) {
+        NSDictionary *symbols = [library symbolsWithName:name types:@[NSStringFromClass(type)]];
+        if ([symbols count] > 0) {
+            return [symbols objectForKey:NSStringFromClass(type)];
         }
     }
-    return dictionary;
-}
-
-- (id)performQueryForSymbolName:(NSString *)name {
-    return [_symbols objectForKey:name];
-}
-
-- (id)performQueryForSymbolName:(NSString *)name ofType:(Class)klass {
-    id symbol = [self performQueryForSymbolName:name];
-    if ([symbol isKindOfClass:klass]) {
-        return symbol;
-    }
+    
     return nil;
 }
 

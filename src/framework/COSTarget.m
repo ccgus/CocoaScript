@@ -39,9 +39,12 @@
         NSLog(@"_cosContext is nil when calling.  Did it dealloc or was it never set?");
     }
     
+    #pragma message "FIXME: fixme"
+    /*
     JSObjectRef actionRef = [[self jsFunction] JSObject];
     
     [_cosContext callJSFunction:actionRef withArgumentsInArray:@[sender]];
+    */
 }
 
 - (SEL)action {

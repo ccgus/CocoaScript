@@ -7,12 +7,18 @@
 //
 
 #import "MOPointer.h"
-#import "MOPointer_Private.h"
 
 
 @implementation MOPointer
 
-@synthesize value=_value;
++ (id)constructWithArguments:(NSArray *)arguments {
+    if ([arguments count] > 0) {
+        return [[self alloc] initWithValue:[arguments objectAtIndex:0]];
+    }
+    else {
+        return [[self alloc] init];
+    }
+}
 
 - (id)initWithValue:(id)value {
     self = [super init];
@@ -20,6 +26,13 @@
         self.value = value;
     }
     return self;
+}
+
+- (id)callWithArguments:(NSArray *)arguments {
+    if ([arguments count] == 0) {
+        self.value = arguments[0];
+    }
+    return self.value;
 }
 
 @end

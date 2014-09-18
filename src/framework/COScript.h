@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <JavaScriptCore/JavaScriptCore.h>
 
-@class Mocha;
+@class MORuntime;
 @class COScript;
 
 
@@ -19,7 +19,7 @@
 
 @interface COScript : NSObject {
     
-    Mocha *_mochaRuntime;
+    MORuntime *_mochaRuntime;
     
     NSMutableArray *_intervals;
 }

@@ -56,7 +56,8 @@
         
         CGContextClearRect(context, CGRectMake(0, 0, _size.width, _size.height));
         
-        [cos callJSFunction:[drawFunction JSObject] withArgumentsInArray:@[@(d * i)]];
+        #pragma message "FIXME: fixme"
+        //[cos callJSFunction:[drawFunction JSObject] withArgumentsInArray:@[@(d * i)]];
         
         CGImageRef r = CGBitmapContextCreateImage(context);
         

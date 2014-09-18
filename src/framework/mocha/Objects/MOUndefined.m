@@ -11,13 +11,22 @@
 
 @implementation MOUndefined
 
+static MOUndefined *__sharedInstance = nil;
+
 + (MOUndefined *)undefined {
-    static MOUndefined *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
+        __sharedInstance = [[self alloc] init];
     });
-    return sharedInstance;
+    return __sharedInstance;
+}
+
+- (BOOL)isEqual:(id)object {
+    return [object isKindOfClass:[MOUndefined class]];
+}
+
+- (NSUInteger)hash {
+    return [__sharedInstance hash];
 }
 
 @end

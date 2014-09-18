@@ -10,7 +10,7 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 
 
-@class Mocha;
+@class MORuntime;
 
 
 /*!
@@ -33,14 +33,14 @@
  * 
  * @result A JSObjectRef value
  */
-@property JSObjectRef JSObject;
+@property (assign) JSObjectRef JSObject;
 
 /*!
  * @property runtime
  * @abstract The runtime for the object
  * 
- * @result A Mocha object
+ * @result An MORuntime object
  */
-@property (weak) Mocha *runtime;
+@property (assign) MORuntime *runtime;
 
 @end

@@ -19,10 +19,8 @@
 - (BOOL)isBridgeSupportLoadedForURL:(NSURL *)aURL;
 - (BOOL)loadBridgeSupportAtURL:(NSURL *)aURL error:(NSError **)outError;
 
-@property (copy, readonly) NSDictionary *symbols;
-- (NSDictionary *)performQueryForSymbolsOfType:(NSArray *)classes;
-
-- (id)performQueryForSymbolName:(NSString *)name;
-- (id)performQueryForSymbolName:(NSString *)name ofType:(Class)klass;
+- (NSDictionary *)symbolsOfType:(Class)type;
+- (NSDictionary *)symbolsWithName:(NSString *)name types:(NSArray *)types;
+- (id)symbolWithName:(NSString *)name type:(Class)type;
 
 @end

@@ -16,20 +16,6 @@
 @interface MOStruct : NSObject
 
 /*!
- * @method structureWithName:memberNames:
- * @abstract Creates a new structure
- * 
- * @param name
- * The name of the structure
- * 
- * @param memberNames
- * The ordered list of member names of the structure
- * 
- * @result An MOStruct object
- */
-+ (MOStruct *)structureWithName:(NSString *)name memberNames:(NSArray *)memberNames;
-
-/*!
  * @method initWithName:memberNames:
  * @abstract Creates a new structure
  * 
@@ -52,6 +38,7 @@
  */
 @property (copy, readonly) NSString *name;
 
+
 /*!
  * @property memberNames
  * @abstract The ordered list of member names of the structure
@@ -59,7 +46,6 @@
  * @result An NSArray of NSString objects
  */
 @property (copy, readonly) NSArray *memberNames;
-
 
 /*!
  * @method objectForMemberName:
@@ -70,7 +56,7 @@
  * 
  * @discussion
  * This method raises an MORuntime exception if the structure has
- * no member named name.
+ * no member with the provided name.
  * 
  * @result An object, or nil
  */
@@ -88,7 +74,7 @@
  * 
  * @discussion
  * This method raises an MORuntime exception if the structure has
- * no member named name.
+ * no member with the provided name.
  */
 - (void)setObject:(id)obj forMemberName:(NSString *)name;
 

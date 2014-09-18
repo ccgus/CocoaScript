@@ -100,7 +100,7 @@
         symbol.type = [attributeDict objectForKey:@"type"];
         symbol.type64 = [attributeDict objectForKey:@"type64"];
         symbol.opaque = [[attributeDict objectForKey:@"opaque"] isEqualToString:@"true"];
-        [_library setSymbol:symbol forName:symbol.name];
+        [_library addSymbol:symbol];
     }
     else if ([elementName isEqualToString:@"cftype"]) {
         // CFType
@@ -110,7 +110,7 @@
         symbol.type64 = [attributeDict objectForKey:@"type64"];
         symbol.tollFreeBridgedClassName = [attributeDict objectForKey:@"tollfree"];
         symbol.getTypeIDFunctionName = [attributeDict objectForKey:@"gettypeid_func"];
-        [_library setSymbol:symbol forName:symbol.name];
+        [_library addSymbol:symbol];
     }
     else if ([elementName isEqualToString:@"opaque"]) {
         // Opaque
@@ -118,7 +118,7 @@
         symbol.name = [attributeDict objectForKey:@"name"];
         symbol.type = [attributeDict objectForKey:@"type"];
         symbol.type64 = [attributeDict objectForKey:@"type64"];
-        [_library setSymbol:symbol forName:symbol.name];
+        [_library addSymbol:symbol];
     }
     else if ([elementName isEqualToString:@"constant"]) {
         // Constant
@@ -127,7 +127,7 @@
         symbol.type = [attributeDict objectForKey:@"type"];
         symbol.type64 = [attributeDict objectForKey:@"type64"];
         symbol.hasMagicCookie = [[attributeDict objectForKey:@"magic_cookie"] isEqualToString:@"true"];
-        [_library setSymbol:symbol forName:symbol.name];
+        [_library addSymbol:symbol];
     }
     else if ([elementName isEqualToString:@"string_constant"]) {
         // String constant
@@ -135,7 +135,7 @@
         symbol.name = [attributeDict objectForKey:@"name"];
         symbol.value = [attributeDict objectForKey:@"value"];
         symbol.hasNSString = [[attributeDict objectForKey:@"nsstring"] isEqualToString:@"true"];
-        [_library setSymbol:symbol forName:symbol.name];
+        [_library addSymbol:symbol];
     }
     else if ([elementName isEqualToString:@"enum"]) {
         // Enum
@@ -149,7 +149,7 @@
         }
         symbol.ignored = [[attributeDict objectForKey:@"ignore"] isEqualToString:@"true"];
         symbol.suggestion = [attributeDict objectForKey:@"suggestion"];
-        [_library setSymbol:symbol forName:symbol.name];
+        [_library addSymbol:symbol];
     }
     else if ([elementName isEqualToString:@"function"]) {
         // Function
@@ -160,7 +160,7 @@
             symbol.sentinel = [NSNumber numberWithInteger:[[attributeDict objectForKey:@"sentinel"] integerValue]];
         }
         symbol.inlineFunction = [[attributeDict objectForKey:@"inline"] isEqualToString:@"true"];
-        [_library setSymbol:symbol forName:symbol.name];
+        [_library addSymbol:symbol];
         
         [_symbolStack addObject:symbol];
     }
@@ -169,20 +169,20 @@
         MOBridgeSupportFunctionAlias *symbol = [[MOBridgeSupportFunctionAlias alloc] init];
         symbol.name = [attributeDict objectForKey:@"name"];
         symbol.original = [attributeDict objectForKey:@"original"];
-        [_library setSymbol:symbol forName:symbol.name];
+        [_library addSymbol:symbol];
     }
     else if ([elementName isEqualToString:@"class"]) {
         // Class
         MOBridgeSupportClass *symbol = [[MOBridgeSupportClass alloc] init];
         symbol.name = [attributeDict objectForKey:@"name"];
-        [_library setSymbol:symbol forName:symbol.name];
+        [_library addSymbol:symbol];
         [_symbolStack addObject:symbol];
     }
     else if ([elementName isEqualToString:@"informal_protocol"]) {
         // Informal protocol
         MOBridgeSupportInformalProtocol *symbol = [[MOBridgeSupportInformalProtocol alloc] init];
         symbol.name = [attributeDict objectForKey:@"name"];
-        [_library setSymbol:symbol forName:symbol.name];
+        [_library addSymbol:symbol];
         [_symbolStack addObject:symbol];
     }
     else if ([elementName isEqualToString:@"method"]) {

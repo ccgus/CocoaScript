@@ -48,7 +48,8 @@
 
 - (void)timerHit:(NSTimer*)timer {
     
-    [_coscript callJSFunction:[_jsfunc JSObject] withArgumentsInArray:@[self]];
+    #pragma message "FIXME: fixme"
+    //[_coscript callJSFunction:[_jsfunc JSObject] withArgumentsInArray:@[self]];
     
     if (_onshot) {
         [self cancel];

@@ -216,8 +216,26 @@
     
 }
 
+
+- (void)dispatchInBackground:(void (^)(void))block {
+    
+    if (!block) {
+        debug(@"no block!");
+        return;
+    }
+    
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), block);
+    
+}
+
 - (IBAction)executeScriptAsJSAutomation:(id)sender {
     
+    
+    if ([JSTPrefs boolForKey:@"clearConsoleOnRun"]) {
+        [self clearConsole:nil];
+    }
     
     NSString *fwPath = [[NSBundle mainBundle] privateFrameworksPath];
     fwPath = [fwPath stringByAppendingPathComponent:@"CocoaScript.framework"];
@@ -238,8 +256,6 @@
         NSAppleEventDescriptor *desc = [osa executeHandlerWithName:@"main" arguments:@[] error:&outDict];
         (void)desc;
         
-        debug(@"outDict: '%@'", outDict);
-        
         if (outDict) {
             NSLog(@"Error running: %@", outDict);
             
@@ -254,10 +270,10 @@
             
             if ([outDict objectForKey:NSLocalizedDescriptionKey]) {
                 NSString *s = [outDict objectForKey:NSLocalizedDescriptionKey];
-                [[[outputTextView textStorage] mutableString] setString:s];
+                [self print:s];
             }
             else {
-                [[[outputTextView textStorage] mutableString] setString:[outDict description]];
+                [self print:[outDict description]];
             }
             
             
@@ -277,7 +293,7 @@
             [jsTextView setSelectedRange:r];
         }
         
-        [[[outputTextView textStorage] mutableString] setString:[outDict description]];
+        [self print:[outDict description]];
     }
 
 

@@ -12,7 +12,8 @@
 #import "COScript+Interval.h"
 
 #import <ScriptingBridge/ScriptingBridge.h>
-#import "MochaRuntime.h"
+#import "MORuntime.h"
+#import "Mocha.h"
 #import "MOMethod.h"
 #import "MOUndefined.h"
 #import "MOBridgeSupportController.h"
@@ -27,11 +28,14 @@ static NSMutableArray *JSTalkPluginList;
 
 static id<CODebugController> CODebugController = nil;
 
-@interface Mocha (Private)
+@interface MORuntime (Private)
+- (JSGlobalContextRef)context;
+/*
 - (JSValueRef)setObject:(id)object withName:(NSString *)name;
 - (BOOL)removeObjectWithName:(NSString *)name;
 - (JSValueRef)callJSFunction:(JSObjectRef)jsFunction withArgumentsInArray:(NSArray *)arguments;
 - (id)objectForJSValue:(JSValueRef)value;
+*/
 @end
 
 @interface COScript (Private)
@@ -73,7 +77,7 @@ void COScriptDebug(NSString* format, ...) {
 - (id)init {
 	self = [super init];
 	if ((self != nil)) {
-        _mochaRuntime = [[Mocha alloc] init];
+        _mochaRuntime = [[MORuntime alloc] init];
         
         [self setEnv:[NSMutableDictionary dictionary]];
         [self setShouldPreprocess:YES];
@@ -101,7 +105,8 @@ void COScriptDebug(NSString* format, ...) {
     [self deleteObjectWithName:@"print"];
     [self deleteObjectWithName:@"log"];
     
-    [_mochaRuntime shutdown];
+    #pragma message "FIXME: fixme"
+    //[_mochaRuntime shutdown];
     
 }
 
@@ -109,7 +114,8 @@ void COScriptDebug(NSString* format, ...) {
     
     NSTimeInterval start = [NSDate timeIntervalSinceReferenceDate];
     
-    [_mochaRuntime garbageCollect];
+    #pragma message "FIXME: fixme"
+    //[_mochaRuntime garbageCollect];
     
     debug(@"gc took %f seconds", [NSDate timeIntervalSinceReferenceDate] - start);
 }
@@ -124,9 +130,9 @@ void COScriptDebug(NSString* format, ...) {
     [self pushObject:self withName:@"jstalk"];
     [self pushObject:self withName:@"coscript"];
     
-    [_mochaRuntime evalString:@"var nil=null;\n"];
-    [_mochaRuntime setValue:[MOMethod methodWithTarget:self selector:@selector(print:)] forKey:@"print"];
-    [_mochaRuntime setValue:[MOMethod methodWithTarget:self selector:@selector(print:)] forKey:@"log"];
+    [_mochaRuntime evaluateString:@"var nil=null;\n"];
+    [_mochaRuntime setGlobalObject:[MOMethod methodWithTarget:self selector:@selector(print:)] withName:@"print"];
+    [_mochaRuntime setGlobalObject:[MOMethod methodWithTarget:self selector:@selector(print:)] withName:@"log"];
     
     [_mochaRuntime loadFrameworkWithName:@"AppKit"];
     [_mochaRuntime loadFrameworkWithName:@"Foundation"];
@@ -302,11 +308,15 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 }
 
 - (void)pushObject:(id)obj withName:(NSString*)name  {
-    [_mochaRuntime setObject:obj withName:name];
+    #pragma message "FIXME: test this."
+    [_mochaRuntime setGlobalObject:obj withName:name];
+//    [_mochaRuntime setObject:obj withName:name];
 }
 
 - (void)deleteObjectWithName:(NSString*)name {
-    [_mochaRuntime removeObjectWithName:name];
+    [_mochaRuntime removeGlobalObjectWithName:name];
+    #pragma message "FIXME: test this"
+//    [_mochaRuntime removeObjectWithName:name];
 }
 
 
@@ -336,7 +346,8 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
     
     @try {
 
-        resultObj = [_mochaRuntime evalString:str atURL:base];
+        #pragma message "FIXME: bring back the base url"
+        resultObj = [_mochaRuntime evaluateString:str]; //evalString:str atURL:base];
 
         if (resultObj == [MOUndefined undefined]) {
             resultObj = nil;
@@ -382,7 +393,8 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
         
         [self pushAsCurrentCOScript];
         
-        returnValue = [_mochaRuntime callFunctionWithName:name withArgumentsInArray:args];
+        #pragma message "FIXME: fixme"
+        //returnValue = [_mochaRuntime callFunctionWithName:name withArgumentsInArray:args];
         
         if (returnValue == [MOUndefined undefined]) {
             returnValue = nil;
@@ -406,7 +418,8 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
     
     JSValueRef r = nil;
     @try {
-        r = [_mochaRuntime callJSFunction:jsFunction withArgumentsInArray:arguments];
+        #pragma message "FIXME: fixme"
+        //r = [_mochaRuntime callJSFunction:jsFunction withArgumentsInArray:arguments];
     }
     @catch (NSException * e) {
         NSLog(@"Exception: %@", e);
@@ -417,7 +430,8 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
     [self popAsCurrentCOScript];
     
     if (r) {
-        return [_mochaRuntime objectForJSValue:r];
+        #pragma message "FIXME: fixme"
+        // return [_mochaRuntime objectForJSValue:r];
     }
     
     return nil;
@@ -426,8 +440,8 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 - (void)unprotect:(id)o {
     
     
-    
-    JSValueRef value = [_mochaRuntime JSValueForObject:o];
+    #pragma message "FIXME: fixme"
+    JSValueRef value = nil;// [_mochaRuntime JSValueForObject:o];
     
     assert(value);
     
@@ -445,8 +459,8 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 
 - (void)protect:(id)o {
     
-    
-    JSValueRef value = [_mochaRuntime JSValueForObject:o];
+    #pragma message "FIXME: fixme"
+    JSValueRef value = nil;//[_mochaRuntime JSValueForObject:o];
     
     
     assert(value);
@@ -472,6 +486,10 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 
 - (void)include:(NSString*)fileName {
     
+    NSLog(@"Don't call include, it's a bad idea");
+    abort();
+    
+    /*
     if (![fileName hasPrefix:@"/"] && [_env objectForKey:@"scriptURL"]) {
         NSString *parentDir = [[[_env objectForKey:@"scriptURL"] path] stringByDeletingLastPathComponent];
         fileName = [parentDir stringByAppendingPathComponent:fileName];
@@ -491,7 +509,8 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
         str = [COSPreprocessor preprocessCode:str];
     }
     
-    [_mochaRuntime evalString:str];
+    [_mochaRuntime evaluateString:str];
+    */
 }
 
 - (void)printException:(NSException*)e {

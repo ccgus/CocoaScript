@@ -7,25 +7,65 @@
 //
 
 #import "MOMethod.h"
-#import "MOMethod_Private.h"
+
+#import "MOBridgeSupportController.h"
+#import "MOBridgeSupportSymbol.h"
+
+#import "MOFunctionInvocation.h"
+
+
+@interface MOMethod ()
+
+@property (strong, readwrite) id target;
+@property (readwrite) SEL selector;
+
+@end
 
 
 @implementation MOMethod
-
-@synthesize target=_target;
-@synthesize selector=_selector;
-@synthesize block=_block;
 
 + (MOMethod *)methodWithTarget:(id)target selector:(SEL)selector {
     MOMethod *method = [[self alloc] init];
     method.target = target;
     method.selector = selector;
-    return method;
-}
-
-+ (MOMethod *)methodWithBlock:(id)block {
-    MOMethod *method = [[self alloc] init];
-    method.block = block;
+    
+    // Determine the retain semantics of the method via BridgeSupport
+    BOOL matchFound = NO;
+    Class searchClass = [target class];
+    while (searchClass != Nil) {
+        MOBridgeSupportClass *aClass = [[MOBridgeSupportController sharedController] symbolWithName:NSStringFromClass(searchClass) type:[MOBridgeSupportClass class]];
+        MOBridgeSupportMethod *bridgeMethod = [aClass methodWithSelector:selector];
+        if (method != nil) {
+            matchFound = YES;
+            method.returnsRetained = [[bridgeMethod returnValue] isAlreadyRetained];
+            method.variadic = [bridgeMethod isVariadic];
+            break;
+        }
+        searchClass = [searchClass superclass];
+    }
+    if (!matchFound) {
+        // Compare method names with standard Cocoa conventions
+        NSString *methodName = NSStringFromSelector(selector);
+        if ([methodName hasPrefix:@"init"]) {
+            // -init...
+            if ([methodName length] > 4 && [[NSCharacterSet uppercaseLetterCharacterSet] characterIsMember:[methodName characterAtIndex:4]]) {
+                method.returnsRetained = YES;
+            }
+            else if ([methodName length] == 4) {
+                method.returnsRetained = YES;
+            }
+        }
+        else if ([methodName hasPrefix:@"copy"]) {
+            // -copy...
+            if ([methodName length] > 4 && [[NSCharacterSet uppercaseLetterCharacterSet] characterIsMember:[methodName characterAtIndex:4]]) {
+                method.returnsRetained = YES;
+            }
+            else if ([methodName length] == 4) {
+                method.returnsRetained = YES;
+            }
+        }
+    }
+    
     return method;
 }
 
