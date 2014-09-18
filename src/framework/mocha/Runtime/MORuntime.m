@@ -1384,8 +1384,21 @@ static JSValueRef MOJSPrototypeFunctionForOBJCInstance(JSContextRef ctx, id inst
     jsPropertyValue = JSObjectGetProperty(ctx, JSValueToObject(ctx, jsPropertyValue, nil), jsPropertyName, &exception);
     JSStringRelease(jsPropertyName);
     
+    debug(@"propName: '%s'", propName);
+    
+    debug(@"jsPropertyValue: %p", jsPropertyValue);
+    
+    if ((int)jsPropertyValue == 0xa) {
+        debug(@"ffffffffff");
+    }
+    
     jsPropertyName = JSStringCreateWithUTF8CString([name UTF8String]);
-    jsPropertyValue = JSObjectGetProperty(ctx, JSValueToObject(ctx, jsPropertyValue, nil), jsPropertyName, &exception);
+    
+    JSObjectRef a = JSValueToObject(ctx, jsPropertyValue, nil);
+    
+    assert(a);
+    
+    jsPropertyValue = JSObjectGetProperty(ctx, a, jsPropertyName, &exception);
     JSStringRelease(jsPropertyName);
     
     if (jsPropertyValue && JSValueGetType(ctx, jsPropertyValue) == kJSTypeObject) {
