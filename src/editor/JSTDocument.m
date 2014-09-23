@@ -308,6 +308,17 @@
     return [super respondsToSelector:aSelector];
 }
 
+/*
++ (BOOL)conformsToProtocol:(Protocol *)protocol {
+    debug(@"protocol: '%@'", protocol);
+    return YES;
+}
+
+- (BOOL)conformsToProtocol:(Protocol *)aProtocol {
+    debug(@"aProtocol: '%@'", NSStringFromProtocol(aProtocol));
+    return YES;
+}
+*/
 - (void)executeScriptViaJSVal:(id)sender {
     
     if ([JSTPrefs boolForKey:@"clearConsoleOnRun"]) {
@@ -317,21 +328,30 @@
     
     JSContext *ctx = [[JSContext alloc] init];
     
+    /*
     MOBridgeSupportController *c = [MOBridgeSupportController sharedController];
     
     for (MOBridgeSupportLibrary *l in [c loadedLibraries]) {
         debug(@"[l dependencies]: '%@'", [l dependencies]);
         debug(@"[l symbolsWithName:@\"NSString\"]: '%@'", [l symbolsWithName:@"NSString"]);
     }
-    
-    
-    ctx[@"doc"] = self;
-    ctx[@"log"] = ^(JSValue *msg) {
+    */
+    ctx[@"root"] = self;
+    ctx[@"print"] = ^(JSValue *msg) {
         NSLog(@"JavaScript %@ log message: %@", [JSContext currentContext], msg);
+        [self print:[msg toObject]];
     };
     
     
+    ctx[@"NSDictionary"] = [NSDictionary class];
+    ctx[@"NSMutableString"] = [NSMutableString class];
+    
+    ctx[@"$"] = ^{
+        return self;
+    };
+    
     [ctx setExceptionHandler:^(JSContext *c, JSValue *exception) {
+        
         NSDictionary *d = [exception toDictionary];
         
         NSUInteger lineNumber = [[d objectForKey:@"line"] unsignedIntegerValue];
@@ -348,7 +368,8 @@
             [jsTextView showFindIndicatorForRange:lineRange];
         }
         
-        [self print:[d description]];
+        [self print:[exception toString]];
+        //[self print:[d description]];
     }];
     
     NSString *script = [[jsTextView textStorage] string];
