@@ -12,6 +12,8 @@
 #import "COScript.h"
 #import "COSPreprocessor.h"
 #import <OSAKit/OSAKit.h>
+#import "MOBridgeSupportController.h"
+#import "MOBridgeSupportLibrary.h"
 
 @interface JSTDocument (SuperSecretItsPrivateDontEvenThinkOfUsingTheseMethodsOutsideThisClass)
 - (void)updateFont:(id)sender;
@@ -143,7 +145,7 @@
     
 }
 
-- (void)JSTalk:(COScript*)jstalk hadError:(NSString*)error onLineNumber:(NSInteger)lineNumber atSourceURL:(id)url {
+- (void)coscript:(COScript*)cos hadError:(NSString*)error onLineNumber:(NSInteger)lineNumber atSourceURL:(id)url {
     
     if (!error) {
         return;
@@ -299,7 +301,61 @@
 
 }
 
+- (BOOL)xrespondsToSelector:(SEL)aSelector {
+    
+    debug(@"aSelector: '%@'", NSStringFromSelector(aSelector));
+    
+    return [super respondsToSelector:aSelector];
+}
 
+- (void)executeScriptViaJSVal:(id)sender {
+    
+    if ([JSTPrefs boolForKey:@"clearConsoleOnRun"]) {
+        [self clearConsole:nil];
+    }
+    
+    
+    JSContext *ctx = [[JSContext alloc] init];
+    
+    MOBridgeSupportController *c = [MOBridgeSupportController sharedController];
+    
+    for (MOBridgeSupportLibrary *l in [c loadedLibraries]) {
+        debug(@"[l dependencies]: '%@'", [l dependencies]);
+        debug(@"[l symbolsWithName:@\"NSString\"]: '%@'", [l symbolsWithName:@"NSString"]);
+    }
+    
+    
+    ctx[@"doc"] = self;
+    ctx[@"log"] = ^(JSValue *msg) {
+        NSLog(@"JavaScript %@ log message: %@", [JSContext currentContext], msg);
+    };
+    
+    
+    [ctx setExceptionHandler:^(JSContext *c, JSValue *exception) {
+        NSDictionary *d = [exception toDictionary];
+        
+        NSUInteger lineNumber = [[d objectForKey:@"line"] unsignedIntegerValue];
+        NSUInteger lineIdx = 0;
+        NSRange lineRange  = NSMakeRange(0, 0);
+        
+        while (lineIdx < lineNumber) {
+            
+            lineRange = [[[jsTextView textStorage] string] lineRangeForRange:NSMakeRange(NSMaxRange(lineRange), 0)];
+            lineIdx++;
+        }
+        
+        if (lineRange.length) {
+            [jsTextView showFindIndicatorForRange:lineRange];
+        }
+        
+        [self print:[d description]];
+    }];
+    
+    NSString *script = [[jsTextView textStorage] string];
+    
+    [ctx evaluateScript:script];
+    
+}
 
 - (void)executeScript:(id)sender {
     
@@ -308,6 +364,11 @@
         return;
     }
     
+    
+    if ([[[jsTextView textStorage] string] hasPrefix:@"//jsval"]) {
+        [self executeScriptViaJSVal:sender];
+        return;
+    }
     
     [self runScript:[[jsTextView textStorage] string]];
 }

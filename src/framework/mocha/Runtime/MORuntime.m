@@ -233,7 +233,7 @@ NSString * MOPropertyNameToSetterName(NSString *propertyName);
 
 - (void)removeBoxAssociationForObject:(id)object {
     if (object != nil) {
-        [_objectsToBoxes removeObjectForKey:object];
+        //[_objectsToBoxes removeObjectForKey:object];
     }
 }
 
@@ -876,11 +876,17 @@ static void MOObject_finalize(JSObjectRef object) {
 static bool MOObject_hasProperty(JSContextRef ctx, JSObjectRef objectJS, JSStringRef propertyNameJS) {
     NSString *propertyName = (NSString *)CFBridgingRelease(JSStringCopyCFString(NULL, propertyNameJS));
     
+    
 //    Mocha *runtime = [Mocha runtimeWithContext:ctx];
     
     id private = (__bridge id)(JSObjectGetPrivate(objectJS));
     id object = [private representedObject];
     Class objectClass = [object class];
+    
+    if ([propertyName isEqualToString:@"dateFromString_"]) {
+        debug(@"%@ object: '%@' / %p", propertyName, NSStringFromClass([object class]), object);
+        debug(@"%@ private: '%@'", propertyName, private);
+    }
     
     // String conversion
     if ([propertyName isEqualToString:@"toString"]) {
@@ -1354,6 +1360,7 @@ static JSValueRef MOObject_callAsFunction(JSContextRef ctx, JSObjectRef function
         return MOFunctionInvoke(function, ctx, argumentCount, arguments, exception);
     }
     else {
+        debug(@"private: '%@'", private);
         debug(@"function type: %@", NSStringFromClass([function class]));
         debug(@"function: '%@'", function);
         NSException *e = [NSException exceptionWithName:NSInvalidArgumentException reason:@"Object cannot be called as a function" userInfo:nil];

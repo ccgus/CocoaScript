@@ -11,4 +11,11 @@
 
 @implementation MOBox
 
+- (void)dealloc {
+    
+    debug(@"representedObject: '%p'", _representedObject);
+    debug(@"%s:%d", __FUNCTION__, __LINE__);
+}
+
+
 @end

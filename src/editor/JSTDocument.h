@@ -11,7 +11,20 @@
 #import "JSTTextView.h"
 #import "JSTFileWatcher.h"
 
-@interface JSTDocument : NSDocument <NSToolbarDelegate> {
+#define JSC_OBJC_API_ENABLED 1
+
+//@import JavaScriptCore;
+
+#import <JavaScriptCore/JSBase.h>
+#import <JavaScriptCore/JSContext.h>
+#import <JavaScriptCore/JSExport.h>
+
+@protocol JSTDocumentScriptMethods <JSExport>
+- (void)print:(id)f;
+@end
+
+
+@interface JSTDocument : NSDocument <NSToolbarDelegate, JSTDocumentScriptMethods> {
     IBOutlet JSTTextView *jsTextView;
     IBOutlet NSTextView *outputTextView;
     IBOutlet NSSplitView *splitView;

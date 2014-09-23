@@ -77,7 +77,7 @@ void COScriptDebug(NSString* format, ...) {
 - (id)init {
 	self = [super init];
 	if ((self != nil)) {
-        _mochaRuntime = [[MORuntime alloc] init];
+        _mochaRuntime = [[MORuntime alloc] initWithOptions:MORuntimeOptionAutomaticReferenceCounting];
         
         [self setEnv:[NSMutableDictionary dictionary]];
         [self setShouldPreprocess:YES];
@@ -136,6 +136,7 @@ void COScriptDebug(NSString* format, ...) {
     
     [_mochaRuntime loadFrameworkWithName:@"AppKit"];
     [_mochaRuntime loadFrameworkWithName:@"Foundation"];
+    [_mochaRuntime loadFrameworkWithName:@"CoreGraphics"];
 }
 
 + (void)loadExtraAtPath:(NSString*)fullPath {
@@ -356,6 +357,9 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
     @catch (NSException *e) {
         
         NSDictionary *d = [e userInfo];
+        
+        debug(@"_errorController: '%@'", _errorController);
+        
         if ([d objectForKey:@"line"]) {
             if ([_errorController respondsToSelector:@selector(coscript:hadError:onLineNumber:atSourceURL:)]) {
                 [_errorController coscript:self hadError:[e reason] onLineNumber:[[d objectForKey:@"line"] integerValue] atSourceURL:nil];
@@ -392,6 +396,9 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
     @try {
         
         [self pushAsCurrentCOScript];
+        
+              
+        [[_mochaRuntime globalObjectWithName:name] callWithArguments:args];
         
         #pragma message "FIXME: fixme"
         //returnValue = [_mochaRuntime callFunctionWithName:name withArgumentsInArray:args];

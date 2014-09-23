@@ -26,7 +26,7 @@ function makePointObject(x, y) {
             var radius = 2;
             var r = NSMakeRect(this.x - radius, this.y - radius, radius*2, radius*2);
             var path = [NSBezierPath bezierPathWithOvalInRect:r];
-            [[NSColor blueColor] set]
+            //[[NSColor blueColor] set]
             [path fill];
         },
         
@@ -43,20 +43,22 @@ var points = [sp, ep, cp1, cp2];
 var movingPoint = null;
 
 sketcher.setup = function() {
+    print("setup")
     [sketcher setSize:NSMakeSize(600, 600)];
     [sketcher clear];
 };
 
 sketcher.drawRect = function() {
+    print("drawing")
     var path = [NSBezierPath bezierPath];
     [sketcher clear];
     
-    [[NSColor greenColor] set];
+    //[[NSColor greenColor] set];
     [NSBezierPath strokeLineFromPoint:sp toPoint:cp1];
     [NSBezierPath strokeLineFromPoint:ep toPoint:cp2];
     
     
-    [[NSColor blackColor] set];
+    //[[NSColor blackColor] set];
     [path moveToPoint:sp.nsp()];
     [path curveToPoint:ep.nsp() controlPoint1:cp1.nsp() controlPoint2:cp2.nsp()];
     [path stroke];
@@ -67,8 +69,8 @@ sketcher.drawRect = function() {
 }
 
 sketcher.mouseDown = function(event) {
-    
-    var loc = [sketcher mouseLocation];
+    print("Mouse down")
+    var loc = sketcher.mouseLocation;
     
     points.forEach(function(p) {
         if (p.inPoint(loc)) {
@@ -79,12 +81,13 @@ sketcher.mouseDown = function(event) {
 };
 
 sketcher.mouseUp = function (event) {
+    print("Mouse up")
     movingPoint = null;
 }
 
 sketcher.mouseDragged = function(event) {
-    
-    var loc = [sketcher mouseLocation];
+    print("Mouse drag")
+    var loc = sketcher.mouseLocation;
     
     if (movingPoint) {
         movingPoint.x = loc.x;

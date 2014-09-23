@@ -364,6 +364,10 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
             if (exception != NULL) {
                 *exception = [runtime JSValueForObject:e inContext:ctx];
             }
+            
+            NSLog(@"Exception calling target '%@' function %@", target, function);
+            
+            
             return NULL;
         }
     }

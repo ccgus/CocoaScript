@@ -120,4 +120,12 @@
     return nil;
 }
 
+- (NSArray*)loadedLibraries {
+    [_loadedLibrariesLock lock];
+    NSArray *loadedLibraries = [_loadedLibraries copy];
+    [_loadedLibrariesLock unlock];
+    
+    return loadedLibraries;
+}
+
 @end

@@ -52,7 +52,7 @@
 @property (retain) NSGraphicsContext *nsContext;
 @property (assign) NSSize size;
 
-//@property (strong) MOJavaScriptObject *drawRect;
+@property (strong) MOJavaScriptObject *drawRect;
 @property (strong) MOJavaScriptObject *setup;
 @property (strong) MOJavaScriptObject *mouseMoved;
 @property (strong) MOJavaScriptObject *mouseUp;
@@ -61,8 +61,6 @@
 
 - (void)stop;
 - (void)start;
-
-- (void)setDrawRect:(MOJavaScriptObject *)drawRect;
 
 
 @end

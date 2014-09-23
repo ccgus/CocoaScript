@@ -23,4 +23,6 @@
 - (NSDictionary *)symbolsWithName:(NSString *)name types:(NSArray *)types;
 - (id)symbolWithName:(NSString *)name type:(Class)type;
 
+- (NSArray*)loadedLibraries;
+
 @end

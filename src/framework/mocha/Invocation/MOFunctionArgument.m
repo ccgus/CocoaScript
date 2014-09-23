@@ -572,7 +572,7 @@ typedef struct { char a; BOOL b; } struct_C_BOOL;
 #if __LP64__
     id type = ([symbol respondsToSelector:@selector(type64)] ? [symbol type64] : nil);
     if (type == nil) {
-        type = ([symbol respondsToSelector:@selector(type)] ? [symbol type] : nil);
+        type = ([symbol respondsToSelector:@selector(type)] ? [(MOBridgeSupportStruct*)symbol type] : nil);
     }
 #else
     id type = ([symbol respondsToSelector:@selector(type)] ? [symbol type] : nil);
