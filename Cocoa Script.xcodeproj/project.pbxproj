@@ -23,7 +23,7 @@
 		CC4143520F25261200E46669 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC5B8A40F1EFA6D00126722 /* JavaScriptCore.framework */; };
 		CC4143530F25261300E46669 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		CC4143620F2527CD00E46669 /* CocoaScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC41431A0F25254200E46669 /* CocoaScript.framework */; };
-		CC4143660F2527E400E46669 /* CocoaScript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CC41431A0F25254200E46669 /* CocoaScript.framework */; };
+		CC4143660F2527E400E46669 /* CocoaScript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CC41431A0F25254200E46669 /* CocoaScript.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CC5EDD4D1237F6DF00E0D965 /* JSTalkStatusIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CC5EDD4C1237F6DF00E0D965 /* JSTalkStatusIcon.png */; };
 		CC5EDD531237F71300E0D965 /* JSTalkStatusIconAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = CC5EDD521237F71300E0D965 /* JSTalkStatusIconAlt.png */; };
 		CC5FB7DF0F1FDE3800F4ECC2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -1232,7 +1232,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "Cocoa Script" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1574,8 +1574,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1600,8 +1602,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
