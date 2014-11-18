@@ -521,7 +521,7 @@ unsigned TE_expandVariablesInString(NSMutableString *input, NSString *variableSt
         replacement = nil;
         [invocation getReturnValue:&replacement];
 #else
-        replacement = objc_msgSend(modalDelegate, callbackSelector, varName, input, varRange, replacementRange, context);
+        replacement = ((NSString* (*)(id, SEL, id, id, NSRange, NSRange, void*))objc_msgSend)(modalDelegate, callbackSelector, varName, input, varRange, replacementRange, context);
 #endif
         
         if (replacement) {
