@@ -180,7 +180,7 @@
     return buffer;
 }
 
-+ (NSString*)processImports:(NSString*)sourceString withBaseURL:(NSURL*)base {
++ (NSString*)processImports:(NSString*)sourceString withBaseURL:(NSURL*)base importedURLs:(NSMutableArray *)importedURLs {
     
     /*
      
@@ -198,7 +198,6 @@
     TDToken *tok                    = nil;
     
     BOOL lastWasAtSym               = NO;
-    
     
     while ((tok = [tokenizer nextToken]) != eof) {
         
@@ -228,16 +227,23 @@
                     }
                     
                     if (importURL) {
-                        NSError *outErr = nil;
-                        NSString *s = [NSString stringWithContentsOfURL:importURL encoding:NSUTF8StringEncoding error:&outErr];
-                        
-                        if (s) {
-                            [buffer appendFormat:@"// imported from %@", [importURL path]];
-                            [buffer appendString:s];
+                        if ([importedURLs containsObject:importURL]) {
+                            [buffer appendFormat:@"// skipping already imported file from %@", [importURL path]];
+                        } else {
+                            NSError *outErr = nil;
+                            NSString *s = [NSString stringWithContentsOfURL:importURL encoding:NSUTF8StringEncoding error:&outErr];
+                            
+                            if (s) {
+                                [importedURLs addObject:importURL];
+                                s = [self processImports:s withBaseURL:base importedURLs:importedURLs];
+                                
+                                [buffer appendFormat:@"// imported from %@", [importURL path]];
+                                [buffer appendString:s];
+                            }
+                            else {
+                                [buffer appendFormat:@"'Unable to import %@ because %@'", path, [outErr localizedFailureReason]];
+                            }
                         }
-                        else {
-                            [buffer appendFormat:@"'Unable to import %@ because %@'", path, [outErr localizedFailureReason]];
-                        }                        
                     }
                     
                     debug(@"[tok stringValue]: '%@'", path);
@@ -262,7 +268,9 @@
 
 + (NSString*)preprocessCode:(NSString*)sourceString withBaseURL:(NSURL*)base {
     
-    sourceString = [self processImports:sourceString withBaseURL:(NSURL*)base];
+    NSMutableArray *importedURLs = (base) ? [NSMutableArray arrayWithObject:base] : [NSMutableArray new];
+    
+    sourceString = [self processImports:sourceString withBaseURL:(NSURL*)base importedURLs:importedURLs];
     sourceString = [self processMultilineStrings:sourceString];
     sourceString = [self preprocessForObjCStrings:sourceString];
     sourceString = [self preprocessForObjCMessagesToJS:sourceString];
