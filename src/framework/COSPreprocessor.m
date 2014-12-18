@@ -228,7 +228,7 @@
                     
                     if (importURL) {
                         if ([importedURLs containsObject:importURL]) {
-                            [buffer appendFormat:@"// skipping already imported file from %@", [importURL path]];
+                            [buffer appendFormat:@"// skipping already imported file from %@\n", [importURL path]];
                         } else {
                             NSError *outErr = nil;
                             NSString *s = [NSString stringWithContentsOfURL:importURL encoding:NSUTF8StringEncoding error:&outErr];
@@ -237,7 +237,7 @@
                                 [importedURLs addObject:importURL];
                                 s = [self processImports:s withBaseURL:base importedURLs:importedURLs];
                                 
-                                [buffer appendFormat:@"// imported from %@", [importURL path]];
+                                [buffer appendFormat:@"// imported from %@\n", [importURL path]];
                                 [buffer appendString:s];
                             }
                             else {
