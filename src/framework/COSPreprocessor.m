@@ -180,7 +180,7 @@
     return buffer;
 }
 
-+ (NSString*)processImports:(NSString*)sourceString withBaseURL:(NSURL*)base {
++ (NSString*)processImports:(NSString*)sourceString withBaseURL:(NSURL*)base importedURLs:(NSMutableArray *)importedURLs {
     
     /*
      
@@ -199,7 +199,6 @@
     
     BOOL lastWasAtSym               = NO;
     
-    
     while ((tok = [tokenizer nextToken]) != eof) {
         
         if ([tok isSymbol] && [[tok stringValue] isEqualToString:@"@"]) {
@@ -216,33 +215,38 @@
                     [tokenizer nextToken]; // the space
                     NSString *pathInQuotes = [[tokenizer nextToken] stringValue];
                     
-                    NSString *path = [pathInQuotes substringWithRange:NSMakeRange(1, [pathInQuotes length]-2)];
+                    NSString *path = [[pathInQuotes substringWithRange:NSMakeRange(1, [pathInQuotes length]-2)] stringByExpandingTildeInPath];
+                    NSURL *importURL = nil;
                     
-                    if (base) {
-                        
-                        NSURL *importURL = [[base URLByDeletingLastPathComponent] URLByAppendingPathComponent:path];
-                        
-                        NSError *outErr = nil;
-                        NSString *s = [NSString stringWithContentsOfURL:importURL encoding:NSUTF8StringEncoding error:&outErr];
-                        
-                        if (s) {
-                            [buffer appendFormat:@"// imported from %@", [importURL path]];
-                            [buffer appendString:s];
-                        }
-                        else {
-                            [buffer appendFormat:@"'Unable to import %@ becase %@'", path, [outErr localizedFailureReason]];
-                        }
-                        
-                        
-                        //debug(@"importURL: '%@'", importURL);
-                        
-                    }
-                    else {
+                    if (path.length && ![[path substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"/"]) {
+                        importURL = [[base URLByDeletingLastPathComponent] URLByAppendingPathComponent:path];
+                    } else if (base) {
+                        importURL = [NSURL fileURLWithPath:path];
+                    } else {
                         [buffer appendFormat:@"'Unable to import %@ becase we have no base url to import from'", path];
                     }
                     
-                    debug(@"[tok stringValue]: '%@'", path);
+                    if (importURL) {
+                        if ([importedURLs containsObject:importURL]) {
+                            [buffer appendFormat:@"// skipping already imported file from %@\n", [importURL path]];
+                        } else {
+                            NSError *outErr = nil;
+                            NSString *s = [NSString stringWithContentsOfURL:importURL encoding:NSUTF8StringEncoding error:&outErr];
+                            
+                            if (s) {
+                                [importedURLs addObject:importURL];
+                                s = [self processImports:s withBaseURL:base importedURLs:importedURLs];
+                                
+                                [buffer appendFormat:@"// imported from %@\n", [importURL path]];
+                                [buffer appendString:s];
+                            }
+                            else {
+                                [buffer appendFormat:@"'Unable to import %@ because %@'", path, [outErr localizedFailureReason]];
+                            }
+                        }
+                    }
                     
+                    debug(@"[tok stringValue]: '%@'", path);
                     
                     continue;
                 }
@@ -264,7 +268,9 @@
 
 + (NSString*)preprocessCode:(NSString*)sourceString withBaseURL:(NSURL*)base {
     
-    sourceString = [self processImports:sourceString withBaseURL:(NSURL*)base];
+    NSMutableArray *importedURLs = (base) ? [NSMutableArray arrayWithObject:base] : [NSMutableArray new];
+    
+    sourceString = [self processImports:sourceString withBaseURL:(NSURL*)base importedURLs:importedURLs];
     sourceString = [self processMultilineStrings:sourceString];
     sourceString = [self preprocessForObjCStrings:sourceString];
     sourceString = [self preprocessForObjCMessagesToJS:sourceString];
