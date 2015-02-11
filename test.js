@@ -1,7 +1,7 @@
 framework("AppKit");
 framework("CoreGraphics");
 
-for (var n = 0; n < 20000; n++) {
+for (var n = 0; n < 3000; n++) {
     print(n);
     var path=NSBezierPath.bezierPath();
     path.moveToPoint(NSMakePoint(0,0));
