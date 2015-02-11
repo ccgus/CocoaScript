@@ -113,5 +113,7 @@ int main(int argc, char *argv[]) {
         printf("%s\n", [[o description] UTF8String]);
     }
     
+    [t cleanup];
+    
     return 0;
 }
