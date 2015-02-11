@@ -19,28 +19,32 @@
  */
 @interface MOBox : NSObject
 
+- (id)initWithRuntime:(Mocha*)runtime;
+- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject context:(JSContextRef)context;
+- (void)disassociateObjectInContext:(JSContextRef)context;
+
 /*!
  * @property representedObject
  * @abstract The boxed Objective-C object
- * 
+ *
  * @result An object
  */
-@property (strong) id representedObject;
+@property (strong, readonly) id representedObject;
 
 /*!
  * @property JSObject
  * @abstract The JSObject representation of the box
- * 
+ *
  * @result A JSObjectRef value
  */
-@property JSObjectRef JSObject;
+@property (assign, readonly) JSObjectRef JSObject;
 
 /*!
  * @property runtime
  * @abstract The runtime for the object
- * 
+ *
  * @result A Mocha object
  */
-@property (weak) Mocha *runtime;
+@property (weak, readonly) Mocha *runtime;
 
 @end

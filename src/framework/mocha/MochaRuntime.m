@@ -462,29 +462,26 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         return NULL;
     }
     
-    MOBox *box = [_objectsToBoxes objectForKey:object];
-    if (box != nil) {
-        return [box JSObject];
-    }
-    
-    box = [[MOBox alloc] init];
-    box.runtime = self;
-    box.representedObject = object;
-    
     JSObjectRef jsObject = NULL;
-    
-    if ([object isKindOfClass:[MOMethod class]]
-        || [object isKindOfClass:[MOClosure class]]
-        || [object isKindOfClass:[MOBridgeSupportFunction class]]) {
-        jsObject = JSObjectMake(_ctx, MOFunctionClass, (__bridge void *)(box));
+    MOBox* box = [_objectsToBoxes objectForKey:object];
+    if (box != nil) {
+        jsObject = [box JSObject];
+    } else {
+        box = [[MOBox alloc] initWithRuntime:self];
+        
+        if ([object isKindOfClass:[MOMethod class]]
+            || [object isKindOfClass:[MOClosure class]]
+            || [object isKindOfClass:[MOBridgeSupportFunction class]]) {
+            jsObject = JSObjectMake(_ctx, MOFunctionClass, (__bridge void *)(box));
+        }
+        else {
+            jsObject = JSObjectMake(_ctx, MOBoxedObjectClass, (__bridge void *)(box));
+        }
+        
+        [box associateObject:object jsObject:jsObject context:_ctx];
+        
+        [_objectsToBoxes setObject:box forKey:object];
     }
-    else {
-        jsObject = JSObjectMake(_ctx, MOBoxedObjectClass, (__bridge void *)(box));
-    }
-    
-    box.JSObject = jsObject;
-    
-    [_objectsToBoxes setObject:box forKey:object];
     
     return jsObject;
 }
@@ -499,7 +496,11 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 
 - (void)removeBoxAssociationForObject:(id)object {
     if (object != nil) {
-        [_objectsToBoxes removeObjectForKey:object];
+        MOBox* box = [_objectsToBoxes objectForKey:object];
+        if (box) {
+            [box disassociateObjectInContext:_ctx];
+            [_objectsToBoxes removeObjectForKey:object];
+        }
     }
 }
 
@@ -1182,12 +1183,9 @@ static void MOObject_initialize(JSContextRef ctx, JSObjectRef object) {
 static void MOObject_finalize(JSObjectRef object) {
     MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
     id o = [private representedObject];
-    
-    //debug(@"finalizing %@ o: %p", o, object);
-    
-//    if (class_isMetaClass(object_getClass(o))) {
-//        debug(@"Finalizing local class: %@ %p", o, object);
-//    }
+    if (o == [NSNumber class]) {
+        NSLog(@"about to finalize NSNumber %p", object);
+    }
     
     // Give the object a chance to finalize itself
     if ([o respondsToSelector:@selector(finalizeForMochaScript)]) {
