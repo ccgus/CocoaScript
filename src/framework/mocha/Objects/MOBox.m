@@ -35,7 +35,7 @@
 
 - (void)disassociateObjectInContext:(JSContextRef)context {
 //    NSLog(@"disassociated box %p for %p js:%p", self, self.representedObject, self.JSObject);
-    JSValueUnprotect(context, self.JSObject); // TODO: also a hack
+//    JSValueUnprotect(context, self.JSObject); // TODO: also a hack
     _JSObject = nil;
 }
 
