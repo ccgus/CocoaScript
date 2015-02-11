@@ -352,6 +352,7 @@
 /* Begin PBXFileReference section */
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		22E281E41A8BB99D006650D2 /* test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = test.js; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		384830E01832D48500B34168 /* COSTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSTarget.h; path = src/framework/COSTarget.h; sourceTree = "<group>"; };
@@ -687,6 +688,7 @@
 			children = (
 				CC66D826181A2A810039A0A5 /* CocoaScript_Prefix.pch */,
 				CC66D8D7181A2FC10039A0A5 /* cocoascript_tool.m */,
+				22E281E41A8BB99D006650D2 /* test.js */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
