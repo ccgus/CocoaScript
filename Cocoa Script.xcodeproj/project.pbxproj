@@ -10,6 +10,9 @@
 		384830E21832D48500B34168 /* COSTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 384830E01832D48500B34168 /* COSTarget.h */; };
 		384830E31832D48500B34168 /* COSTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 384830E11832D48500B34168 /* COSTarget.m */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		9F9555C91AB255BB000E70CA /* MOObjectKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F9555C71AB255BB000E70CA /* MOObjectKey.h */; };
+		9F9555CA1AB255BB000E70CA /* MOObjectKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9555C81AB255BB000E70CA /* MOObjectKey.m */; };
+		9F9555CB1AB255C9000E70CA /* MOObjectKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9555C81AB255BB000E70CA /* MOObjectKey.m */; };
 		CC07AF481982C2BC001CCA93 /* libMultiMarkdown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC07AF471982C2BC001CCA93 /* libMultiMarkdown.a */; };
 		CC07AF4C1982C310001CCA93 /* COSMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = CC07AF4A1982C310001CCA93 /* COSMarkdown.h */; };
 		CC07AF4D1982C310001CCA93 /* COSMarkdown.m in Sources */ = {isa = PBXBuildFile; fileRef = CC07AF4B1982C310001CCA93 /* COSMarkdown.m */; };
@@ -392,6 +395,8 @@
 		384830E01832D48500B34168 /* COSTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSTarget.h; path = src/framework/COSTarget.h; sourceTree = "<group>"; };
 		384830E11832D48500B34168 /* COSTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSTarget.m; path = src/framework/COSTarget.m; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Cocoa Script Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cocoa Script Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F9555C71AB255BB000E70CA /* MOObjectKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOObjectKey.h; path = src/framework/mocha/Objects/MOObjectKey.h; sourceTree = SOURCE_ROOT; };
+		9F9555C81AB255BB000E70CA /* MOObjectKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOObjectKey.m; path = src/framework/mocha/Objects/MOObjectKey.m; sourceTree = SOURCE_ROOT; };
 		CC07AF471982C2BC001CCA93 /* libMultiMarkdown.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMultiMarkdown.a; path = lib/libMultiMarkdown.a; sourceTree = "<group>"; };
 		CC07AF4A1982C310001CCA93 /* COSMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSMarkdown.h; path = src/framework/COSMarkdown.h; sourceTree = "<group>"; };
 		CC07AF4B1982C310001CCA93 /* COSMarkdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSMarkdown.m; path = src/framework/COSMarkdown.m; sourceTree = "<group>"; };
@@ -1084,6 +1089,8 @@
 		CCEC36B115BA5E44008D8460 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				9F9555C71AB255BB000E70CA /* MOObjectKey.h */,
+				9F9555C81AB255BB000E70CA /* MOObjectKey.m */,
 				CC66D878181A2B0A0039A0A5 /* MOAllocator.h */,
 				CC66D879181A2B0A0039A0A5 /* MOAllocator.m */,
 				CC66D87A181A2B0A0039A0A5 /* MOBox.h */,
@@ -1155,6 +1162,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F9555C91AB255BB000E70CA /* MOObjectKey.h in Headers */,
 				CC66D81E181A2A710039A0A5 /* COScript.h in Headers */,
 				CC66D89C181A2B0A0039A0A5 /* MOAllocator.h in Headers */,
 				CC66D80E181A2A470039A0A5 /* TDWhitespaceState.h in Headers */,
@@ -1455,6 +1463,7 @@
 				CC66D8B6181A2B0A0039A0A5 /* MOPointerValue.m in Sources */,
 				CC66D8A4181A2B0A0039A0A5 /* MOClosure.m in Sources */,
 				CC66D80F181A2A470039A0A5 /* TDWhitespaceState.m in Sources */,
+				9F9555CA1AB255BB000E70CA /* MOObjectKey.m in Sources */,
 				CC66D85B181A2ABF0039A0A5 /* NSDictionary+MochaAdditions.m in Sources */,
 				CC66D7F1181A2A470039A0A5 /* TDSingleLineCommentState.m in Sources */,
 				CC66D85F181A2ABF0039A0A5 /* NSOrderedSet+MochaAdditions.m in Sources */,
@@ -1566,6 +1575,7 @@
 				CC9FEFE418296A2A009DB0F9 /* TDLetter.m in Sources */,
 				CC9FEFE618296A2A009DB0F9 /* TDLiteral.m in Sources */,
 				CC9FEFE818296A2A009DB0F9 /* TDLowercaseWord.m in Sources */,
+				9F9555CB1AB255C9000E70CA /* MOObjectKey.m in Sources */,
 				CC9FEFEA18296A2A009DB0F9 /* TDMultiLineCommentState.m in Sources */,
 				CCD38344195A454F00C436B9 /* COSDatabase.m in Sources */,
 				CC9FEFEC18296A2A009DB0F9 /* TDNonReservedWord.m in Sources */,

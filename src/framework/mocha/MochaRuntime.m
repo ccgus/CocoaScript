@@ -18,6 +18,7 @@
 #import "MOUtilities.h"
 #import "MOFunctionArgument.h"
 #import "MOAllocator.h"
+#import "MOObjectKey.h"
 
 #import "MOObjCRuntime.h"
 #import "MOMapTable.h"
@@ -462,7 +463,8 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         return NULL;
     }
     
-    MOBox *box = [_objectsToBoxes objectForKey:object];
+    MOObjectKey *key = [[MOObjectKey alloc] initWithObject: object];
+    MOBox *box = [_objectsToBoxes objectForKey: key];
     if (box != nil) {
         return [box JSObject];
     }
@@ -484,7 +486,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     
     box.JSObject = jsObject;
     
-    [_objectsToBoxes setObject:box forKey:object];
+    [_objectsToBoxes setObject:box forKey:key];
     
     return jsObject;
 }
@@ -499,7 +501,8 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 
 - (void)removeBoxAssociationForObject:(id)object {
     if (object != nil) {
-        [_objectsToBoxes removeObjectForKey:object];
+        MOObjectKey *key = [[MOObjectKey alloc] initWithObject: object];
+        [_objectsToBoxes removeObjectForKey: key];
     }
 }
 
