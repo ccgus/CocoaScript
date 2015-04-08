@@ -18,10 +18,8 @@
 #import "MOUtilities.h"
 #import "MOFunctionArgument.h"
 #import "MOAllocator.h"
-#import "MOObjectKey.h"
 
 #import "MOObjCRuntime.h"
-#import "MOMapTable.h"
 
 #import "MOBridgeSupportController.h"
 #import "MOBridgeSupportSymbol.h"
@@ -79,7 +77,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     JSGlobalContextRef _ctx;
     BOOL _ownsContext;
     NSMutableDictionary *_exportedObjects;
-    MOMapTable *_objectsToBoxes;
+    NSMapTable *_objectsToBoxes;
     NSMutableArray *_frameworkSearchPaths;
 }
 
@@ -206,7 +204,9 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     if (self) {
         _ctx = ctx;
         _exportedObjects = [[NSMutableDictionary alloc] init];
-        _objectsToBoxes = [MOMapTable mapTableWithStrongToStrongObjects];
+        _objectsToBoxes = [NSMapTable
+                           mapTableWithKeyOptions:NSMapTableWeakMemory | NSMapTableObjectPointerPersonality
+                           valueOptions:NSMapTableStrongMemory | NSMapTableObjectPointerPersonality];
         _frameworkSearchPaths = [[NSMutableArray alloc] initWithObjects:
                                  @"/System/Library/Frameworks",
                                  @"/Library/Frameworks",
@@ -463,8 +463,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         return NULL;
     }
     
-    MOObjectKey *key = [[MOObjectKey alloc] initWithObject: object];
-    MOBox *box = [_objectsToBoxes objectForKey: key];
+    MOBox *box = [_objectsToBoxes objectForKey: object];
     if (box != nil) {
         return [box JSObject];
     }
@@ -486,7 +485,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     
     box.JSObject = jsObject;
     
-    [_objectsToBoxes setObject:box forKey:key];
+    [_objectsToBoxes setObject:box forKey: object];
     
     return jsObject;
 }
@@ -501,8 +500,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 
 - (void)removeBoxAssociationForObject:(id)object {
     if (object != nil) {
-        MOObjectKey *key = [[MOObjectKey alloc] initWithObject: object];
-        [_objectsToBoxes removeObjectForKey: key];
+        [_objectsToBoxes removeObjectForKey: object];
     }
 }
 
