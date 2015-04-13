@@ -92,6 +92,12 @@
         obj = [CISampler samplerWithImage:obj];
     }
     
+    if (!obj) {
+        NSLog(@"Argument nil! (%ld ahead)", [_kernelArgs count]);
+        return;
+    }
+    
+    
     [_kernelArgs addObject:obj];
 }
 

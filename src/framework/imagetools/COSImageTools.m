@@ -222,7 +222,13 @@ static NSMutableDictionary *JSTCIWindows = 0x00;
 
 + (void)viewCIImage:(CIImage*)img {
     
-    return [self viewCIImage:img inWindowNamed:@"Untitled" extent:[img extent]];
+    CGRect r = [img extent];
+    
+    if (CGRectEqualToRect(CGRectInfinite, r)) {
+        r = NSMakeRect(0, 0, 100, 100);
+    }
+    
+    return [self viewCIImage:img inWindowNamed:@"Untitled" extent:r];
     
 }
 

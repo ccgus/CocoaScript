@@ -20,17 +20,20 @@ var context = [COSOpenCLContext new];
 var program = [context programWithSource:src];
 [program build];
 
+var w = 600;
+var h = 749;
+
 var imagePath = [COSImageTools pathOfImageNamed:"llama"];
 var kernel    = [program createKernel:"clDesaturate"];
 var inBuffer  = [COSOpenCLImageBuffer instanceWithContext:context usingImageAtPath:imagePath];
-var outBuffer = [COSOpenCLImageBuffer instanceWithContext:context width:[inBuffer width] height:[inBuffer height]];
+var outBuffer = [COSOpenCLImageBuffer instanceWithContext:context width:w height:h];
 
 [kernel setArgument:0 buffer:inBuffer];
 [kernel setArgument:1 buffer:outBuffer];
-[kernel setIntArgumentAtIndex:2 value:[inBuffer width]];
-[kernel setIntArgumentAtIndex:3 value:[inBuffer height]];
+[kernel setIntArgumentAtIndex:2 value:w];
+[kernel setIntArgumentAtIndex:3 value:h];
 
-[kernel enqueueCallWithGlobalSizeX:[inBuffer width] Y:[inBuffer height]];
+[kernel enqueueCallWithGlobalSizeX:w Y:h];
 [context finish];
 
 [COSImageTools viewImageBuffer:outBuffer inWindowNamed:"OpenCL"];

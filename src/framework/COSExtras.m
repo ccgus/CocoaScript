@@ -227,6 +227,10 @@
     return [uuidString lowercaseString];
 }
 
+- (void)testTempWrite {
+    [self writeToFile:@"/tmp/foo.txt" atomically:NO encoding:NSUTF8StringEncoding error:nil];
+}
+
 @end
 
 
