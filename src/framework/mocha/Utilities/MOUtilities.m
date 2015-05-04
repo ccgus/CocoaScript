@@ -35,6 +35,19 @@
 #import <ffi/ffi.h>
 #endif
 
+@interface NSMethodSignature (Mocha)
+- (NSString *)typeEncoding;
+@end
+@implementation NSMethodSignature (Mocha)
+- (NSString *)typeEncoding {
+    NSString *encoding = [NSString stringWithFormat: @"%s", [self methodReturnType]];
+    for (NSUInteger i = 0;i < [self numberOfArguments];++i) {
+        const char *argType = [self getArgumentTypeAtIndex:i];
+        encoding = [encoding stringByAppendingFormat: @"%s", argType];
+     }
+    return encoding;
+}
+@end
 
 #pragma mark -
 #pragma mark Values
@@ -321,6 +334,7 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
         }
         
         Method method = NULL;
+        IMP method_imp = NULL;
         BOOL classMethod = (target == klass);
         
         // Determine the method type
@@ -329,11 +343,13 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
         }
         else {
             method = class_getInstanceMethod(klass, selector);
+            /* For dynamic properties from CoreData, method will be NULL, but we can still get the method_imp and the methodSignature from the object */
+            method_imp = [target methodForSelector: selector];
         }
         
         variadic = MOSelectorIsVariadic(klass, selector);
         
-        if (method == NULL) {
+        if (method == NULL && method_imp == NULL) {
             NSException *e = [NSException exceptionWithName:MORuntimeException reason:[NSString stringWithFormat:@"Unable to locate method %@ of class %@", NSStringFromSelector(selector), klass] userInfo:nil];
             if (exception != NULL) {
                 *exception = [runtime JSValueForObject:e];
@@ -341,7 +357,11 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
             return NULL;
         }
         
-        const char *encoding = method_getTypeEncoding(method);
+        const char *encoding;
+        if (method)
+            encoding = method_getTypeEncoding(method);
+        else
+            encoding = [[[target methodSignatureForSelector: selector] typeEncoding] cStringUsingEncoding: NSASCIIStringEncoding];
         argumentEncodings = [MOParseObjCMethodEncoding(encoding) mutableCopy];
         
         if (argumentEncodings == nil) {
