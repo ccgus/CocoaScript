@@ -362,7 +362,8 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
             encoding = method_getTypeEncoding(method);
         else
             encoding = [[[target methodSignatureForSelector: selector] typeEncoding] cStringUsingEncoding: NSASCIIStringEncoding];
-        argumentEncodings = [MOParseObjCMethodEncoding(encoding) mutableCopy];
+        if (encoding)
+            argumentEncodings = [MOParseObjCMethodEncoding(encoding) mutableCopy];
         
         if (argumentEncodings == nil) {
             NSException *e = [NSException exceptionWithName:MORuntimeException reason:[NSString stringWithFormat:@"Unable to parse method encoding for method %@ of class %@", NSStringFromSelector(selector), klass] userInfo:nil];
