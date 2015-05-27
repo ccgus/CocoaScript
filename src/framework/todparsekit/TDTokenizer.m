@@ -162,7 +162,7 @@
 
 - (void)setString:(NSString *)s {
     if (string != s) {
-        [string retain];
+        [string release];
         string = [s retain];
     }
     reader.string = string;
