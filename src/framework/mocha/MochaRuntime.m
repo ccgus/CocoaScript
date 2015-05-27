@@ -20,7 +20,6 @@
 #import "MOAllocator.h"
 
 #import "MOObjCRuntime.h"
-#import "MOMapTable.h"
 
 #import "MOBridgeSupportController.h"
 #import "MOBridgeSupportSymbol.h"
@@ -78,7 +77,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     JSGlobalContextRef _ctx;
     BOOL _ownsContext;
     NSMutableDictionary *_exportedObjects;
-    MOMapTable *_objectsToBoxes;
+    NSMapTable *_objectsToBoxes;
     NSMutableArray *_frameworkSearchPaths;
 }
 
@@ -205,7 +204,9 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     if (self) {
         _ctx = ctx;
         _exportedObjects = [[NSMutableDictionary alloc] init];
-        _objectsToBoxes = [MOMapTable mapTableWithStrongToStrongObjects];
+        _objectsToBoxes = [NSMapTable
+                           mapTableWithKeyOptions:NSMapTableWeakMemory | NSMapTableObjectPointerPersonality
+                           valueOptions:NSMapTableStrongMemory | NSMapTableObjectPointerPersonality];
         _frameworkSearchPaths = [[NSMutableArray alloc] initWithObjects:
                                  @"/System/Library/Frameworks",
                                  @"/Library/Frameworks",
@@ -480,7 +481,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         
         [box associateObject:object jsObject:jsObject context:_ctx];
         
-        [_objectsToBoxes setObject:box forKey:object];
+    [_objectsToBoxes setObject:box forKey: object];
     }
     
     return jsObject;
@@ -917,7 +918,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     
     [self removeObjectWithName:@"__mocha__"];
     
-    debug(@"shutting down & releasing %p.", _ctx);
     JSGlobalContextRelease(_ctx);
     
     _ctx = nil;
@@ -1183,9 +1183,10 @@ static void MOObject_initialize(JSContextRef ctx, JSObjectRef object) {
 static void MOObject_finalize(JSObjectRef object) {
     MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
     id o = [private representedObject];
-    if (o == [NSNumber class]) {
-        NSLog(@"about to finalize NSNumber %p", object);
-    }
+    
+//    if (class_isMetaClass(object_getClass(o))) {
+//        debug(@"Finalizing local class: %@ %p", o, object);
+//    }
     
     // Give the object a chance to finalize itself
     if ([o respondsToSelector:@selector(finalizeForMochaScript)]) {

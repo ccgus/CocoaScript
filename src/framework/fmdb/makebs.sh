@@ -1,0 +1,1 @@
+gen_bridge_metadata -c '-I.' *.h -o FMDB.bridgesupport

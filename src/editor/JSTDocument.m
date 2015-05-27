@@ -11,6 +11,7 @@
 #import "COSListener.h"
 #import "COScript.h"
 #import "COSPreprocessor.h"
+#import <OSAKit/OSAKit.h>
 
 @interface JSTDocument (SuperSecretItsPrivateDontEvenThinkOfUsingTheseMethodsOutsideThisClass)
 - (void)updateFont:(id)sender;
@@ -215,10 +216,83 @@
     
 }
 
+- (IBAction)executeScriptAsJSAutomation:(id)sender {
+    
+    
+    NSString *fwPath = [[NSBundle mainBundle] privateFrameworksPath];
+    fwPath = [fwPath stringByAppendingPathComponent:@"CocoaScript.framework"];
+    
+    NSString *script = [[jsTextView textStorage] string];
+    
+    //NSString *importLine = [NSString stringWithFormat:@"ObjC.import('%@');\n", fwPath];
+    //script = [importLine stringByAppendingString:script];
+    
+    NSString *importLine = @"";
+    
+    OSAScript *osa = [[OSAScript alloc] initWithSource:script language:[OSALanguage languageForName:@"JavaScript"]];
+    
+    NSDictionary *outDict = nil;
+    if ([osa compileAndReturnError:&outDict]) {
+        
+        //NSAppleEventDescriptor *desc = [osa executeAndReturnError:&outDict];
+        NSAppleEventDescriptor *desc = [osa executeHandlerWithName:@"main" arguments:@[] error:&outDict];
+        (void)desc;
+        
+        debug(@"outDict: '%@'", outDict);
+        
+        if (outDict) {
+            NSLog(@"Error running: %@", outDict);
+            
+            if ([outDict objectForKey:OSAScriptErrorRangeKey]) {
+                
+                NSRange r = [[outDict objectForKey:OSAScriptErrorRangeKey] rangeValue];
+                
+                r.location -= [importLine length];
+                
+                [jsTextView setSelectedRange:r];
+            }
+            
+            if ([outDict objectForKey:NSLocalizedDescriptionKey]) {
+                NSString *s = [outDict objectForKey:NSLocalizedDescriptionKey];
+                [[[outputTextView textStorage] mutableString] setString:s];
+            }
+            else {
+                [[[outputTextView textStorage] mutableString] setString:[outDict description]];
+            }
+            
+            
+            
+        }
+        
+    }
+    else if (outDict) {
+        NSLog(@"Error compiling: %@", outDict);
+        
+        if ([outDict objectForKey:OSAScriptErrorRangeKey]) {
+            
+            NSRange r = [[outDict objectForKey:OSAScriptErrorRangeKey] rangeValue];
+            
+            r.location -= [importLine length];
+            
+            [jsTextView setSelectedRange:r];
+        }
+        
+        [[[outputTextView textStorage] mutableString] setString:[outDict description]];
+    }
+
+
+}
 
 
 
 - (void)executeScript:(id)sender {
+    
+    if ([[[jsTextView textStorage] string] hasPrefix:@"ObjC.import('"]) {
+        [self executeScriptAsJSAutomation:sender];
+        return;
+    }
+    
+    
     [self runScript:[[jsTextView textStorage] string]];
 }
 
@@ -314,8 +388,8 @@
 
 - (void)updateFont:(id)sender {
     
-    [[jsTextView textStorage] addAttribute:NSFontAttributeName value:[[NSApp delegate] defaultEditorFont] range:NSMakeRange(0, [[jsTextView textStorage] length])];
-    [[outputTextView textStorage] addAttribute:NSFontAttributeName value:[[NSApp delegate] defaultEditorFont] range:NSMakeRange(0, [[outputTextView textStorage] length])];
+    [[jsTextView textStorage] addAttribute:NSFontAttributeName value:[(JSTAppDelegate*)[NSApp delegate] defaultEditorFont] range:NSMakeRange(0, [[jsTextView textStorage] length])];
+    [[outputTextView textStorage] addAttribute:NSFontAttributeName value:[(JSTAppDelegate*)[NSApp delegate] defaultEditorFont] range:NSMakeRange(0, [[outputTextView textStorage] length])];
     
     
 }

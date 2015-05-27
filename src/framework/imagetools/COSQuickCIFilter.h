@@ -16,6 +16,7 @@
     NSMutableArray *_kernelArgs;
 }
 
+@property (strong) CIFilterShape *applyDefinitionShape;
 @property (retain) CIKernel *theKernel;
 @property (retain) NSMutableArray *kernelArgs;
 

@@ -32,7 +32,7 @@
     NSString *askQuestion = NSLocalizedString(@"Would you like to copy the plugin '%@' into your JSTalk Plug-ins folder?",
                                               @"Would you like to copy the plugin '%@' into your JSTalk Plug-ins folder?");
     
-    int decision = NSRunAlertPanel(NSLocalizedString(@"Install Plug-in?", @"Install Plug-in?"),
+    NSInteger decision = NSRunAlertPanel(NSLocalizedString(@"Install Plug-in?", @"Install Plug-in?"),
                                    [NSString stringWithFormat:askQuestion, thePluginName], @"Install Plug-in", @"Cancel", nil);
     
     

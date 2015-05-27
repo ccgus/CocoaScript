@@ -218,6 +218,15 @@
     return [NSURL fileURLWithPath:self];
 }
 
+
++ (id)stringWithUUID {
+    CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
+    NSString *uuidString = (__bridge_transfer NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuid);
+    CFRelease(uuid);
+    
+    return [uuidString lowercaseString];
+}
+
 @end
 
 
@@ -375,5 +384,3 @@
 }
 
 @end
-
-
