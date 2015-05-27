@@ -243,7 +243,6 @@ static BOOL JSTImageToolsCISWRender = NO;
 
 + (void)setMainDisplayTransferUsingRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b {
     CGDisplayErr  err;
-    CGDisplayCount  dspyCnt;
     
     float red[256];
     float green[256];
