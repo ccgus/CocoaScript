@@ -492,16 +492,20 @@ typedef struct { char a; BOOL b; } struct_C_BOOL;
 + (NSString *)structureNameFromStructureTypeEncoding:(NSString *)encoding {
     // Extract structure name
     // skip '{'
-    char *c = (char *)[encoding UTF8String] + 1;
-    // skip '_' if it's there
-    if (*c == '_') {
-        c++;
+    NSString* result = nil;
+    if (encoding) {
+        char *c = (char *)[encoding UTF8String] + 1;
+        // skip '_' if it's there
+        if (*c == '_') {
+            c++;
+        }
+        char *c2 = c;
+        while (*c2 && *c2 != '=') {
+            c2++;
+        }
+        result = [[NSString alloc] initWithBytes:c length:(c2-c) encoding:NSUTF8StringEncoding];
     }
-    char *c2 = c;
-    while (*c2 && *c2 != '=') {
-        c2++;
-    }
-    return [[NSString alloc] initWithBytes:c length:(c2-c) encoding:NSUTF8StringEncoding];
+    return result;
 }
 
 + (NSString *)structureFullTypeEncodingFromStructureTypeEncoding:(NSString *)encoding {
