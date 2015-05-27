@@ -271,8 +271,8 @@ static int FloorPow2(int n)
     CFRelease(imageSourceRef);
     
     CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGBLinear);
-    
     CGContextRef bcontext = CGBitmapContextCreate(_bitmapData, _width, _height, 8, _bytesPerRow, cs, kCGBitmapFloatComponents | kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Host);
+    CGColorSpaceRelease(cs);
     
     if (!bcontext) {
         NSLog(@"Could not create a context for drawing");
