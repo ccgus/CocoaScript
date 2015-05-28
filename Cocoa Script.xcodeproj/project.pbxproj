@@ -10,6 +10,9 @@
 		384830E21832D48500B34168 /* COSTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 384830E01832D48500B34168 /* COSTarget.h */; };
 		384830E31832D48500B34168 /* COSTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 384830E11832D48500B34168 /* COSTarget.m */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		9FC343CD1AF7D2FE00B53759 /* CocoaScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC41431A0F25254200E46669 /* CocoaScript.framework */; };
+		9FC343D51AF7D32B00B53759 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9FC343D31AF7D32B00B53759 /* Model.xcdatamodeld */; };
+		9FC343D71AF7D33300B53759 /* CSPropertyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FC343D61AF7D33300B53759 /* CSPropertyTests.m */; };
 		CC07AF481982C2BC001CCA93 /* libMultiMarkdown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC07AF471982C2BC001CCA93 /* libMultiMarkdown.a */; };
 		CC07AF4C1982C310001CCA93 /* COSMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = CC07AF4A1982C310001CCA93 /* COSMarkdown.h */; };
 		CC07AF4D1982C310001CCA93 /* COSMarkdown.m in Sources */ = {isa = PBXBuildFile; fileRef = CC07AF4B1982C310001CCA93 /* COSMarkdown.m */; };
@@ -351,6 +354,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9FC343CE1AF7D2FE00B53759 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC4143190F25254200E46669;
+			remoteInfo = "Cocoa Script Framework";
+		};
 		CC5064E50F4A164D00F4A952 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -392,6 +402,10 @@
 		384830E01832D48500B34168 /* COSTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSTarget.h; path = src/framework/COSTarget.h; sourceTree = "<group>"; };
 		384830E11832D48500B34168 /* COSTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSTarget.m; path = src/framework/COSTarget.m; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Cocoa Script Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cocoa Script Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FC343C71AF7D2FE00B53759 /* CocoaScriptTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CocoaScriptTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FC343CA1AF7D2FE00B53759 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9FC343D41AF7D32B00B53759 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		9FC343D61AF7D33300B53759 /* CSPropertyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPropertyTests.m; sourceTree = "<group>"; };
 		CC07AF471982C2BC001CCA93 /* libMultiMarkdown.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMultiMarkdown.a; path = lib/libMultiMarkdown.a; sourceTree = "<group>"; };
 		CC07AF4A1982C310001CCA93 /* COSMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSMarkdown.h; path = src/framework/COSMarkdown.h; sourceTree = "<group>"; };
 		CC07AF4B1982C310001CCA93 /* COSMarkdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COSMarkdown.m; path = src/framework/COSMarkdown.m; sourceTree = "<group>"; };
@@ -664,6 +678,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9FC343C41AF7D2FE00B53759 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FC343CD1AF7D2FE00B53759 /* CocoaScript.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CC4143180F25254200E46669 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -719,6 +741,7 @@
 				8D15AC370486D014006FF6A4 /* Cocoa Script Editor.app */,
 				CC5FB7C20F1FDCCC00F4ECC2 /* coscript */,
 				CC41431A0F25254200E46669 /* CocoaScript.framework */,
+				9FC343C71AF7D2FE00B53759 /* CocoaScriptTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -730,6 +753,7 @@
 				CC0EC3380F2274730094F69D /* Framework */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
+				9FC343C81AF7D2FE00B53759 /* CocoaScriptTests */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 			);
@@ -780,6 +804,24 @@
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9FC343C81AF7D2FE00B53759 /* CocoaScriptTests */ = {
+			isa = PBXGroup;
+			children = (
+				9FC343D61AF7D33300B53759 /* CSPropertyTests.m */,
+				9FC343C91AF7D2FE00B53759 /* Supporting Files */,
+			);
+			path = CocoaScriptTests;
+			sourceTree = "<group>";
+		};
+		9FC343C91AF7D2FE00B53759 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9FC343D31AF7D32B00B53759 /* Model.xcdatamodeld */,
+				9FC343CA1AF7D2FE00B53759 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		CC07AF491982C2FB001CCA93 /* Markdown */ = {
@@ -1291,6 +1333,24 @@
 			productReference = 8D15AC370486D014006FF6A4 /* Cocoa Script Editor.app */;
 			productType = "com.apple.product-type.application";
 		};
+		9FC343C61AF7D2FE00B53759 /* CocoaScriptTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9FC343D01AF7D2FE00B53759 /* Build configuration list for PBXNativeTarget "CocoaScriptTests" */;
+			buildPhases = (
+				9FC343C31AF7D2FE00B53759 /* Sources */,
+				9FC343C41AF7D2FE00B53759 /* Frameworks */,
+				9FC343C51AF7D2FE00B53759 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9FC343CF1AF7D2FE00B53759 /* PBXTargetDependency */,
+			);
+			name = CocoaScriptTests;
+			productName = CocoaScriptTests;
+			productReference = 9FC343C71AF7D2FE00B53759 /* CocoaScriptTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		CC4143190F25254200E46669 /* Cocoa Script Framework */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CC41431E0F25254200E46669 /* Build configuration list for PBXNativeTarget "Cocoa Script Framework" */;
@@ -1333,6 +1393,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					9FC343C61AF7D2FE00B53759 = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+				};
 			};
 			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "Cocoa Script" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1352,6 +1417,7 @@
 				8D15AC270486D014006FF6A4 /* Cocoa Script Editor */,
 				CC5FB7C10F1FDCCC00F4ECC2 /* coscript tool */,
 				CC4143190F25254200E46669 /* Cocoa Script Framework */,
+				9FC343C61AF7D2FE00B53759 /* CocoaScriptTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1382,6 +1448,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9FC343C51AF7D2FE00B53759 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CC4143160F25254200E46669 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1404,6 +1477,15 @@
 				CC66D8D5181A2E2F0039A0A5 /* JSTTextView.m in Sources */,
 				CC66D8D2181A2E2F0039A0A5 /* JSTFileWatcher.m in Sources */,
 				CC66D8D6181A2E2F0039A0A5 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9FC343C31AF7D2FE00B53759 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FC343D71AF7D33300B53759 /* CSPropertyTests.m in Sources */,
+				9FC343D51AF7D32B00B53759 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1607,6 +1689,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9FC343CF1AF7D2FE00B53759 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC4143190F25254200E46669 /* Cocoa Script Framework */;
+			targetProxy = 9FC343CE1AF7D2FE00B53759 /* PBXContainerItemProxy */;
+		};
 		CC5064E60F4A164D00F4A952 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CC4143190F25254200E46669 /* Cocoa Script Framework */;
@@ -1642,6 +1729,72 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		9FC343D11AF7D2FE00B53759 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = CocoaScriptTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9FC343D21AF7D2FE00B53759 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = CocoaScriptTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		C05733C808A9546B00998B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1842,6 +1995,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9FC343D01AF7D2FE00B53759 /* Build configuration list for PBXNativeTarget "CocoaScriptTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9FC343D11AF7D2FE00B53759 /* Debug */,
+				9FC343D21AF7D2FE00B53759 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Cocoa Script Editor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1879,6 +2040,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9FC343D31AF7D32B00B53759 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9FC343D41AF7D32B00B53759 /* Model.xcdatamodel */,
+			);
+			currentVersion = 9FC343D41AF7D32B00B53759 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 }
