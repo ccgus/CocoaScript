@@ -145,9 +145,9 @@
 
 - (NSArray*)maximumWorkItemSizes {
     NSUInteger numberOfDimensions = [self maximumWorkItemDimensions];
-    size_t *sizes = malloc(numberOfDimensions * sizeof(cl_uint));
+    size_t *sizes = malloc(numberOfDimensions * sizeof(size_t));
     
-    clGetDeviceInfo(computeDeviceId, CL_DEVICE_MAX_WORK_GROUP_SIZE, numberOfDimensions * sizeof( size_t ), sizes, NULL);
+    clGetDeviceInfo(computeDeviceId, CL_DEVICE_MAX_WORK_ITEM_SIZES, numberOfDimensions * sizeof( size_t ), sizes, NULL);
     
     NSMutableArray *sizeArray = [NSMutableArray array];
     for ( NSInteger i = 0; i < numberOfDimensions; i++ ) {

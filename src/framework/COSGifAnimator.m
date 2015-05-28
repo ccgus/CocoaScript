@@ -43,8 +43,8 @@
 
     
     CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-    
     CGContextRef context = CGBitmapContextCreate(nil, _size.width, _size.height, 8, 0, cs, kCGBitmapByteOrder32Host | kCGImageAlphaPremultipliedFirst);
+    CGColorSpaceRelease(cs);
     
     NSGraphicsContext *gc = [NSGraphicsContext graphicsContextWithGraphicsPort:context flipped:NO];
     [NSGraphicsContext saveGraphicsState];

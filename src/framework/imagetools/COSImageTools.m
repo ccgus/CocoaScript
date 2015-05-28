@@ -22,7 +22,7 @@
 
 @implementation COSImageTools
 
-+ (CGImageRef)createImageRefFromBuffer:(COSOpenCLImageBuffer*)imgBuffer {
++ (CGImageRef)createImageRefFromBuffer:(COSOpenCLImageBuffer*)imgBuffer CF_RETURNS_RETAINED {
     
     CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
     
@@ -33,6 +33,7 @@
                                                  [imgBuffer bytesPerRow],
                                                  cs, kCGBitmapFloatComponents | kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Host);
     
+    CGColorSpaceRelease(cs);
     CGImageRef img = CGBitmapContextCreateImage(context);
     
     CGContextRelease(context);
@@ -242,7 +243,6 @@ static BOOL JSTImageToolsCISWRender = NO;
 
 + (void)setMainDisplayTransferUsingRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b {
     CGDisplayErr  err;
-    CGDisplayCount  dspyCnt;
     
     float red[256];
     float green[256];

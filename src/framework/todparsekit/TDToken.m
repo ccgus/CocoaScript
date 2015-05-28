@@ -16,6 +16,7 @@
 
 static TDTokenEOF *EOFToken = nil;
 
+#ifndef __clang_analyzer__ // SD: disabled analyzer for this somewhat crazy code; not sure quite what would be wrong with just doing a dispatch_once here...
 + (TDTokenEOF *)instance {
     @synchronized(self) {
         if (!EOFToken) {
@@ -24,7 +25,7 @@ static TDTokenEOF *EOFToken = nil;
     }
     return EOFToken;
 }
-
+#endif
 
 + (id)allocWithZone:(NSZone *)zone {
     @synchronized(self) {
