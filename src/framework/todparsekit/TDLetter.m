@@ -11,7 +11,7 @@
 @implementation TDLetter
 
 + (id)letter {
-    return [[[self alloc] initWithString:nil] autorelease];
+    return [[(TDLetter*)[self alloc] initWithString:nil] autorelease];
 }
 
 

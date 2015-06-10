@@ -16,7 +16,7 @@
 @implementation TDSymbol
 
 + (id)symbol {
-    return [[[self alloc] initWithString:nil] autorelease];
+    return [[(TDSymbol*)[self alloc] initWithString:nil] autorelease];
 }
 
 

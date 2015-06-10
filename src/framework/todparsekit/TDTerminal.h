@@ -26,18 +26,18 @@
     @param      s the string matched by this parser
     @result     an initialized <tt>TDTerminal</tt> subclass object
 */
-- (id)initWithString:(NSString *)s;
+- (nullable instancetype)initWithString:(nullable NSString *)s;
 
 /*!
     @brief      By default, terminals push themselves upon a assembly's stack, after a successful match. This method will turn off that behavior.
     @details    This method returns this parser as a convenience for chainging-style usage.
     @result     this parser, returned for chaining/convenience
 */
-- (TDTerminal *)discard;
+- (nonnull TDTerminal *)discard;
 
 /*!
     @property   string
     @brief      the string matched by this parser.
 */
-@property (nonatomic, readonly, copy) NSString *string;
+@property (nonatomic, readonly, copy, nullable) NSString *string;
 @end
