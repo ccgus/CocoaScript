@@ -6,7 +6,7 @@
 //  Copyright 2008 Todd Ditchendorf. All rights reserved.
 //
 
-#ifndef __MAC_10_10_3
+#ifndef __MAC_10_10_3 // TEMPORARY SUPPORT FOR XC6.2, which doesn't know about some of these
 #define nullable
 #define nonnull
 #endif
