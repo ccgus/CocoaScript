@@ -8,6 +8,7 @@
 
 #ifndef __MAC_10_10_3
 #define nullable
+#define nonnull
 #endif
 
 #import <Foundation/Foundation.h>
