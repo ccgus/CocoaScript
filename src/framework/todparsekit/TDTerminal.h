@@ -6,6 +6,10 @@
 //  Copyright 2008 Todd Ditchendorf. All rights reserved.
 //
 
+#ifndef __MAC_10_10_3
+#define nullable
+#endif
+
 #import <Foundation/Foundation.h>
 #import "TDParser.h"
 
