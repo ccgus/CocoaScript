@@ -203,4 +203,15 @@
     XCTAssertTrue(1, @"GarbageCollect2 Test did not run");
 }
 
+/* Unfortunately this will just crash if it doesn't work.  */
+- (void)test_17_UsingLoadPlist_WithHugeNumberOfIterations_ShouldNotCrash {
+    NSURL *URL = [testScriptURL URLByAppendingPathComponent: @"loadPlist.js"];
+    NSError *error = nil;
+    NSString *testScript = [NSString stringWithContentsOfURL:URL usedEncoding:NULL error:&error];
+    
+    XCTAssertNotNil(testScript, @"Error loading test script: %@", error);
+    [jsContext executeString: testScript];
+    
+    XCTAssertTrue(1, @"loadPlist Test did not run");
+}
 @end
