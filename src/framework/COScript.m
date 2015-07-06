@@ -288,6 +288,13 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 }
 
 - (void)pushAsCurrentCOScript {
+    
+    if ([COScript currentCOScript]) {
+        
+        NSLog(@"JSC isn't reentrant");
+        abort();
+    }
+    
     [[[self class] currentCOSThreadStack] addObject:self];
 }
 

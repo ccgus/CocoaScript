@@ -1170,7 +1170,24 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 
 static void MOObject_initialize(JSContextRef ctx, JSObjectRef object) {
     MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
+    
+    //debug(@"[private representedObject]: '%@'", [private representedObject]);
+    //debug(@"[[private representedObject] valueForKey:@\"retainCount\"]: %@", [[private representedObject] valueForKey:@"retainCount"]);
+    
+    //int before = [[[private representedObject] valueForKey:@"retainCount"] integerValue];
+    
+    // CFIndex b = CFGetRetainCount((__bridge CFTypeRef)private);
+    
     CFRetain((__bridge CFTypeRef)private);
+    
+    /*
+    if (CFGetRetainCount((__bridge CFTypeRef)private) <= b) {
+        debug(@"couldn't retain %@ / %@", private, [private representedObject]);
+        assert(NO);
+    }
+     */
+    
+    //debug(@"%p initialize %p (%ld)", private, [private representedObject], CFGetRetainCount((__bridge CFTypeRef)private));
     
     if (class_isMetaClass(object_getClass([private representedObject]))) {
         //debug(@"inited a local class object %@ - going to keep it protected %p", [private representedObject], object);
@@ -1181,6 +1198,14 @@ static void MOObject_initialize(JSContextRef ctx, JSObjectRef object) {
 
 static void MOObject_finalize(JSObjectRef object) {
     MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
+    
+    if (![private representedObjectCanary]) {
+        NSLog(@"whoa- the canary is gone!  I'm not touching this stuff. (%@)", [private representedObjectCanaryDesc]);
+        return;
+    }
+    
+    
+    // debug(@"%p finalizing %ld", private, CFGetRetainCount((__bridge CFTypeRef)private));
     id o = [private representedObject];
     
     //debug(@"finalizing %@ o: %p", o, object);
