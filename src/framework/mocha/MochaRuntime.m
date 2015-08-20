@@ -500,7 +500,7 @@ static void * MochaUnboxerKey = &MochaUnboxerKey;
         box = [[MOBox alloc] initWithRuntime:self];
         
         MochaUnboxer *unboxer = [[MochaUnboxer alloc] initWithRuntime:self objectPointerValue:objectPointerValue];
-        objc_setAssociatedObject(box, MochaUnboxerKey, unboxer, OBJC_ASSOCIATION_RETAIN);
+        objc_setAssociatedObject(object, MochaUnboxerKey, unboxer, OBJC_ASSOCIATION_RETAIN);
         
         if ([object isKindOfClass:[MOMethod class]]
             || [object isKindOfClass:[MOClosure class]]
