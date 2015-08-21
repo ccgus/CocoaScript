@@ -72,8 +72,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 #pragma mark -
 #pragma mark Runtime
 
-static void * MochaObjectToBoxKey = &MochaObjectToBoxKey;
-
 @implementation Mocha {
     JSGlobalContextRef _ctx;
     BOOL _ownsContext;
@@ -461,7 +459,7 @@ static void * MochaObjectToBoxKey = &MochaObjectToBoxKey;
     }
     
     JSObjectRef jsObject = NULL;
-    MOBox* box = objc_getAssociatedObject(object, MochaObjectToBoxKey);
+    MOBox *box = [MOBox boxForObject:object];
     if (box != nil) {
         jsObject = [box JSObject];
     } else {
@@ -477,8 +475,6 @@ static void * MochaObjectToBoxKey = &MochaObjectToBoxKey;
         }
         
         [box associateObject:object jsObject:jsObject context:_ctx];
-
-        objc_setAssociatedObject(object, MochaObjectToBoxKey, box, OBJC_ASSOCIATION_RETAIN);
     }
     
     return jsObject;
@@ -494,11 +490,8 @@ static void * MochaObjectToBoxKey = &MochaObjectToBoxKey;
 
 - (void)removeBoxAssociationForObject:(id)object {
     if (object != nil) {
-        MOBox* box = objc_getAssociatedObject(object, MochaObjectToBoxKey);
-        if (box) {
-            [box disassociateObjectInContext:_ctx];
-            objc_setAssociatedObject(object, MochaObjectToBoxKey, nil, OBJC_ASSOCIATION_RETAIN);
-        }
+        MOBox *box = [MOBox boxForObject:object];
+        [box disassociateObjectInContext:_ctx];
     }
 }
 
