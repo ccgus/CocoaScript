@@ -19,6 +19,14 @@
  */
 @interface MOBox : NSObject
 
+/*!
+ * @method boxForObject
+ * @param object
+ *
+ * @result The box associated with  object, or nil if no box exists
+ */
++ (instancetype)boxForObject:(id)object;
+
 - (id)initWithRuntime:(Mocha*)runtime;
 - (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject context:(JSContextRef)context;
 - (void)disassociateObjectInContext:(JSContextRef)context;

@@ -72,12 +72,10 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 #pragma mark -
 #pragma mark Runtime
 
-
 @implementation Mocha {
     JSGlobalContextRef _ctx;
     BOOL _ownsContext;
     NSMutableDictionary *_exportedObjects;
-    NSMapTable *_objectsToBoxes;
     NSMutableArray *_frameworkSearchPaths;
 }
 
@@ -204,9 +202,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     if (self) {
         _ctx = ctx;
         _exportedObjects = [[NSMutableDictionary alloc] init];
-        _objectsToBoxes = [NSMapTable
-                           mapTableWithKeyOptions:NSMapTableWeakMemory | NSMapTableObjectPointerPersonality
-                           valueOptions:NSMapTableStrongMemory | NSMapTableObjectPointerPersonality];
         _frameworkSearchPaths = [[NSMutableArray alloc] initWithObjects:
                                  @"/System/Library/Frameworks",
                                  @"/Library/Frameworks",
@@ -464,7 +459,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     }
     
     JSObjectRef jsObject = NULL;
-    MOBox* box = [_objectsToBoxes objectForKey:object];
+    MOBox *box = [MOBox boxForObject:object];
     if (box != nil) {
         jsObject = [box JSObject];
     } else {
@@ -480,8 +475,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         }
         
         [box associateObject:object jsObject:jsObject context:_ctx];
-        
-    [_objectsToBoxes setObject:box forKey: object];
     }
     
     return jsObject;
@@ -497,14 +490,10 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 
 - (void)removeBoxAssociationForObject:(id)object {
     if (object != nil) {
-        MOBox* box = [_objectsToBoxes objectForKey:object];
-        if (box) {
-            [box disassociateObjectInContext:_ctx];
-            [_objectsToBoxes removeObjectForKey:object];
-        }
+        MOBox *box = [MOBox boxForObject:object];
+        [box disassociateObjectInContext:_ctx];
     }
 }
-
 
 #pragma mark -
 #pragma mark Object Storage
