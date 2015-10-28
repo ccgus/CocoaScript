@@ -72,10 +72,42 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 #pragma mark -
 #pragma mark Runtime
 
+@interface Mocha ()
+- (void)removeBoxForObjectPointerValue:(NSValue *)objectPointerValue;
+@end
+
+static void * MochaUnboxerKey = &MochaUnboxerKey;
+
+@interface MochaUnboxer : NSObject {
+    __weak Mocha *_mocha;
+    NSValue *_objectPointerValue;
+}
+- (instancetype)initWithRuntime:(Mocha *)runtime objectPointerValue:(NSValue *)objectPointerValue;
+@end
+
+@implementation MochaUnboxer
+
+- (instancetype)initWithRuntime:(Mocha *)runtime objectPointerValue:(NSValue *)objectPointerValue
+{
+    self = [super init];
+    if (self) {
+        _mocha = runtime;
+        _objectPointerValue = objectPointerValue;
+    }
+    return self;
+}
+
+-(void)dealloc {
+    [_mocha removeBoxForObjectPointerValue:_objectPointerValue];
+}
+
+@end
+
 @implementation Mocha {
     JSGlobalContextRef _ctx;
     BOOL _ownsContext;
     NSMutableDictionary *_exportedObjects;
+    NSMutableDictionary *_objectsToBoxes;
     NSMutableArray *_frameworkSearchPaths;
 }
 
@@ -202,6 +234,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     if (self) {
         _ctx = ctx;
         _exportedObjects = [[NSMutableDictionary alloc] init];
+        _objectsToBoxes = [NSMutableDictionary new];
         _frameworkSearchPaths = [[NSMutableArray alloc] initWithObjects:
                                  @"/System/Library/Frameworks",
                                  @"/Library/Frameworks",
@@ -459,11 +492,15 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     }
     
     JSObjectRef jsObject = NULL;
-    MOBox *box = [MOBox boxForObject:object];
+    NSValue *objectPointerValue = [NSValue valueWithPointer:(__bridge const void *)(object)];
+    MOBox* box = [_objectsToBoxes objectForKey:objectPointerValue];
     if (box != nil) {
         jsObject = [box JSObject];
     } else {
         box = [[MOBox alloc] initWithRuntime:self];
+        
+        MochaUnboxer *unboxer = [[MochaUnboxer alloc] initWithRuntime:self objectPointerValue:objectPointerValue];
+        objc_setAssociatedObject(box, MochaUnboxerKey, unboxer, OBJC_ASSOCIATION_RETAIN);
         
         if ([object isKindOfClass:[MOMethod class]]
             || [object isKindOfClass:[MOClosure class]]
@@ -475,6 +512,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         }
         
         [box associateObject:object jsObject:jsObject context:_ctx];
+        [_objectsToBoxes setObject:box forKey: objectPointerValue];
     }
     
     return jsObject;
@@ -490,8 +528,15 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 
 - (void)removeBoxAssociationForObject:(id)object {
     if (object != nil) {
-        MOBox *box = [MOBox boxForObject:object];
+        [self removeBoxForObjectPointerValue:[NSValue valueWithPointer:(__bridge const void *)(object)]];
+    }
+}
+
+- (void)removeBoxForObjectPointerValue:(NSValue *)objectPointerValue {
+    MOBox* box = [_objectsToBoxes objectForKey:objectPointerValue];
+    if (box) {
         [box disassociateObjectInContext:_ctx];
+        [_objectsToBoxes removeObjectForKey:objectPointerValue];
     }
 }
 
