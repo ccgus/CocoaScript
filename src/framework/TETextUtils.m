@@ -45,7 +45,7 @@ unsigned TE_numberOfLeadingSpacesFromRangeInString(NSString *string, NSRange *ra
     unsigned tabW = tabWidth;
     NSUInteger endOfWhiteSpaceIndex = NSNotFound;
 
-    if (range->length == 0) {
+    if (range && range->length == 0) {
         return 0;
     }
     
