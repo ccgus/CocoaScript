@@ -22,7 +22,7 @@
 
 - (id)initWithManager:(MOBoxManager*)manager;
 - (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject;
-- (void)disassociateObjectInContext:(JSContextRef)context;
+- (void)disassociateObject;
 
 /*!
  * @property representedObject

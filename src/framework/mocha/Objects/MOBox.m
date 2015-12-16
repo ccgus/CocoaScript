@@ -28,7 +28,8 @@
     _JSObject = jsObject;
 }
 
-- (void)disassociateObjectInContext:(JSContextRef)context {
+- (void)disassociateObject {
+    JSObjectSetPrivate(_JSObject, nil);
     _JSObject = nil;
     _representedObject = nil;
 }

@@ -25,9 +25,11 @@
 }
 
 - (void)cleanup {
+    NSAssert([NSThread isMainThread], @"should be main thread");
     [_index enumerateKeysAndObjectsUsingBlock:^(id key, MOBox *box, BOOL *stop) {
-        JSValueUnprotect(_context, box.JSObject);
-        [box disassociateObjectInContext:_context];
+        NSLog(@"cleaned up box %@ for %@", box, [box.representedObject class]);
+//        JSValueUnprotect(_context, box.JSObject);
+        [box disassociateObject];
     }];
     _index = nil;
     _context = nil;
@@ -39,25 +41,28 @@
 }
 
 - (MOBox*)boxForObject:(id)object {
+    NSAssert([NSThread isMainThread], @"should be main thread");
     id key = [self keyForObject:object];
     MOBox* box = [_index objectForKey:key];
     return box;
 }
 
 - (JSObjectRef)makeBoxForObject:(id)object jsClass:(JSClassRef)jsClass {
+    NSAssert([NSThread isMainThread], @"should be main thread");
     MOBox* box = [[MOBox alloc] initWithManager:self];
     JSObjectRef jsObject = JSObjectMake(_context, jsClass, (__bridge void *)(box));
     [box associateObject:object jsObject:jsObject];
-    JSValueProtect(_context, jsObject); // TODO: this is a temporary hack. It will fix the script crash, but only at the expense of leaking all JS objects during a script run. Which is not good...
+//    JSValueProtect(_context, jsObject); // TODO: this is a temporary hack. It will fix the script crash, but only at the expense of leaking all JS objects during a script run. Which is not good...
     [_index setObject:box forKey:[self keyForObject:object]];
     return jsObject;
 }
 
 - (void)removeBoxForObject:(id)object {
+    NSAssert([NSThread isMainThread], @"should be main thread");
     id key = [self keyForObject:object];
     MOBox* box = [_index objectForKey:key];
     if (box) {
-        [box disassociateObjectInContext:_context];
+        [box disassociateObject];
         [_index removeObjectForKey:key];
     }
 }
