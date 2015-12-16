@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		229C1FF61C21B38D004C5B3B /* MOBoxManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 229C1FF41C21B38D004C5B3B /* MOBoxManager.h */; };
+		229C1FF71C21B38D004C5B3B /* MOBoxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 229C1FF51C21B38D004C5B3B /* MOBoxManager.m */; };
+		229C1FF81C21B38D004C5B3B /* MOBoxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 229C1FF51C21B38D004C5B3B /* MOBoxManager.m */; };
 		384830E21832D48500B34168 /* COSTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 384830E01832D48500B34168 /* COSTarget.h */; };
 		384830E31832D48500B34168 /* COSTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 384830E11832D48500B34168 /* COSTarget.m */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -387,6 +390,8 @@
 /* Begin PBXFileReference section */
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		229C1FF41C21B38D004C5B3B /* MOBoxManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBoxManager.h; path = src/framework/mocha/Objects/MOBoxManager.h; sourceTree = SOURCE_ROOT; };
+		229C1FF51C21B38D004C5B3B /* MOBoxManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBoxManager.m; path = src/framework/mocha/Objects/MOBoxManager.m; sourceTree = SOURCE_ROOT; };
 		22E281E41A8BB99D006650D2 /* test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = test.js; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -1090,6 +1095,8 @@
 				CC66D879181A2B0A0039A0A5 /* MOAllocator.m */,
 				CC66D87A181A2B0A0039A0A5 /* MOBox.h */,
 				CC66D87B181A2B0A0039A0A5 /* MOBox.m */,
+				229C1FF41C21B38D004C5B3B /* MOBoxManager.h */,
+				229C1FF51C21B38D004C5B3B /* MOBoxManager.m */,
 				CC66D87C181A2B0A0039A0A5 /* MOClassDescription.h */,
 				CC66D87D181A2B0A0039A0A5 /* MOClassDescription.m */,
 				CC66D87E181A2B0A0039A0A5 /* MOClosure_Private.h */,
@@ -1232,6 +1239,7 @@
 				CC66D7CD181A2A470039A0A5 /* TDEmpty.h in Headers */,
 				CC66D8A3181A2B0A0039A0A5 /* MOClosure.h in Headers */,
 				CC66D7CF181A2A470039A0A5 /* TDLetter.h in Headers */,
+				229C1FF61C21B38D004C5B3B /* MOBoxManager.h in Headers */,
 				CC66D7E6181A2A470039A0A5 /* TDRepetition.h in Headers */,
 				CC66D834181A2A9B0039A0A5 /* COSCIImageAdditions.h in Headers */,
 				CC66D83E181A2A9B0039A0A5 /* COSQuickCIFilter.h in Headers */,
@@ -1426,6 +1434,7 @@
 				CC66D7DF181A2A470039A0A5 /* TDParser.m in Sources */,
 				384830E31832D48500B34168 /* COSTarget.m in Sources */,
 				CC66D86B181A2AE10039A0A5 /* MochaRuntime.m in Sources */,
+				229C1FF81C21B38D004C5B3B /* MOBoxManager.m in Sources */,
 				CC66D821181A2A710039A0A5 /* COSExtras.m in Sources */,
 				CC66D83F181A2A9B0039A0A5 /* COSQuickCIFilter.m in Sources */,
 				CC66D81F181A2A710039A0A5 /* COScript.m in Sources */,
@@ -1592,6 +1601,7 @@
 				CC9FF01118296A2B009DB0F9 /* TDToken.m in Sources */,
 				CC9FF01318296A2B009DB0F9 /* TDTokenArraySource.m in Sources */,
 				CC9FF01518296A2B009DB0F9 /* TDTokenAssembly.m in Sources */,
+				229C1FF71C21B38D004C5B3B /* MOBoxManager.m in Sources */,
 				CC9FF01718296A2B009DB0F9 /* TDTokenizer.m in Sources */,
 				CCD3834A195A454F00C436B9 /* COSDatabaseQueue.m in Sources */,
 				CC9FF01918296A2B009DB0F9 /* TDTokenizerState.m in Sources */,

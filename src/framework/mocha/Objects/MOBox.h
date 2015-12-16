@@ -11,6 +11,7 @@
 
 
 @class Mocha;
+@class MOBoxManager;
 
 
 /*!
@@ -19,8 +20,8 @@
  */
 @interface MOBox : NSObject
 
-- (id)initWithRuntime:(Mocha*)runtime;
-- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject context:(JSContextRef)context;
+- (id)initWithManager:(MOBoxManager*)manager;
+- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject;
 - (void)disassociateObjectInContext:(JSContextRef)context;
 
 /*!
@@ -40,11 +41,11 @@
 @property (assign, readonly) JSObjectRef JSObject;
 
 /*!
- * @property runtime
- * @abstract The runtime for the object
+ * @property manager
+ * @abstract The manager for the object
  *
- * @result A Mocha object
+ * @result A MOBoxManager object
  */
-@property (weak, readonly) Mocha *runtime;
+@property (weak, readonly) MOBoxManager *manager;
 
 @end
