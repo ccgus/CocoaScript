@@ -665,6 +665,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         for (NSUInteger i=0; i<argumentsCount; i++) {
             id argument = [arguments objectAtIndex:i];
             JSValueRef value = [self JSValueForObject:argument];
+            JSValueProtect(_ctx, value);
             jsArguments[i] = value;
         }
     }
@@ -673,6 +674,11 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     JSValueRef exception = NULL;
     //debug(@"calling function");
     JSValueRef returnValue = JSObjectCallAsFunction(_ctx, jsFunction, NULL, argumentsCount, jsArguments, &exception);
+
+    for (NSUInteger n = 0; n < argumentsCount; ++n) {
+        JSValueUnprotect(_ctx, jsArguments[n]);
+    }
+
     //debug(@"called");
     if (jsArguments != NULL) {
         free(jsArguments);
@@ -1166,8 +1172,7 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 
 static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresentingBox) {
     MOBox *box = (__bridge MOBox *)(JSObjectGetPrivate(jsObjectRepresentingBox));
-    CFRetain((__bridge CFTypeRef)box);
-    
+
     if (class_isMetaClass(object_getClass([box representedObject]))) {
         //debug(@"inited a local class object %@ - going to keep it protected %p", [private representedObject], object);
 //        JSValueProtect(ctx, [private JSObject]);
@@ -1193,7 +1198,6 @@ static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {
     [manager removeBoxForObject:boxedObject];
     
     JSObjectSetPrivate(jsObjectRepresentingBox, NULL);
-    CFRelease((__bridge CFTypeRef)box);
 }
 
 
@@ -1669,7 +1673,7 @@ static JSValueRef MOFunction_callAsFunction(JSContextRef ctx, JSObjectRef functi
     id function = [private representedObject];
     JSValueRef value = NULL;
     
-//    if ([function isKindOfClass:[MOMethod class]]) {
+    //    if ([function isKindOfClass:[MOMethod class]]) {
 //    
 //        MOMethod *method = function;
 //        
@@ -1681,7 +1685,7 @@ static JSValueRef MOFunction_callAsFunction(JSContextRef ctx, JSObjectRef functi
 //        selector = [function selector];
 //        Class klass = [target class];
 //    }
-    
+
     // Perform the invocation
     @try {
         value = MOFunctionInvoke(function, ctx, argumentCount, arguments, exception);
@@ -1692,7 +1696,7 @@ static JSValueRef MOFunction_callAsFunction(JSContextRef ctx, JSObjectRef functi
             *exception = [runtime JSValueForObject:e];
         }
     }
-    
+
     return value;
 }
 
