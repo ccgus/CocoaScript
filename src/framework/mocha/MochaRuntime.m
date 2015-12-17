@@ -10,6 +10,7 @@
 #import "MochaRuntime_Private.h"
 
 #import "MOBox.h"
+#import "MOBoxManager.h"
 #import "MOUndefined.h"
 #import "MOMethod_Private.h"
 #import "MOClosure_Private.h"
@@ -72,12 +73,11 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 #pragma mark -
 #pragma mark Runtime
 
-
 @implementation Mocha {
     JSGlobalContextRef _ctx;
     BOOL _ownsContext;
     NSMutableDictionary *_exportedObjects;
-    NSMapTable *_objectsToBoxes;
+    MOBoxManager *_boxManager;
     NSMutableArray *_frameworkSearchPaths;
 }
 
@@ -204,9 +204,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     if (self) {
         _ctx = ctx;
         _exportedObjects = [[NSMutableDictionary alloc] init];
-        _objectsToBoxes = [NSMapTable
-                           mapTableWithKeyOptions:NSMapTableWeakMemory | NSMapTableObjectPointerPersonality
-                           valueOptions:NSMapTableStrongMemory | NSMapTableObjectPointerPersonality];
+        _boxManager = [[MOBoxManager alloc] initWithContext:ctx];
         _frameworkSearchPaths = [[NSMutableArray alloc] initWithObjects:
                                  @"/System/Library/Frameworks",
                                  @"/Library/Frameworks",
@@ -463,29 +461,23 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         return NULL;
     }
     
-    MOBox *box = [_objectsToBoxes objectForKey: object];
-    if (box != nil) {
-        return [box JSObject];
-    }
-    
-    box = [[MOBox alloc] init];
-    box.runtime = self;
-    box.representedObject = object;
-    
     JSObjectRef jsObject = NULL;
-    
-    if ([object isKindOfClass:[MOMethod class]]
-        || [object isKindOfClass:[MOClosure class]]
-        || [object isKindOfClass:[MOBridgeSupportFunction class]]) {
-        jsObject = JSObjectMake(_ctx, MOFunctionClass, (__bridge void *)(box));
+    MOBox* box = [_boxManager boxForObject:object];
+    if (box != nil) {
+        jsObject = [box JSObject];
+    } else {
+        JSClassRef jsClass;
+        if ([object isKindOfClass:[MOMethod class]]
+            || [object isKindOfClass:[MOClosure class]]
+            || [object isKindOfClass:[MOBridgeSupportFunction class]]) {
+            jsClass = MOFunctionClass;
+        }
+        else {
+            jsClass = MOBoxedObjectClass;
+        }
+
+        jsObject = [_boxManager makeBoxForObject:object jsClass:jsClass];
     }
-    else {
-        jsObject = JSObjectMake(_ctx, MOBoxedObjectClass, (__bridge void *)(box));
-    }
-    
-    box.JSObject = jsObject;
-    
-    [_objectsToBoxes setObject:box forKey: object];
     
     return jsObject;
 }
@@ -497,13 +489,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     }
     return nil;
 }
-
-- (void)removeBoxAssociationForObject:(id)object {
-    if (object != nil) {
-        [_objectsToBoxes removeObjectForKey: object];
-    }
-}
-
 
 #pragma mark -
 #pragma mark Object Storage
@@ -671,6 +656,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         for (NSUInteger i=0; i<argumentsCount; i++) {
             id argument = [arguments objectAtIndex:i];
             JSValueRef value = [self JSValueForObject:argument];
+            JSValueProtect(_ctx, value);
             jsArguments[i] = value;
         }
     }
@@ -679,6 +665,11 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     JSValueRef exception = NULL;
     //debug(@"calling function");
     JSValueRef returnValue = JSObjectCallAsFunction(_ctx, jsFunction, NULL, argumentsCount, jsArguments, &exception);
+
+    for (NSUInteger n = 0; n < argumentsCount; ++n) {
+        JSValueUnprotect(_ctx, jsArguments[n]);
+    }
+
     //debug(@"called");
     if (jsArguments != NULL) {
         free(jsArguments);
@@ -916,13 +907,12 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     [self setNilValueForKey:@"print"];
     
     [self removeObjectWithName:@"__mocha__"];
-    
+
+    [_boxManager cleanup];
+    _boxManager = nil;
+
     JSGlobalContextRelease(_ctx);
-    
     _ctx = nil;
-    
-    //[_mochaRuntime garbageCollect];
-    
 }
 
 - (void)print:(id)o {
@@ -997,34 +987,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 #pragma mark -
 #pragma mark Global Object
 
-//static void Mocha_initialize(JSContextRef ctx, JSObjectRef object) {
-//    MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
-//    
-//    if (private) {
-//        
-//        CFRetain((__bridge CFTypeRef)private);
-//        
-////        if (class_isMetaClass(object_getClass([private representedObject]))) {
-////            debug(@"inited a global class object %@ - going to keep it protected", [private representedObject]);
-////            JSValueProtect(ctx, [private JSObject]);
-////        }
-//    }
-//    
-//    
-//}
-//
-//static void Mocha_finalize(JSObjectRef object) {
-//    MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
-//    id o = [private representedObject];
-//    
-//    //debug(@"finalizing %@ o: %p", o, object);
-//    
-//    if (class_isMetaClass(object_getClass(o))) {
-//        debug(@"Finalizing global class: %@ %p", o, object);
-//    }
-//}
-
-
 JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef propertyNameJS, JSValueRef *exception) {
     NSString *propertyName = (NSString *)CFBridgingRelease(JSStringCopyCFString(kCFAllocatorDefault, propertyNameJS));
     
@@ -1045,7 +1007,7 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
         JSValueRef ret = [runtime JSValueForObject:exportedObj];
         
         if (!objc_getAssociatedObject(exportedObj, &MOAlreadyProtectedKey)) {
-            //debug(@"protecting an exported object: %@ %p", propertyName, ret);
+            debug(@"protecting an exported object: %@ %p", propertyName, ret);
             objc_setAssociatedObject(exportedObj, &MOAlreadyProtectedKey, @(1), OBJC_ASSOCIATION_RETAIN);
             JSValueProtect(ctx, ret);
         }
@@ -1061,7 +1023,7 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
         JSValueRef ret = [runtime JSValueForObject:objCClass];
         
         if (!objc_getAssociatedObject(objCClass, &MOAlreadyProtectedKey)) {
-            // debug(@"inited a global class object %@ - going to keep it protected %p", propertyName, ret);
+            debug(@"inited a global class object %@ - going to keep it protected %p", propertyName, ret);
             objc_setAssociatedObject(objCClass, &MOAlreadyProtectedKey, @(1), OBJC_ASSOCIATION_RETAIN);
             JSValueProtect(ctx, ret);
         }
@@ -1168,64 +1130,23 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 #pragma mark -
 #pragma mark Mocha Objects
 
-static void MOObject_initialize(JSContextRef ctx, JSObjectRef object) {
-    MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
-    
-    //debug(@"[private representedObject]: '%@'", [private representedObject]);
-    //debug(@"[[private representedObject] valueForKey:@\"retainCount\"]: %@", [[private representedObject] valueForKey:@"retainCount"]);
-    
-    //int before = [[[private representedObject] valueForKey:@"retainCount"] integerValue];
-    
-    // CFIndex b = CFGetRetainCount((__bridge CFTypeRef)private);
-    
-    CFRetain((__bridge CFTypeRef)private);
-    
-    /*
-    if (CFGetRetainCount((__bridge CFTypeRef)private) <= b) {
-        debug(@"couldn't retain %@ / %@", private, [private representedObject]);
-        assert(NO);
-    }
-     */
-    
-    //debug(@"%p initialize %p (%ld)", private, [private representedObject], CFGetRetainCount((__bridge CFTypeRef)private));
-    
-    if (class_isMetaClass(object_getClass([private representedObject]))) {
-        //debug(@"inited a local class object %@ - going to keep it protected %p", [private representedObject], object);
-//        JSValueProtect(ctx, [private JSObject]);
-    }
-    
+static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresentingBox) {
+    NSCAssert([((__bridge MOBox *)JSObjectGetPrivate(jsObjectRepresentingBox)) isKindOfClass:[MOBox class]], @"should have an associated box object");
 }
 
-static void MOObject_finalize(JSObjectRef object) {
-    MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
-    
-    if (![private representedObjectCanary]) {
-        NSLog(@"whoa- the canary is gone!  I'm not touching this stuff. (%@)", [private representedObjectCanaryDesc]);
-        return;
-    }
-    
-    
-    // debug(@"%p finalizing %ld", private, CFGetRetainCount((__bridge CFTypeRef)private));
-    id o = [private representedObject];
-    
-    //debug(@"finalizing %@ o: %p", o, object);
-    
-//    if (class_isMetaClass(object_getClass(o))) {
-//        debug(@"Finalizing local class: %@ %p", o, object);
-//    }
-    
+static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {
     // Give the object a chance to finalize itself
-    if ([o respondsToSelector:@selector(finalizeForMochaScript)]) {
-        [o finalizeForMochaScript];
+    MOBox *box = (__bridge MOBox *)(JSObjectGetPrivate(jsObjectRepresentingBox));
+    NSCAssert(!box || [box isKindOfClass:[MOBox class]], @"if we're shutting down, the private object may have been cleaned out already, but otherwise, it should be an MOBox");
+
+    id boxedObject = [box representedObject];
+    if ([boxedObject respondsToSelector:@selector(finalizeForMochaScript)]) {
+        [boxedObject finalizeForMochaScript];
     }
     
     // Remove the object association
-    Mocha *runtime = [private runtime];
-    [runtime removeBoxAssociationForObject:o];
-    
-    JSObjectSetPrivate(object, NULL);
-    
-    CFRelease((__bridge CFTypeRef)private);
+    MOBoxManager *manager = [box manager];
+    [manager removeBoxForObject:boxedObject];
 }
 
 
@@ -1701,7 +1622,7 @@ static JSValueRef MOFunction_callAsFunction(JSContextRef ctx, JSObjectRef functi
     id function = [private representedObject];
     JSValueRef value = NULL;
     
-//    if ([function isKindOfClass:[MOMethod class]]) {
+    //    if ([function isKindOfClass:[MOMethod class]]) {
 //    
 //        MOMethod *method = function;
 //        
@@ -1713,7 +1634,7 @@ static JSValueRef MOFunction_callAsFunction(JSContextRef ctx, JSObjectRef functi
 //        selector = [function selector];
 //        Class klass = [target class];
 //    }
-    
+
     // Perform the invocation
     @try {
         value = MOFunctionInvoke(function, ctx, argumentCount, arguments, exception);
@@ -1724,7 +1645,7 @@ static JSValueRef MOFunction_callAsFunction(JSContextRef ctx, JSObjectRef functi
             *exception = [runtime JSValueForObject:e];
         }
     }
-    
+
     return value;
 }
 

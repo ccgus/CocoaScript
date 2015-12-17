@@ -96,7 +96,7 @@ static NSString *COSUTTypeTable = @"R.table";
     
     COSR *sub = [self subTableWithName:tableName];
     
-    #pragma message "FIXME: make sure to return an existing one if it's already around"
+    // FIXME: make sure to return an existing one if it's already around
     
     [sub setTableID:[NSString stringWithUUID]];
     [self setObject:sub forKeyedSubscript:tableName];

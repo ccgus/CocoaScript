@@ -195,7 +195,7 @@ static NSMutableDictionary *JSTSketchers = nil;
         
         NSPoint p = [NSEvent mouseLocation];
         
-        p = [_mwindow convertScreenToBase:p];
+        p = [_mwindow convertRectFromScreen:NSMakeRect(p.x, p.y, 0, 0)].origin;
         _mouseLocation = [self convertPoint:p fromView:nil];
     }
 }

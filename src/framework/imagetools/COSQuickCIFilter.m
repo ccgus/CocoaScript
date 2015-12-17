@@ -8,7 +8,7 @@
 
 #import "COSQuickCIFilter.h"
 
-#pragma message "FIXME: Gus- you can get CI kernel errors like so: http://stackoverflow.com/questions/13754997/how-do-you-debug-syntax-errors-in-a-core-image-kernel"
+// FIXME: Gus- you can get CI kernel errors like so: http://stackoverflow.com/questions/13754997/how-do-you-debug-syntax-errors-in-a-core-image-kernel"
 /*
  If you use introspection on the CIKernel class, you will find a kernelsWithString:messageLog: method. There is no public interface to it, but don't let that stop you…
  

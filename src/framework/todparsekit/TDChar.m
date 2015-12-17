@@ -11,7 +11,7 @@
 @implementation TDChar
 
 + (id)char {
-    return [[[self alloc] initWithString:nil] autorelease];
+    return [[(TDChar*)[self alloc] initWithString:nil] autorelease];
 }
 
 

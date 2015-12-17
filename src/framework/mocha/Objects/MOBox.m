@@ -7,37 +7,35 @@
 //
 
 #import "MOBox.h"
-
+#import "MOMethod.h"
+#import "MOBridgeSupportSymbol.h"
+#import "MOFunctionArgument.h"
+#import "MOClosure.h"
 
 @implementation MOBox
 
-@synthesize JSObject=_JSObject;
-@synthesize runtime=_runtime;
-@synthesize representedObject=_representedObject;
-
-- (void)dealloc {
-    //debug(@"MOBox dealloc releasing: '%@'", _representedObjectCanaryDesc);
-}
-
-- (void)setRepresentedObject:(id)representedObject {
-    
-    
-    //debug(@"%p set %p (%@)", self, representedObject, [representedObject isKindOfClass:[NSData class]] ? @"BIG BIT O' DATA" : representedObject);
-    
-    _representedObject = representedObject;
-    _representedObjectCanary = representedObject;
-    _representedObjectCanaryDesc = [representedObject description];
-    
-    if ([representedObject isKindOfClass:[NSData class]]) {
-        //debug(@"DATAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        _representedObjectCanaryDesc = [NSString stringWithFormat:@"NSData object (%p)", representedObject];
+- (id)initWithManager:(MOBoxManager *)manager {
+    self = [super init];
+    if (self) {
+        _manager = manager;
     }
     
+    return self;
 }
 
-- (id)representedObject {
-    return _representedObject;
+- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject {
+    _representedObject = object;
+    _JSObject = jsObject;
 }
 
+- (void)disassociateObject {
+    JSObjectSetPrivate(_JSObject, nil);
+    _JSObject = nil;
+    _representedObject = nil;
+}
+
+- (void)dealloc {
+    NSAssert((_JSObject == nil) && (_representedObject == nil), @"should have been disassociated");
+}
 
 @end

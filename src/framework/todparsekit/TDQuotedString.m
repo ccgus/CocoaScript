@@ -12,7 +12,7 @@
 @implementation TDQuotedString
 
 + (id)quotedString {
-    return [[[self alloc] initWithString:nil] autorelease];
+    return [[(TDQuotedString*)[self alloc] initWithString:nil] autorelease];
 }
 
 

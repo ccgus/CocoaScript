@@ -12,7 +12,7 @@
 @implementation TDNum
 
 + (id)num {
-    return [[[self alloc] initWithString:nil] autorelease];
+    return [[(TDNum*)[self alloc] initWithString:nil] autorelease];
 }
 
 
