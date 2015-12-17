@@ -456,11 +456,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     return [Mocha objectForJSValue:value inContext:_ctx unboxObjects:unboxObjects];
 }
 
-- (void)cleanupBoxes {
-    [_boxManager cleanup];
-    _boxManager = nil;
-}
-
 - (JSObjectRef)boxedJSObjectForObject:(id)object {
     if (object == nil) {
         return NULL;
@@ -493,10 +488,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         return [private representedObject];
     }
     return nil;
-}
-
-- (void)removeBoxAssociationForObject:(id)object {
-    [_boxManager removeBoxForObject:object];
 }
 
 #pragma mark -
@@ -917,14 +908,11 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     
     [self removeObjectWithName:@"__mocha__"];
 
-    [self cleanupBoxes];
+    [_boxManager cleanup];
+    _boxManager = nil;
 
     JSGlobalContextRelease(_ctx);
-    
     _ctx = nil;
-    
-    //[_mochaRuntime garbageCollect];
-    
 }
 
 - (void)print:(id)o {
@@ -1181,14 +1169,9 @@ static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresenti
 }
 
 static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {
+    // Give the object a chance to finalize itself
     MOBox *box = (__bridge MOBox *)(JSObjectGetPrivate(jsObjectRepresentingBox));
     id boxedObject = [box representedObject];
-    
-//    if (class_isMetaClass(object_getClass(o))) {
-//        debug(@"Finalizing local class: %@ %p", o, object);
-//    }
-    
-    // Give the object a chance to finalize itself
     if ([boxedObject respondsToSelector:@selector(finalizeForMochaScript)]) {
         [boxedObject finalizeForMochaScript];
     }
@@ -1196,8 +1179,6 @@ static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {
     // Remove the object association
     MOBoxManager *manager = [box manager];
     [manager removeBoxForObject:boxedObject];
-    
-    JSObjectSetPrivate(jsObjectRepresentingBox, NULL);
 }
 
 
