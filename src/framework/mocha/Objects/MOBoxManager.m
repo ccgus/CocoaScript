@@ -17,9 +17,7 @@
 - (instancetype)initWithContext:(JSGlobalContextRef)context {
     self = [super init];
     if (self) {
-        _index = [NSMapTable
-                           mapTableWithKeyOptions:NSMapTableStrongMemory | NSMapTableObjectPointerPersonality
-                           valueOptions:NSMapTableStrongMemory | NSMapTableObjectPointerPersonality];
+        _index = [NSMapTable strongToStrongObjectsMapTable];
         _context = context;
     }
 
