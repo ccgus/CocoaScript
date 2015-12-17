@@ -35,7 +35,7 @@
 }
 
 - (void)dealloc {
-    NSAssert(_JSObject == nil, @"should have been disassociated");
+    NSAssert((_JSObject == nil) && (_representedObject == nil), @"should have been disassociated");
 }
 
 @end
