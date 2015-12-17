@@ -38,12 +38,14 @@
 
 - (MOBox*)boxForObject:(id)object {
     NSAssert([NSThread isMainThread], @"should be main thread");
+    NSAssert(![object isKindOfClass:[MOBox class]], @"shouldn't box a box");
     MOBox* box = [_index objectForKey:object];
     return box;
 }
 
 - (JSObjectRef)makeBoxForObject:(id)object jsClass:(JSClassRef)jsClass {
     NSAssert([NSThread isMainThread], @"should be main thread");
+    NSAssert(![object isKindOfClass:[MOBox class]], @"shouldn't box a box");
     MOBox* box = [[MOBox alloc] initWithManager:self];
     JSObjectRef jsObject = JSObjectMake(_context, jsClass, (__bridge void *)(box));
     [box associateObject:object jsObject:jsObject];
@@ -55,6 +57,7 @@
 - (void)removeBoxForObject:(id)object {
     NSAssert([NSThread isMainThread], @"should be main thread");
     MOBox* box = [_index objectForKey:object];
+    NSAssert(box != nil, @"shouldn't be asked to unbox something that has no box");
     if (box) {
         [box disassociateObject];
         [_index removeObjectForKey:object];
