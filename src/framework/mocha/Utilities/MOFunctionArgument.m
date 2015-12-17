@@ -1075,7 +1075,7 @@ typedef struct { char a; BOOL b; } struct_C_BOOL;
         }
     }
     
-    MOStruct *structure = [MOStruct structureWithName:structureName memberNames:memberNames];
+    MOStruct *structure = [MOStruct structureWithName:structureName memberNames:memberNames runtime:runtime];
     for (NSString *name in memberNames) {
         id memberValue = [memberValues objectForKey:name];
         [structure setObject:memberValue forMemberName:name];

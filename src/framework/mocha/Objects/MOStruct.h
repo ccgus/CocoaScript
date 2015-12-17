@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class Mocha;
 
 /*!
  * @class MOStruct
@@ -27,7 +28,7 @@
  * 
  * @result An MOStruct object
  */
-+ (MOStruct *)structureWithName:(NSString *)name memberNames:(NSArray *)memberNames;
++ (MOStruct *)structureWithName:(NSString *)name memberNames:(NSArray *)memberNames runtime:(Mocha*)runtime;
 
 /*!
  * @method initWithName:memberNames:
@@ -41,7 +42,7 @@
  * 
  * @result An MOStruct object
  */
-- (id)initWithName:(NSString *)name memberNames:(NSArray *)memberNames;
+- (id)initWithName:(NSString *)name memberNames:(NSArray *)memberNames runtime:(Mocha*)runtime;
 
 
 /*!
