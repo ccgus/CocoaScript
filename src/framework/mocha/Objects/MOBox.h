@@ -32,6 +32,9 @@
  */
 @property (strong, readonly) id representedObject;
 
+@property (weak) id representedObjectCanary;
+@property (strong) NSString *representedObjectCanaryDesc;
+
 /*!
  * @property JSObject
  * @abstract The JSObject representation of the box

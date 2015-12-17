@@ -30,11 +30,13 @@
     
     NSDictionary *fileProperties = @{(__bridge id)kCGImagePropertyGIFDictionary: @{
                                              (__bridge id)kCGImagePropertyGIFLoopCount: @0, // 0 means loop forever
+                                             (__bridge id)kCGImagePropertyGIFUnclampedDelayTime: @((float)d)
                                              }
                                      };
     
     NSDictionary *frameProperties = @{(__bridge id)kCGImagePropertyGIFDictionary: @{
                                               (__bridge id)kCGImagePropertyGIFDelayTime: @((float)d), // a float (not double!) in seconds, rounded to centiseconds in the GIF data
+                                              (__bridge id)kCGImageDestinationLossyCompressionQuality: @(0.0)
                                               }
                                       };
     CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:@"/tmp/foo.gif"], kUTTypeGIF, _fps * _seconds, NULL);

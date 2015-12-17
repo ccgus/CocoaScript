@@ -1165,7 +1165,6 @@ static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresenti
         //debug(@"inited a local class object %@ - going to keep it protected %p", [private representedObject], object);
 //        JSValueProtect(ctx, [private JSObject]);
     }
-    
 }
 
 static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {

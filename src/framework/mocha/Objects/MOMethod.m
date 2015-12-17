@@ -30,7 +30,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: %p : target=%@, selector=%@>", [self class], self, [self target], NSStringFromSelector([self selector])];
+    return [NSString stringWithFormat:@"<%@: %p : target=%p%@, selector=%@>", [self class], self, [self target], [self target], NSStringFromSelector([self selector])];
 }
 
 @end
