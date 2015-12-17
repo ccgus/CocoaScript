@@ -102,7 +102,7 @@ void COScriptDebug(NSString* format, ...) {
     [self deleteObjectWithName:@"log"];
     
     [_mochaRuntime shutdown];
-    
+    _mochaRuntime = nil;
 }
 
 - (void)garbageCollect {
