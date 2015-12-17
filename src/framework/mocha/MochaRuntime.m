@@ -987,34 +987,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 #pragma mark -
 #pragma mark Global Object
 
-//static void Mocha_initialize(JSContextRef ctx, JSObjectRef object) {
-//    MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
-//    
-//    if (private) {
-//        
-//        CFRetain((__bridge CFTypeRef)private);
-//        
-////        if (class_isMetaClass(object_getClass([private representedObject]))) {
-////            debug(@"inited a global class object %@ - going to keep it protected", [private representedObject]);
-////            JSValueProtect(ctx, [private JSObject]);
-////        }
-//    }
-//    
-//    
-//}
-//
-//static void Mocha_finalize(JSObjectRef object) {
-//    MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
-//    id o = [private representedObject];
-//    
-//    //debug(@"finalizing %@ o: %p", o, object);
-//    
-//    if (class_isMetaClass(object_getClass(o))) {
-//        debug(@"Finalizing global class: %@ %p", o, object);
-//    }
-//}
-
-
 JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef propertyNameJS, JSValueRef *exception) {
     NSString *propertyName = (NSString *)CFBridgingRelease(JSStringCopyCFString(kCFAllocatorDefault, propertyNameJS));
     
@@ -1159,17 +1131,14 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 #pragma mark Mocha Objects
 
 static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresentingBox) {
-    MOBox *box = (__bridge MOBox *)(JSObjectGetPrivate(jsObjectRepresentingBox));
-
-    if (class_isMetaClass(object_getClass([box representedObject]))) {
-        //debug(@"inited a local class object %@ - going to keep it protected %p", [private representedObject], object);
-//        JSValueProtect(ctx, [private JSObject]);
-    }
+    NSCAssert([((__bridge MOBox *)JSObjectGetPrivate(jsObjectRepresentingBox)) isKindOfClass:[MOBox class]], @"should have an associated box object");
 }
 
 static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {
     // Give the object a chance to finalize itself
     MOBox *box = (__bridge MOBox *)(JSObjectGetPrivate(jsObjectRepresentingBox));
+    NSCAssert(!box || [box isKindOfClass:[MOBox class]], @"if we're shutting down, the private object may have been cleaned out already, but otherwise, it should be an MOBox");
+
     id boxedObject = [box representedObject];
     if ([boxedObject respondsToSelector:@selector(finalizeForMochaScript)]) {
         [boxedObject finalizeForMochaScript];

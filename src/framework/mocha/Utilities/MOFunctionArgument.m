@@ -1086,7 +1086,6 @@ typedef struct { char a; BOOL b; } struct_C_BOOL;
     }
     
     JSValueRef jsValue = [runtime JSValueForObject:structure];
-//    JSValueProtect(ctx, jsValue);
     JSObjectRef jsObject = JSValueToObject(ctx, jsValue, NULL);
     
     if (!*value) {

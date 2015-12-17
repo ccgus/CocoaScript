@@ -19,6 +19,7 @@
     if (self) {
         _index = [NSMapTable strongToStrongObjectsMapTable];
         _context = context;
+        JSGlobalContextRetain(context);
     }
 
     return self;
@@ -28,10 +29,10 @@
     NSAssert([NSThread isMainThread], @"should be main thread");
     for (NSValue* key in _index) {
         MOBox* box = [_index objectForKey:key];
-//        NSLog(@"cleaned up box %@ for %@", box, [box.representedObject class]);
         [box disassociateObject];
     }
     _index = nil;
+    JSGlobalContextRelease(_context);
     _context = nil;
 }
 
