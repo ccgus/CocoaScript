@@ -20,8 +20,8 @@
  */
 @interface MOBox : NSObject
 
-- (id)initWithManager:(MOBoxManager*)manager;
-- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject;
+- (id)initWithManager:(MOBoxManager*)manager object:(id)object;
+- (void)associateObject:(JSObjectRef)jsObject;
 - (void)disassociateObject;
 
 /*!

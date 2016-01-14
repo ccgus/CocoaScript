@@ -36,5 +36,6 @@
 - (void)cleanup;
 - (MOBox*)boxForObject:(id)object;
 - (JSObjectRef)makeBoxForObject:(id)object jsClass:(JSClassRef)jsClass;
+- (void)associateObject:(JSObjectRef)jsObject withBox:(MOBox*)box;
 - (void)removeBoxForObject:(id)object;
 @end

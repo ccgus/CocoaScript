@@ -14,17 +14,18 @@
 
 @implementation MOBox
 
-- (id)initWithManager:(MOBoxManager *)manager {
+- (id)initWithManager:(MOBoxManager *)manager object:(id)object {
     self = [super init];
     if (self) {
         _manager = manager;
+        _representedObject = object;
     }
     
     return self;
 }
 
-- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject {
-    _representedObject = object;
+- (void)associateObject:(JSObjectRef)jsObject {
+    NSAssert(JSObjectGetPrivate(jsObject) == (__bridge void *)self, @"object should already be connected to this box");
     _JSObject = jsObject;
 }
 

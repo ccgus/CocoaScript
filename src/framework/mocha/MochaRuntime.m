@@ -1131,7 +1131,10 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 #pragma mark Mocha Objects
 
 static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresentingBox) {
-    NSCAssert([((__bridge MOBox *)JSObjectGetPrivate(jsObjectRepresentingBox)) isKindOfClass:[MOBox class]], @"should have an associated box object");
+    MOBox *box = (__bridge MOBox *)(JSObjectGetPrivate(jsObjectRepresentingBox));
+    NSCAssert([box isKindOfClass:[MOBox class]], @"should have an associated box object");
+    MOBoxManager *manager = [box manager];
+    [manager associateObject:jsObjectRepresentingBox withBox:box];
 }
 
 static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {
@@ -1640,6 +1643,8 @@ static JSValueRef MOFunction_callAsFunction(JSContextRef ctx, JSObjectRef functi
         value = MOFunctionInvoke(function, ctx, argumentCount, arguments, exception);
     }
     @catch (NSException *e) {
+        debug(@"caught exception whilst invoking function %@: %@", function, e);
+
         // Catch ObjC exceptions and propogate them up as JS exceptions
         if (exception != nil) {
             *exception = [runtime JSValueForObject:e];
