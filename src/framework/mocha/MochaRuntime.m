@@ -1133,7 +1133,7 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 
 static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresentingBox) {
     MOBoxManagerBoxContext* context = (__bridge MOBoxManagerBoxContext *)(JSObjectGetPrivate(jsObjectRepresentingBox));
-    NSCAssert([context isKindOfClass:[MOBoxManagerBoxContext class]], @"should have an dictionary with context");
+    NSCAssert([context isKindOfClass:[MOBoxManagerBoxContext class]], @"should have a context object");
 
     [context finishMakingBoxForObject:jsObjectRepresentingBox];
 }
