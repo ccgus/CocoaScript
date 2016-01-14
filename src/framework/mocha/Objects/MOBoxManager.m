@@ -34,7 +34,12 @@
         MOBox* box = [_index objectForKey:key];
         [box disassociateObject];
     }
+
+    // throw away the index, which will release any boxes still in it, which in turn should release the objects they were boxing
     _index = nil;
+
+    // throw the context away, which should clean up any remaining JS objects
+    // (these should all have had their boxes removed by now, and their private pointers cleaned out)
     JSGlobalContextRelease(_context);
     _context = nil;
 }
@@ -70,12 +75,6 @@
         [_index removeObjectForKey:object];
     } else {
         debug(@"shouldn't be asked to unbox something that has no box (the object was %p %@)", object, [object className]);
-        for (id key in _index) {
-            box = [_index objectForKey:key];
-            if (box.representedObject == object) {
-                NSLog(@"found orphaned box");
-            }
-        }
     }
 }
 
