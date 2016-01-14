@@ -19,7 +19,9 @@
     if (self) {
         _manager = manager;
         _representedObject = object;
+#if DEBUG_CRASHES
         _representedObjectCanaryDesc = [NSString stringWithFormat:@"%@ %@", [NSDate date], object];
+#endif
         _JSObject = jsObject;
         JSObjectSetPrivate(jsObject, (__bridge void*)self);
     }
@@ -36,7 +38,11 @@
 
 - (void)dealloc {
     if (_manager) {
+#if DEBUG_CRASHES
         debug(@"box should have been disassociated for %@", _representedObjectCanaryDesc);
+#else
+        debug(@"box should have been disassociated for %@", _representedObject);
+#endif
         [self disassociateObject];
     }
 }

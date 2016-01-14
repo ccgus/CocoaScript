@@ -13,6 +13,7 @@
 @class Mocha;
 @class MOBoxManager;
 
+#define DEBUG_CRASHES 0
 
 /*!
  * @class MOBox
@@ -31,8 +32,6 @@
  */
 @property (strong, readonly) id representedObject;
 
-@property (strong) NSString *representedObjectCanaryDesc;
-
 /*!
  * @property JSObject
  * @abstract The JSObject representation of the box
@@ -48,5 +47,9 @@
  * @result A MOBoxManager object
  */
 @property (weak, readonly) MOBoxManager *manager;
+
+#if DEBUG_CRASHES
+@property (strong) NSString *representedObjectCanaryDesc;
+#endif
 
 @end
