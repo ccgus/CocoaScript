@@ -32,10 +32,11 @@
  */
 
 @interface MOBoxManager : NSObject
+
 - (instancetype)initWithContext:(JSGlobalContextRef)context;
 - (void)cleanup;
 - (MOBox*)boxForObject:(id)object;
 - (JSObjectRef)makeBoxForObject:(id)object jsClass:(JSClassRef)jsClass;
-- (void)associateObject:(JSObjectRef)jsObject withBox:(MOBox*)box;
+- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject;
 - (void)removeBoxForObject:(id)object;
 @end

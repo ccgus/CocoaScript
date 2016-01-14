@@ -14,31 +14,31 @@
 
 @implementation MOBox
 
-- (id)initWithManager:(MOBoxManager *)manager object:(id)object {
+- (id)initWithManager:(MOBoxManager *)manager object:(id)object jsObject:(JSObjectRef)jsObject {
     self = [super init];
     if (self) {
         _manager = manager;
         _representedObject = object;
-        _representedObjectCanary = object;
-        _representedObjectCanaryDesc = [object description];
+        _representedObjectCanaryDesc = [NSString stringWithFormat:@"%@ %@", [NSDate date], object];
+        _JSObject = jsObject;
+        JSObjectSetPrivate(jsObject, (__bridge void*)self);
     }
     
     return self;
 }
 
-- (void)associateObject:(JSObjectRef)jsObject {
-    NSAssert(JSObjectGetPrivate(jsObject) == (__bridge void *)self, @"object should already be connected to this box");
-    _JSObject = jsObject;
-}
-
 - (void)disassociateObject {
+    NSAssert(_manager != nil, @"shouldn't have been disassociated already");
     JSObjectSetPrivate(_JSObject, nil);
-    _JSObject = nil;
     _representedObject = nil;
+    _manager = nil;
 }
 
 - (void)dealloc {
-    NSAssert((_JSObject == nil) && (_representedObject == nil), @"should have been disassociated");
+    if (_manager) {
+        debug(@"box should have been disassociated for %@", _representedObjectCanaryDesc);
+        [self disassociateObject];
+    }
 }
 
 @end

@@ -28,6 +28,8 @@
 
 - (void)cleanup {
     NSAssert([NSThread isMainThread], @"should be main thread");
+
+    // break any retain cycles between the boxed objects and the things that they are boxing
     for (NSValue* key in _index) {
         MOBox* box = [_index objectForKey:key];
         [box disassociateObject];
@@ -38,7 +40,7 @@
 }
 
 - (MOBox*)boxForObject:(id)object {
-    debug(@"added box for %p %@", object, object);
+    debug(@"added box for %p %@", object, [object className]);
     NSAssert([NSThread isMainThread], @"should be main thread");
     NSAssert(![object isKindOfClass:[MOBox class]], @"shouldn't box a box");
     MOBox* box = [_index objectForKey:object];
@@ -48,15 +50,14 @@
 - (JSObjectRef)makeBoxForObject:(id)object jsClass:(JSClassRef)jsClass {
     NSAssert([NSThread isMainThread], @"should be main thread");
     NSAssert(![object isKindOfClass:[MOBox class]], @"shouldn't box a box");
-    MOBox* box = [[MOBox alloc] initWithManager:self object:object];
-    JSObjectRef jsObject = JSObjectMake(_context, jsClass, (__bridge void *)(box));
+    NSDictionary* context = @{ @"manager" : self, @"object" : object };
+    JSObjectRef jsObject = JSObjectMake(_context, jsClass, (__bridge void *)(context));
     return jsObject;
 }
 
-- (void)associateObject:(JSObjectRef)jsObject withBox:(MOBox*)box {
-    id object = box.representedObject;
+- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject {
     NSAssert([_index objectForKey:object] == nil, @"shouldn't already have an entry for the object");
-    [box associateObject:jsObject];
+    MOBox* box = [[MOBox alloc] initWithManager:self object:object jsObject:jsObject];
     [_index setObject:box forKey:object];
 }
 
@@ -68,7 +69,7 @@
         [box disassociateObject];
         [_index removeObjectForKey:object];
     } else {
-        debug(@"shouldn't be asked to unbox something that has no box (the object was %p %@)", object, object);
+        debug(@"shouldn't be asked to unbox something that has no box (the object was %p %@)", object, [object className]);
         for (id key in _index) {
             box = [_index objectForKey:key];
             if (box.representedObject == object) {

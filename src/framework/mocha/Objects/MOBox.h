@@ -20,8 +20,7 @@
  */
 @interface MOBox : NSObject
 
-- (id)initWithManager:(MOBoxManager*)manager object:(id)object;
-- (void)associateObject:(JSObjectRef)jsObject;
+- (id)initWithManager:(MOBoxManager *)manager object:(id)object jsObject:(JSObjectRef)jsObject;
 - (void)disassociateObject;
 
 /*!
@@ -32,7 +31,6 @@
  */
 @property (strong, readonly) id representedObject;
 
-@property (weak) id representedObjectCanary;
 @property (strong) NSString *representedObjectCanaryDesc;
 
 /*!

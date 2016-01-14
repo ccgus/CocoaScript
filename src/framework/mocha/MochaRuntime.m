@@ -1131,15 +1131,18 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 #pragma mark Mocha Objects
 
 static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresentingBox) {
-    MOBox *box = (__bridge MOBox *)(JSObjectGetPrivate(jsObjectRepresentingBox));
-    NSCAssert([box isKindOfClass:[MOBox class]], @"should have an associated box object");
-    MOBoxManager *manager = [box manager];
-    [manager associateObject:jsObjectRepresentingBox withBox:box];
+    NSDictionary* context = (__bridge NSDictionary *)(JSObjectGetPrivate(jsObjectRepresentingBox));
+    NSCAssert([context isKindOfClass:[NSDictionary class]], @"should have an dictionary with context");
+
+    MOBoxManager* manager = context[@"manager"];
+    id object = context[@"object"];
+    [manager associateObject:object jsObject:jsObjectRepresentingBox];
 }
 
 static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {
     // Give the object a chance to finalize itself
-    MOBox *box = (__bridge MOBox *)(JSObjectGetPrivate(jsObjectRepresentingBox));
+    void* private = JSObjectGetPrivate(jsObjectRepresentingBox);
+    MOBox *box = (__bridge MOBox *)private;
     NSCAssert(!box || [box isKindOfClass:[MOBox class]], @"if we're shutting down, the private object may have been cleaned out already, but otherwise, it should be an MOBox");
 
     id boxedObject = [box representedObject];
