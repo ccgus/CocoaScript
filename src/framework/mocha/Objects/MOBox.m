@@ -19,6 +19,8 @@
     if (self) {
         _manager = manager;
         _representedObject = object;
+        _representedObjectCanary = object;
+        _representedObjectCanaryDesc = [object description];
     }
     
     return self;

@@ -15,6 +15,7 @@
 }
 
 - (instancetype)initWithContext:(JSGlobalContextRef)context {
+    NSAssert([NSThread isMainThread], @"should be main thread");
     self = [super init];
     if (self) {
         _index = [NSMapTable strongToStrongObjectsMapTable];
