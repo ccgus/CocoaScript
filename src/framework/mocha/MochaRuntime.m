@@ -11,6 +11,7 @@
 
 #import "MOBox.h"
 #import "MOBoxManager.h"
+#import "MOBoxManagerBoxContext.h"
 #import "MOUndefined.h"
 #import "MOMethod_Private.h"
 #import "MOClosure_Private.h"
@@ -1131,12 +1132,10 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 #pragma mark Mocha Objects
 
 static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresentingBox) {
-    NSDictionary* context = (__bridge NSDictionary *)(JSObjectGetPrivate(jsObjectRepresentingBox));
-    NSCAssert([context isKindOfClass:[NSDictionary class]], @"should have an dictionary with context");
+    MOBoxManagerBoxContext* context = (__bridge MOBoxManagerBoxContext *)(JSObjectGetPrivate(jsObjectRepresentingBox));
+    NSCAssert([context isKindOfClass:[MOBoxManagerBoxContext class]], @"should have an dictionary with context");
 
-    MOBoxManager* manager = context[@"manager"];
-    id object = context[@"object"];
-    [manager associateObject:object jsObject:jsObjectRepresentingBox];
+    [context finishMakingBoxForObject:jsObjectRepresentingBox];
 }
 
 static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {

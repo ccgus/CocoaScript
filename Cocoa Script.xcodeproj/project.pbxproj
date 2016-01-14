@@ -10,6 +10,9 @@
 		229C1FF61C21B38D004C5B3B /* MOBoxManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 229C1FF41C21B38D004C5B3B /* MOBoxManager.h */; };
 		229C1FF71C21B38D004C5B3B /* MOBoxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 229C1FF51C21B38D004C5B3B /* MOBoxManager.m */; };
 		229C1FF81C21B38D004C5B3B /* MOBoxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 229C1FF51C21B38D004C5B3B /* MOBoxManager.m */; };
+		22FBD9951C47EA55004CF31E /* MOBoxManagerBoxContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 22FBD9931C47EA55004CF31E /* MOBoxManagerBoxContext.h */; };
+		22FBD9961C47EA55004CF31E /* MOBoxManagerBoxContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FBD9941C47EA55004CF31E /* MOBoxManagerBoxContext.m */; };
+		22FBD9971C47EA55004CF31E /* MOBoxManagerBoxContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FBD9941C47EA55004CF31E /* MOBoxManagerBoxContext.m */; };
 		384830E21832D48500B34168 /* COSTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 384830E01832D48500B34168 /* COSTarget.h */; };
 		384830E31832D48500B34168 /* COSTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 384830E11832D48500B34168 /* COSTarget.m */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -403,6 +406,8 @@
 		229C1FF41C21B38D004C5B3B /* MOBoxManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBoxManager.h; path = src/framework/mocha/Objects/MOBoxManager.h; sourceTree = SOURCE_ROOT; };
 		229C1FF51C21B38D004C5B3B /* MOBoxManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBoxManager.m; path = src/framework/mocha/Objects/MOBoxManager.m; sourceTree = SOURCE_ROOT; };
 		22E281E41A8BB99D006650D2 /* test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = test.js; sourceTree = "<group>"; };
+		22FBD9931C47EA55004CF31E /* MOBoxManagerBoxContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBoxManagerBoxContext.h; path = src/framework/mocha/Objects/MOBoxManagerBoxContext.h; sourceTree = SOURCE_ROOT; };
+		22FBD9941C47EA55004CF31E /* MOBoxManagerBoxContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBoxManagerBoxContext.m; path = src/framework/mocha/Objects/MOBoxManagerBoxContext.m; sourceTree = SOURCE_ROOT; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		384830E01832D48500B34168 /* COSTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COSTarget.h; path = src/framework/COSTarget.h; sourceTree = "<group>"; };
@@ -1139,6 +1144,8 @@
 				CC66D87B181A2B0A0039A0A5 /* MOBox.m */,
 				229C1FF41C21B38D004C5B3B /* MOBoxManager.h */,
 				229C1FF51C21B38D004C5B3B /* MOBoxManager.m */,
+				22FBD9931C47EA55004CF31E /* MOBoxManagerBoxContext.h */,
+				22FBD9941C47EA55004CF31E /* MOBoxManagerBoxContext.m */,
 				CC66D87C181A2B0A0039A0A5 /* MOClassDescription.h */,
 				CC66D87D181A2B0A0039A0A5 /* MOClassDescription.m */,
 				CC66D87E181A2B0A0039A0A5 /* MOClosure_Private.h */,
@@ -1270,6 +1277,7 @@
 				CC66D869181A2AE10039A0A5 /* MochaRuntime_Private.h in Headers */,
 				CC66D8B9181A2B0A0039A0A5 /* MOProtocolDescription_Private.h in Headers */,
 				CC66D824181A2A710039A0A5 /* COSPreprocessor.h in Headers */,
+				22FBD9951C47EA55004CF31E /* MOBoxManagerBoxContext.h in Headers */,
 				CC66D836181A2A9B0039A0A5 /* COSCodeSketcher.h in Headers */,
 				CC66D84E181A2AB10039A0A5 /* MOBridgeSupportSymbol.h in Headers */,
 				CCD38343195A454F00C436B9 /* COSDatabase.h in Headers */,
@@ -1569,6 +1577,7 @@
 				CC66D813181A2A470039A0A5 /* TDWordOrReservedState.m in Sources */,
 				CC66D7CA181A2A470039A0A5 /* TDCommentState.m in Sources */,
 				CC66D7E9181A2A470039A0A5 /* TDReservedWord.m in Sources */,
+				22FBD9971C47EA55004CF31E /* MOBoxManagerBoxContext.m in Sources */,
 				CC66D7D0181A2A470039A0A5 /* TDLetter.m in Sources */,
 				CC66D75B181A2A210039A0A5 /* TETextUtils.m in Sources */,
 				CC66D84D181A2AB10039A0A5 /* MOBridgeSupportParser.m in Sources */,
@@ -1658,6 +1667,7 @@
 				CC9FEFE218296A2A009DB0F9 /* TDEmpty.m in Sources */,
 				CC9FEFE418296A2A009DB0F9 /* TDLetter.m in Sources */,
 				CC9FEFE618296A2A009DB0F9 /* TDLiteral.m in Sources */,
+				22FBD9961C47EA55004CF31E /* MOBoxManagerBoxContext.m in Sources */,
 				CC9FEFE818296A2A009DB0F9 /* TDLowercaseWord.m in Sources */,
 				CC9FEFEA18296A2A009DB0F9 /* TDMultiLineCommentState.m in Sources */,
 				CCD38344195A454F00C436B9 /* COSDatabase.m in Sources */,
@@ -2027,6 +2037,7 @@
 				9FC343D21AF7D2FE00B53759 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Cocoa Script Editor" */ = {
 			isa = XCConfigurationList;

@@ -7,6 +7,7 @@
 //
 
 #import "MOBoxManager.h"
+#import "MOBoxManagerBoxContext.h"
 #import "MOBox.h"
 
 @implementation MOBoxManager {
@@ -55,15 +56,9 @@
 - (JSObjectRef)makeBoxForObject:(id)object jsClass:(JSClassRef)jsClass {
     NSAssert([NSThread isMainThread], @"should be main thread");
     NSAssert(![object isKindOfClass:[MOBox class]], @"shouldn't box a box");
-    NSDictionary* context = @{ @"manager" : self, @"object" : object };
+    MOBoxManagerBoxContext* context = [[MOBoxManagerBoxContext alloc] initWithManager:self object:object];
     JSObjectRef jsObject = JSObjectMake(_context, jsClass, (__bridge void *)(context));
     return jsObject;
-}
-
-- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject {
-    NSAssert([_index objectForKey:object] == nil, @"shouldn't already have an entry for the object");
-    MOBox* box = [[MOBox alloc] initWithManager:self object:object jsObject:jsObject];
-    [_index setObject:box forKey:object];
 }
 
 - (void)removeBoxForObject:(id)object {
@@ -76,6 +71,17 @@
     } else {
         debug(@"shouldn't be asked to unbox something that has no box (the object was %p %@)", object, [object className]);
     }
+}
+
+@end
+
+
+@implementation MOBoxManager(MOBoxManagerBoxContextSupport)
+
+- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject {
+    NSAssert([_index objectForKey:object] == nil, @"shouldn't already have an entry for the object");
+    MOBox* box = [[MOBox alloc] initWithManager:self object:object jsObject:jsObject];
+    [_index setObject:box forKey:object];
 }
 
 @end

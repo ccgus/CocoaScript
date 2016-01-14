@@ -11,6 +11,7 @@
 
 @class MOBox;
 
+
 /**
  Manages the boxing and un-boxing of non-JS objects.
  
@@ -37,6 +38,5 @@
 - (void)cleanup;
 - (MOBox*)boxForObject:(id)object;
 - (JSObjectRef)makeBoxForObject:(id)object jsClass:(JSClassRef)jsClass;
-- (void)associateObject:(id)object jsObject:(JSObjectRef)jsObject;
 - (void)removeBoxForObject:(id)object;
 @end
