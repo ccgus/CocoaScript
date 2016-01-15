@@ -30,6 +30,10 @@
  
  When an Obj-C object is longer referenced externally, we will continue to retain it, until such time as there
  are no more JS references to it.
+ 
+ Note that the JS object does not increment the retain count for the MOBox object. 
+ We ensure that there's a retain cycle MOBox -> object -> index -> MOBox, which keeps the box and its object
+ alive whilst the JS object is alive.
  */
 
 @interface MOBoxManager : NSObject
