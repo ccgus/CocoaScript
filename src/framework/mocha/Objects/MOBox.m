@@ -20,7 +20,7 @@
         _manager = manager;
         _representedObject = object;
 #if DEBUG_CRASHES
-        _representedObjectCanaryDesc = [NSString stringWithFormat:@"%@ %@", [NSDate date], object];
+        _representedObjectCanaryDesc = [NSString stringWithFormat:@"box: %p\nobject: %p %@\njs object: %p\nboxed at: %@\n", self, object, object, jsObject, [NSDate date]];
 #endif
         _JSObject = jsObject;
         JSObjectSetPrivate(jsObject, (__bridge void*)self);
@@ -30,10 +30,21 @@
 }
 
 - (void)disassociateObject {
-    NSAssert(_manager != nil, @"shouldn't have been disassociated already");
-    JSObjectSetPrivate(_JSObject, nil);
-    _representedObject = nil;
-    _manager = nil;
+    if (_JSObject) {
+        JSObjectSetPrivate(_JSObject, nil);
+        _JSObject = nil;
+    }
+
+    if (_manager) {
+        _representedObject = nil;
+        _manager = nil;
+    } else {
+#if DEBUG_CRASHES
+        debug(@"shouldn't have been disassociated already %@", _representedObjectCanaryDesc);
+#else
+        debug(@"shouldn't have been disassociated already %@", _representedObject);
+#endif
+    }
 }
 
 - (void)dealloc {

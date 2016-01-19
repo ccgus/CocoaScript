@@ -13,7 +13,9 @@
 @class Mocha;
 @class MOBoxManager;
 
-#define DEBUG_CRASHES 0
+#if DEBUG
+    #define DEBUG_CRASHES 1
+#endif
 
 /*!
  * @class MOBox
