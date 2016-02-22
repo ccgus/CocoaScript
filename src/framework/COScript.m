@@ -70,10 +70,15 @@ void COScriptDebug(NSString* format, ...) {
     JSTalkShouldLoadJSTPlugins = b;
 }
 
+
 - (id)init {
+    return [self initWithName:@"Untitled"];
+}
+
+- (instancetype)initWithName:(NSString*)name {
 	self = [super init];
 	if ((self != nil)) {
-        _mochaRuntime = [[Mocha alloc] init];
+        _mochaRuntime = [[Mocha alloc] initWithName:name];
         
         [self setEnv:[NSMutableDictionary dictionary]];
         [self setShouldPreprocess:YES];

@@ -32,6 +32,7 @@
 + (Mocha *)sharedRuntime;
 
 
+
 /*!
  * @property delegate
  * @abstract Gets the runtime delegate
@@ -40,6 +41,17 @@
  */
 @property (unsafe_unretained) id <MochaDelegate> delegate;
 
+
+/*!
+ * @method initWithName:
+ * @abstract Create a new runtime, with a given name.
+ *
+ * @param name
+ * The name to use for the context (for use with interactive debugging).
+ *
+ * @result An object, or nil
+ */
+- (instancetype)initWithName:(NSString*)name;
 
 /*!
  * @method evalString:

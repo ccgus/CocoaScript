@@ -32,7 +32,6 @@
 #import <objc/runtime.h>
 #import <dlfcn.h>
 
-
 // Class types
 static JSClassRef MochaClass = NULL;
 static JSClassRef MOObjectClass = NULL;
@@ -180,12 +179,22 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 }
 
 - (id)init {
-    return [self initWithGlobalContext:NULL];
+    return [self initWithGlobalContext:NULL name:nil];
 }
 
-- (id)initWithGlobalContext:(JSGlobalContextRef)ctx {
+- (id)initWithName:(NSString *)name {
+    return [self initWithGlobalContext:NULL name:name];
+}
+
+
+- (id)initWithGlobalContext:(JSGlobalContextRef)ctx name:(NSString*)name {
     if (ctx == NULL) {
         ctx = JSGlobalContextCreate(MochaClass);
+        if (name) {
+            JSStringRef jsName = JSStringCreateWithCFString((__bridge CFStringRef)name);
+            JSGlobalContextSetName(ctx, jsName);
+            JSStringRelease(jsName);
+        }
         _ownsContext = YES;
     }
     else {
@@ -571,15 +580,6 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
 }
 
 - (id)evalString:(NSString *)string atURL:(NSURL *)url {
-#ifdef MAC_OS_X_VERSION_10_10
-    if (JSGlobalContextSetName != NULL)
-    {
-        NSString* name = url ? [[url lastPathComponent] stringByDeletingPathExtension] : @"Untitled Script";
-        JSStringRef jsName = JSStringCreateWithUTF8CString([name UTF8String]);
-        JSGlobalContextSetName(_ctx, jsName);
-        JSStringRelease(jsName);
-    }
-#endif
     JSValueRef jsValue = [self evalJSString:string scriptPath:[url path]];
     return [self objectForJSValue:jsValue];
 }
@@ -610,7 +610,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         [self throwJSException:exception];
         return NULL;
     }
-    
+
     return result;
 }
 
