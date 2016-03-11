@@ -168,8 +168,7 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 }
 
 
-
-- (void) textStorageDidProcessEditing:(NSNotification *)note {
+- (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta {
     [self parseCode:nil];
 }
 
@@ -188,22 +187,22 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
     
 }
 
-- (void)insertText:(id)insertString {
-    
+- (void)insertText:(id)insertString replacementRange:(NSRange)replacementRange {
+
     if (!([JSTPrefs boolForKey:@"codeCompletionEnabled"])) {
-        [super insertText:insertString];
+        [super insertText:insertString replacementRange:replacementRange];
         return;
     }
     
     // make sure we're not doing anything fance in a quoted string.
-    if (NSMaxRange([self selectedRange]) < [[self textStorage] length] && [[[self textStorage] attributesAtIndex:[self selectedRange].location effectiveRange:nil] objectForKey:JSTQuotedStringAttributeName]) {
-        [super insertText:insertString];
+    if (NSMaxRange(replacementRange) < [[self textStorage] length] && [[[self textStorage] attributesAtIndex:replacementRange.location effectiveRange:nil] objectForKey:JSTQuotedStringAttributeName]) {
+        [super insertText:insertString replacementRange:replacementRange];
         return;
     }
     
     if ([@")" isEqualToString:insertString] && [_lastAutoInsert isEqualToString:@")"]) {
         
-        NSRange nextRange   = [self selectedRange];
+        NSRange nextRange   = replacementRange;
         nextRange.length = 1;
         
         if (NSMaxRange(nextRange) <= [[self textStorage] length]) {
@@ -222,8 +221,8 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
     
     [self setLastAutoInsert:nil];
     
-    [super insertText:insertString];
-    
+    [super insertText:insertString replacementRange:replacementRange];
+
     NSRange currentRange = [self selectedRange];
     NSRange r = [self selectionRangeForProposedRange:currentRange granularity:NSSelectByParagraph];
     BOOL atEndOfLine = (NSMaxRange(r) - 1 == NSMaxRange(currentRange));
