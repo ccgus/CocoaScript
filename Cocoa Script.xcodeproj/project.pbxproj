@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		220D93E71C92E69C001EF05C /* JSTTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */; };
+		220D93E81C92E75A001EF05C /* JSTTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = CC66D8CC181A2E2F0039A0A5 /* JSTTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		384830E21832D48500B34168 /* COSTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 384830E01832D48500B34168 /* COSTarget.h */; };
 		384830E31832D48500B34168 /* COSTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 384830E11832D48500B34168 /* COSTarget.m */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -1207,6 +1209,7 @@
 				CC66D8B2181A2B0A0039A0A5 /* MOPointer_Private.h in Headers */,
 				CCA1A535183EA86E000159B3 /* COSInterval.h in Headers */,
 				CC66D8BC181A2B0A0039A0A5 /* MOStruct.h in Headers */,
+				220D93E81C92E75A001EF05C /* JSTTextView.h in Headers */,
 				CC66D7D5181A2A470039A0A5 /* TDMultiLineCommentState.h in Headers */,
 				CC66D7BD181A2A470039A0A5 /* TDAssembly.h in Headers */,
 				CCE675E8182ED9C900DB1932 /* COSAlertWindow.h in Headers */,
@@ -1486,6 +1489,7 @@
 				CC66D7E5181A2A470039A0A5 /* TDReader.m in Sources */,
 				CC66D7D6181A2A470039A0A5 /* TDMultiLineCommentState.m in Sources */,
 				CC66D8B1181A2B0A0039A0A5 /* MOObjCRuntime.m in Sources */,
+				220D93E71C92E69C001EF05C /* JSTTextView.m in Sources */,
 				CC07AF4D1982C310001CCA93 /* COSMarkdown.m in Sources */,
 				CC66D807181A2A470039A0A5 /* TDTokenizerState.m in Sources */,
 				CC66D84F181A2AB10039A0A5 /* MOBridgeSupportSymbol.m in Sources */,
