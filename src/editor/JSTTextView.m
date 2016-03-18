@@ -169,7 +169,9 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 
 
 - (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta {
-    [self parseCode:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self parseCode:nil];
+    });
 }
 
 - (NSArray *)writablePasteboardTypes {
