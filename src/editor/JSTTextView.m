@@ -23,6 +23,7 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 @property (assign) CGPoint initialDragPoint;
 @property (strong) NSNumber *initialNumber;
 @property (strong) NSMutableDictionary *numberRanges;
+@property (assign) BOOL parsingInResponseToEdit;
 
 @end
 
@@ -169,9 +170,16 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 
 
 - (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self parseCode:nil];
-    });
+    // SD: calling parseCode directly from here was causing the selection to be messed up when deleting characters - seemingly some sort of timing issue.
+    //     deferring the parse has fixed that, but at the expense of causing potential recursion since the parse then seems to register as another edit.
+    //     to avoid this, I've added the parsingInResponseToEdit flag, but it's all a bit clumsy; a better fix might be to sort out the original deletion problem
+    if (!self.parsingInResponseToEdit) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.parsingInResponseToEdit = YES;
+            [self parseCode:nil];
+            self.parsingInResponseToEdit = NO;
+        });
+    }
 }
 
 - (NSArray *)writablePasteboardTypes {
