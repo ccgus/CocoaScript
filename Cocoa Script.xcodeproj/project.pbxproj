@@ -357,6 +357,7 @@
 		CCF4DBE118296AB800ACB9EC /* Mocha.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D861181A2AE10039A0A5 /* Mocha.m */; };
 		CCF4DBE218296AB800ACB9EC /* MochaRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D865181A2AE10039A0A5 /* MochaRuntime.m */; };
 		CCF68F1E0F4E3E4F00925FCA /* JSTalkDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = CCF68F1D0F4E3E4F00925FCA /* JSTalkDocument.icns */; };
+		F34CC6641CF3703A002FF620 /* MochaRuntimeObjectStorateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F34CC6631CF3703A002FF620 /* MochaRuntimeObjectStorateTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -674,6 +675,7 @@
 		CCF056171849A23C000C56F7 /* COSScript+Spelunking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "COSScript+Spelunking.m"; path = "src/framework/COSScript+Spelunking.m"; sourceTree = "<group>"; };
 		CCF0561C184A884D000C56F7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
 		CCF68F1D0F4E3E4F00925FCA /* JSTalkDocument.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = JSTalkDocument.icns; path = res/images/JSTalkDocument.icns; sourceTree = "<group>"; };
+		F34CC6631CF3703A002FF620 /* MochaRuntimeObjectStorateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MochaRuntimeObjectStorateTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -835,6 +837,7 @@
 			children = (
 				9FC343D61AF7D33300B53759 /* CSPropertyTests.m */,
 				9F5068DC1B4B20BB00A2218F /* GarbageCollectionTests.m */,
+				F34CC6631CF3703A002FF620 /* MochaRuntimeObjectStorateTests.m */,
 				9F5068D31B4B20B400A2218F /* Resources */,
 				9FC343C91AF7D2FE00B53759 /* Supporting Files */,
 			);
@@ -1517,6 +1520,7 @@
 			files = (
 				9FC343D71AF7D33300B53759 /* CSPropertyTests.m in Sources */,
 				9F5068DD1B4B20BB00A2218F /* GarbageCollectionTests.m in Sources */,
+				F34CC6641CF3703A002FF620 /* MochaRuntimeObjectStorateTests.m in Sources */,
 				9FC343D51AF7D32B00B53759 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
