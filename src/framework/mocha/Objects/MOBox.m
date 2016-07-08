@@ -14,7 +14,10 @@
 
 @implementation MOBox
 
+#if DEBUG_CRASHES
 static NSUInteger initCount = 0;
+#endif
+
 
 - (id)initWithManager:(MOBoxManager *)manager object:(id)object jsObject:(JSObjectRef)jsObject {
     self = [super init];
