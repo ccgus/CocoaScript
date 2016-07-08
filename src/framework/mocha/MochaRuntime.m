@@ -1131,6 +1131,19 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 #pragma mark -
 #pragma mark Mocha Objects
 
+static inline MOBox* boxForJSObject(JSObjectRef jsObject) {
+    void* private = JSObjectGetPrivate(jsObject);
+    MOBox *box = (__bridge MOBox *)private;
+    NSCAssert(!box || [box isKindOfClass:[MOBox class]], @"if we're shutting down, the private object may have been cleaned out already, but otherwise, it should be an MOBox");
+    return box;
+}
+
+static inline id objectForJSObject(JSObjectRef jsObject) {
+    MOBox* box = boxForJSObject(jsObject);
+    id object = [box representedObject];
+    return object;
+}
+
 static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresentingBox) {
     MOBoxManagerBoxContext* context = (__bridge MOBoxManagerBoxContext *)(JSObjectGetPrivate(jsObjectRepresentingBox));
     NSCAssert([context isKindOfClass:[MOBoxManagerBoxContext class]], @"should have a context object");
@@ -1140,9 +1153,7 @@ static void MOObject_initialize(JSContextRef ctx, JSObjectRef jsObjectRepresenti
 
 static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {
     // Give the object a chance to finalize itself
-    void* private = JSObjectGetPrivate(jsObjectRepresentingBox);
-    MOBox *box = (__bridge MOBox *)private;
-    NSCAssert(!box || [box isKindOfClass:[MOBox class]], @"if we're shutting down, the private object may have been cleaned out already, but otherwise, it should be an MOBox");
+    MOBox* box = boxForJSObject(jsObjectRepresentingBox);
 
     id boxedObject = [box representedObject];
     if ([boxedObject respondsToSelector:@selector(finalizeForMochaScript)]) {
@@ -1161,10 +1172,7 @@ static void MOObject_finalize(JSObjectRef jsObjectRepresentingBox) {
 static bool MOBoxedObject_hasProperty(JSContextRef ctx, JSObjectRef objectJS, JSStringRef propertyNameJS) {
     NSString *propertyName = (NSString *)CFBridgingRelease(JSStringCopyCFString(NULL, propertyNameJS));
     
-//    Mocha *runtime = [Mocha runtimeWithContext:ctx];
-    
-    id private = (__bridge id)(JSObjectGetPrivate(objectJS));
-    id object = [private representedObject];
+    id object = objectForJSObject(objectJS);
     Class objectClass = [object class];
     
     // String conversion
@@ -1293,8 +1301,7 @@ static JSValueRef MOBoxedObject_getProperty(JSContextRef ctx, JSObjectRef object
     
     Mocha *runtime = [Mocha runtimeWithContext:ctx];
     
-    id private = (__bridge id)(JSObjectGetPrivate(objectJS));
-    id object = [private representedObject];
+    id object = objectForJSObject(objectJS);
     Class objectClass = [object class];
     
     // Perform the lookup
@@ -1465,8 +1472,7 @@ static bool MOBoxedObject_setProperty(JSContextRef ctx, JSObjectRef objectJS, JS
     
     Mocha *runtime = [Mocha runtimeWithContext:ctx];
     
-    id private = (__bridge id)(JSObjectGetPrivate(objectJS));
-    id object = [private representedObject];
+    id object = objectForJSObject(objectJS);
     Class objectClass = [object class];
     id value = [runtime objectForJSValue:valueJS];
     
@@ -1524,9 +1530,8 @@ static bool MOBoxedObject_deleteProperty(JSContextRef ctx, JSObjectRef objectJS,
     
     Mocha *runtime = [Mocha runtimeWithContext:ctx];
     
-    id private = (__bridge id)(JSObjectGetPrivate(objectJS));
-    id object = [private representedObject];
-    
+    id object = objectForJSObject(objectJS);
+
     // Perform the lookup
     @try {
         // Indexed subscript
@@ -1556,11 +1561,7 @@ static bool MOBoxedObject_deleteProperty(JSContextRef ctx, JSObjectRef objectJS,
 }
 
 static void MOBoxedObject_getPropertyNames(JSContextRef ctx, JSObjectRef object, JSPropertyNameAccumulatorRef propertyNames) {
-    MOBox *privateObject = (__bridge MOBox *)(JSObjectGetPrivate(object));
-    
-    // If we have a dictionary, add keys from allKeys
-    id o = [privateObject representedObject];
-    
+    id o = objectForJSObject(object);
     if ([o isKindOfClass:[NSDictionary class]]) {
         NSDictionary *dictionary = o;
         NSArray *keys = [dictionary allKeys];
@@ -1579,9 +1580,8 @@ static JSValueRef MOBoxedObject_convertToType(JSContextRef ctx, JSObjectRef obje
 
 static bool MOBoxedObject_hasInstance(JSContextRef ctx, JSObjectRef constructor, JSValueRef possibleInstance, JSValueRef *exception) {
     Mocha *runtime = [Mocha runtimeWithContext:ctx];
-    MOBox *privateObject = (__bridge MOBox *)(JSObjectGetPrivate(constructor));
-    id representedObject = [privateObject representedObject];
-    
+    id representedObject = objectForJSObject(constructor);
+
     if (!JSValueIsObject(ctx, possibleInstance)) {
         return false;
     }
@@ -1590,8 +1590,7 @@ static bool MOBoxedObject_hasInstance(JSContextRef ctx, JSObjectRef constructor,
     if (instanceObj == nil) {
         return NO;
     }
-    MOBox *instancePrivateObj = (__bridge MOBox *)(JSObjectGetPrivate(instanceObj));
-    id instanceRepresentedObj = [instancePrivateObj representedObject];
+    id instanceRepresentedObj = objectForJSObject(instanceObj);
     
     // Check to see if the object's class matches the passed-in class
     @try {
@@ -1623,8 +1622,7 @@ static JSObjectRef MOConstructor_callAsConstructor(JSContextRef ctx, JSObjectRef
 
 static JSValueRef MOFunction_callAsFunction(JSContextRef ctx, JSObjectRef functionJS, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef *exception) {
     Mocha *runtime = [Mocha runtimeWithContext:ctx];
-    MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(functionJS));
-    id function = [private representedObject];
+    id function = objectForJSObject(functionJS);
     JSValueRef value = NULL;
     
     //    if ([function isKindOfClass:[MOMethod class]]) {
