@@ -52,6 +52,7 @@
 
 #if DEBUG_CRASHES
 @property (strong) NSString *representedObjectCanaryDesc;
+@property (assign) NSUInteger count;
 #endif
 
 @end
