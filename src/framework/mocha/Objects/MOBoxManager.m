@@ -19,7 +19,9 @@
     NSAssert([NSThread isMainThread], @"should be main thread");
     self = [super init];
     if (self) {
-        _index = [NSMapTable strongToStrongObjectsMapTable];
+        // we want to use NSMapTableObjectPointerPersonality for the keys, since we are associating boxes with specific objects
+        // and not with the underlying values of them (if two objects are equal according to isEqual:, we still want a box for both)
+        _index = [[NSMapTable alloc] initWithKeyOptions:NSMapTableObjectPointerPersonality | NSMapTableStrongMemory valueOptions:NSMapTableStrongMemory capacity:0];
         _context = context;
         JSGlobalContextRetain(context);
     }
@@ -27,12 +29,18 @@
     return self;
 }
 
+- (void)dealloc {
+    debug(@"dealloced manager");
+}
+
 - (void)cleanup {
     NSAssert([NSThread isMainThread], @"should be main thread");
 
     // break any retain cycles between the boxed objects and the things that they are boxing
-    for (NSValue* key in _index) {
-        MOBox* box = [_index objectForKey:key];
+    NSEnumerator* enumerator = [_index objectEnumerator];
+    MOBox* box = nil;
+    while (box = [enumerator nextObject]) {
+        debug(@"cleaned %p %ld", box, box.count);
         [box disassociateObject];
     }
 
