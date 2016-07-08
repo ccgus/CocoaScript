@@ -23,6 +23,7 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 @property (assign) CGPoint initialDragPoint;
 @property (strong) NSNumber *initialNumber;
 @property (strong) NSMutableDictionary *numberRanges;
+@property (assign) BOOL parsingInResponseToEdit;
 
 @end
 
@@ -168,9 +169,17 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 }
 
 
-
-- (void) textStorageDidProcessEditing:(NSNotification *)note {
-    [self parseCode:nil];
+- (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta {
+    // SD: calling parseCode directly from here was causing the selection to be messed up when deleting characters - seemingly some sort of timing issue.
+    //     deferring the parse has fixed that, but at the expense of causing potential recursion since the parse then seems to register as another edit.
+    //     to avoid this, I've added the parsingInResponseToEdit flag, but it's all a bit clumsy; a better fix might be to sort out the original deletion problem
+    if (!self.parsingInResponseToEdit) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.parsingInResponseToEdit = YES;
+            [self parseCode:nil];
+            self.parsingInResponseToEdit = NO;
+        });
+    }
 }
 
 - (NSArray *)writablePasteboardTypes {
@@ -188,22 +197,22 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
     
 }
 
-- (void)insertText:(id)insertString {
-    
+- (void)insertText:(id)insertString replacementRange:(NSRange)replacementRange {
+
     if (!([JSTPrefs boolForKey:@"codeCompletionEnabled"])) {
-        [super insertText:insertString];
+        [super insertText:insertString replacementRange:replacementRange];
         return;
     }
     
     // make sure we're not doing anything fance in a quoted string.
-    if (NSMaxRange([self selectedRange]) < [[self textStorage] length] && [[[self textStorage] attributesAtIndex:[self selectedRange].location effectiveRange:nil] objectForKey:JSTQuotedStringAttributeName]) {
-        [super insertText:insertString];
+    if (NSMaxRange(replacementRange) < [[self textStorage] length] && [[[self textStorage] attributesAtIndex:replacementRange.location effectiveRange:nil] objectForKey:JSTQuotedStringAttributeName]) {
+        [super insertText:insertString replacementRange:replacementRange];
         return;
     }
     
     if ([@")" isEqualToString:insertString] && [_lastAutoInsert isEqualToString:@")"]) {
         
-        NSRange nextRange   = [self selectedRange];
+        NSRange nextRange   = replacementRange;
         nextRange.length = 1;
         
         if (NSMaxRange(nextRange) <= [[self textStorage] length]) {
@@ -222,8 +231,8 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
     
     [self setLastAutoInsert:nil];
     
-    [super insertText:insertString];
-    
+    [super insertText:insertString replacementRange:replacementRange];
+
     NSRange currentRange = [self selectedRange];
     NSRange r = [self selectionRangeForProposedRange:currentRange granularity:NSSelectByParagraph];
     BOOL atEndOfLine = (NSMaxRange(r) - 1 == NSMaxRange(currentRange));

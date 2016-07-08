@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		229C1FF61C21B38D004C5B3B /* MOBoxManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 229C1FF41C21B38D004C5B3B /* MOBoxManager.h */; };
 		229C1FF71C21B38D004C5B3B /* MOBoxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 229C1FF51C21B38D004C5B3B /* MOBoxManager.m */; };
+		220D93E71C92E69C001EF05C /* JSTTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */; };
 		229C1FF81C21B38D004C5B3B /* MOBoxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 229C1FF51C21B38D004C5B3B /* MOBoxManager.m */; };
 		22FBD9951C47EA55004CF31E /* MOBoxManagerBoxContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 22FBD9931C47EA55004CF31E /* MOBoxManagerBoxContext.h */; };
+		220D93E81C92E75A001EF05C /* JSTTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = CC66D8CC181A2E2F0039A0A5 /* JSTTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22FBD9961C47EA55004CF31E /* MOBoxManagerBoxContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FBD9941C47EA55004CF31E /* MOBoxManagerBoxContext.m */; };
 		22FBD9971C47EA55004CF31E /* MOBoxManagerBoxContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FBD9941C47EA55004CF31E /* MOBoxManagerBoxContext.m */; };
 		384830E21832D48500B34168 /* COSTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 384830E01832D48500B34168 /* COSTarget.h */; };
@@ -1263,6 +1265,7 @@
 				CC66D8B2181A2B0A0039A0A5 /* MOPointer_Private.h in Headers */,
 				CCA1A535183EA86E000159B3 /* COSInterval.h in Headers */,
 				CC66D8BC181A2B0A0039A0A5 /* MOStruct.h in Headers */,
+				220D93E81C92E75A001EF05C /* JSTTextView.h in Headers */,
 				CC66D7D5181A2A470039A0A5 /* TDMultiLineCommentState.h in Headers */,
 				CC66D7BD181A2A470039A0A5 /* TDAssembly.h in Headers */,
 				CCE675E8182ED9C900DB1932 /* COSAlertWindow.h in Headers */,
@@ -1410,7 +1413,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				TargetAttributes = {
 					9FC343C61AF7D2FE00B53759 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -1586,6 +1589,7 @@
 				CC66D7E5181A2A470039A0A5 /* TDReader.m in Sources */,
 				CC66D7D6181A2A470039A0A5 /* TDMultiLineCommentState.m in Sources */,
 				CC66D8B1181A2B0A0039A0A5 /* MOObjCRuntime.m in Sources */,
+				220D93E71C92E69C001EF05C /* JSTTextView.m in Sources */,
 				CC07AF4D1982C310001CCA93 /* COSMarkdown.m in Sources */,
 				CC66D807181A2A470039A0A5 /* TDTokenizerState.m in Sources */,
 				CC66D84F181A2AB10039A0A5 /* MOBridgeSupportSymbol.m in Sources */,

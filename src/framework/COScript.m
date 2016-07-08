@@ -70,10 +70,15 @@ void COScriptDebug(NSString* format, ...) {
     JSTalkShouldLoadJSTPlugins = b;
 }
 
+
 - (id)init {
+    return [self initWithName:@"Untitled"];
+}
+
+- (instancetype)initWithName:(NSString*)name {
 	self = [super init];
 	if ((self != nil)) {
-        _mochaRuntime = [[Mocha alloc] init];
+        _mochaRuntime = [[Mocha alloc] initWithName:name];
         
         [self setEnv:[NSMutableDictionary dictionary]];
         [self setShouldPreprocess:YES];
@@ -347,7 +352,7 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
         NSDictionary *d = [e userInfo];
         if ([d objectForKey:@"line"]) {
             if ([_errorController respondsToSelector:@selector(coscript:hadError:onLineNumber:atSourceURL:)]) {
-                [_errorController coscript:self hadError:[e reason] onLineNumber:[[d objectForKey:@"line"] integerValue] atSourceURL:nil];
+                [_errorController coscript:self hadError:[e reason] onLineNumber:[[d objectForKey:@"line"] integerValue] atSourceURL:base];
             }
         }
         
