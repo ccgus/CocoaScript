@@ -94,7 +94,7 @@ NSString * MOJSValueToString(JSContextRef ctx, JSValueRef value, JSValueRef *exc
 #pragma mark -
 #pragma mark Invocation
 
-JSValueRef MOSelectorInvoke(id target, SEL selector, JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef *exception) {
+JSValueRef _MOSelectorInvoke(id target, SEL selector, JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef *exception) {
     Mocha *runtime = [Mocha runtimeWithContext:ctx];
     
     NSMethodSignature *methodSignature = [target methodSignatureForSelector:selector];
@@ -278,8 +278,7 @@ JSValueRef MOSelectorInvoke(id target, SEL selector, JSContextRef ctx, size_t ar
     return returnValue;
 }
 
-
-JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef *exception) {
+JSValueRef _MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef *exception) {
     Mocha *runtime = [Mocha runtimeWithContext:ctx];
     
     JSValueRef value = NULL;
@@ -295,9 +294,9 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
     
     id block = nil;
     
-    #pragma message "FIXME: Check to see if function is nil or not."
+    // FIXME: Check to see if function is nil or not."
     
-    // NSLog(@"function: %@", function);
+    debug(@"function: %@", function);
     
     // Determine the metadata for the function call
     if ([function isKindOfClass:[MOMethod class]]) {
@@ -652,6 +651,35 @@ JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount,
     
     return value;
 }
+
+JSValueRef MOSelectorInvoke(id target, SEL selector, JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef *exception) {
+    for (NSUInteger n = 0; n < argumentCount; ++n) {
+        JSValueProtect(ctx, arguments[n]);
+    }
+
+    JSValueRef result = _MOSelectorInvoke(target, selector, ctx, argumentCount, arguments, exception);
+
+    for (NSUInteger n = 0; n < argumentCount; ++n) {
+        JSValueUnprotect(ctx, arguments[n]);
+    }
+
+    return result;
+}
+
+JSValueRef MOFunctionInvoke(id function, JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef *exception) {
+    for (NSUInteger n = 0; n < argumentCount; ++n) {
+        JSValueProtect(ctx, arguments[n]);
+    }
+
+    JSValueRef result = _MOFunctionInvoke(function, ctx, argumentCount, arguments, exception);
+
+    for (NSUInteger n = 0; n < argumentCount; ++n) {
+        JSValueUnprotect(ctx, arguments[n]);
+    }
+
+    return result;
+}
+
 
 BOOL MOSelectorIsVariadic(Class klass, SEL selector) {
     NSString *className = [NSString stringWithUTF8String:class_getName(klass)];

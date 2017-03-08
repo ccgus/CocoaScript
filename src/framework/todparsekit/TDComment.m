@@ -11,8 +11,8 @@
 
 @implementation TDComment
 
-+ (id)comment {
-    return [[[self alloc] initWithString:nil] autorelease];
++ (instancetype)comment {
+    return [[(TDComment*)[self alloc] initWithString:nil] autorelease];
 }
 
 

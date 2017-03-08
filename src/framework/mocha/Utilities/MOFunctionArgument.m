@@ -1068,17 +1068,21 @@ typedef struct { char a; BOOL b; } struct_C_BOOL;
                     *convertedValueCount = *convertedValueCount+1;
                 }
             }
-            
+
             id objValue = [runtime objectForJSValue:valueJS];
             [memberNames addObject:propertyName];
             [memberValues setObject:objValue forKey:propertyName];
         }
     }
     
-    MOStruct *structure = [MOStruct structureWithName:structureName memberNames:memberNames];
+    MOStruct *structure = [MOStruct structureWithName:structureName memberNames:memberNames runtime:runtime];
     for (NSString *name in memberNames) {
         id memberValue = [memberValues objectForKey:name];
         [structure setObject:memberValue forMemberName:name];
+        JSValueRef memberJS = [runtime JSValueForObject:memberValue];
+        if (memberJS) {
+            JSValueProtect(ctx, memberJS);
+        }
     }
     
     JSValueRef jsValue = [runtime JSValueForObject:structure];

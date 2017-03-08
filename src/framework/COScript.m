@@ -102,7 +102,7 @@ void COScriptDebug(NSString* format, ...) {
     [self deleteObjectWithName:@"log"];
     
     [_mochaRuntime shutdown];
-    
+    _mochaRuntime = nil;
 }
 
 - (void)garbageCollect {
@@ -111,7 +111,7 @@ void COScriptDebug(NSString* format, ...) {
     
     [_mochaRuntime garbageCollect];
     
-    debug(@"gc took %f seconds", [NSDate timeIntervalSinceReferenceDate] - start);
+    debug(@"gc took %f seconds", [NSDate timeIntervalSinceReferenceDate] - start); (void)start;
 }
 
 
@@ -268,7 +268,7 @@ void COScriptDebug(NSString* format, ...) {
 
 NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 
-#pragma message "FIXME: Change currentCOScript and friends to use a stack in the thread dictionary, instead of just overwriting what might already be there."
+// FIXME: Change currentCOScript and friends to use a stack in the thread dictionary, instead of just overwriting what might already be there."
 
 + (NSMutableArray*)currentCOSThreadStack {
     
