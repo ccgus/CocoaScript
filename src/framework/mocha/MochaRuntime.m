@@ -802,13 +802,27 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
     NSString *libPath = [frameworkPath stringByAppendingPathComponent:frameworkName];
     void *address = dlopen([libPath UTF8String], RTLD_LAZY);
     if (!address) {
-        //NSLog(@"ERROR: Could not load framework dylib: %@, %@", frameworkName, libPath);
+        NSLog(@"ERROR: Could not load framework dylib: %@, %@", frameworkName, libPath);
         return NO;
     }
+    
     
     // Load the BridgeSupport data
     NSString *bridgeSupportPath = [frameworkPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Resources/BridgeSupport"]];
     [self loadBridgeSupportFilesAtPath:bridgeSupportPath];
+    
+    // Check for any overrides by us.
+    NSBundle *frameworkBundle = [NSBundle bundleForClass:[self class]];
+    bridgeSupportPath = [frameworkBundle pathForResource:frameworkName ofType:@"bridgesupport" inDirectory:@"BridgeSupport"];
+    if (bridgeSupportPath) {
+        
+        NSError *error = nil;
+        if (![[MOBridgeSupportController sharedController] loadBridgeSupportAtURL:[NSURL fileURLWithPath:bridgeSupportPath] error:&error]) {
+            NSLog(@"Error loading bridge support file at %@", bridgeSupportPath);
+            NSLog(@"%@", error);
+        }
+    }
+    
     
     return YES;
 }

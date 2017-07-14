@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+
+<class name='COSImageTools'>
+
+</class>
+</signatures>
