@@ -23,7 +23,6 @@
 		CC1324300F2504F00032FEB8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1323840F24FF9D0032FEB8 /* Carbon.framework */; };
 		CC1C7E400F48C34D007A2941 /* Play.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CC1C7E3F0F48C34D007A2941 /* Play.tiff */; };
 		CC1C7E580F48C76B007A2941 /* Clear.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CC1C7E570F48C76B007A2941 /* Clear.tiff */; };
-		CC239E9419BE64B0006F9837 /* CocoaScript.bridgesupport in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC239E9319BE64AD006F9837 /* CocoaScript.bridgesupport */; };
 		CC4143500F25261000E46669 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1323840F24FF9D0032FEB8 /* Carbon.framework */; };
 		CC4143510F25261100E46669 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0EC3280F226F550094F69D /* ScriptingBridge.framework */; };
 		CC4143520F25261200E46669 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC5B8A40F1EFA6D00126722 /* JavaScriptCore.framework */; };
@@ -226,6 +225,14 @@
 		CC66D8D5181A2E2F0039A0A5 /* JSTTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */; };
 		CC66D8D6181A2E2F0039A0A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8CE181A2E2F0039A0A5 /* main.m */; };
 		CC66D8D8181A2FC10039A0A5 /* cocoascript_tool.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8D7181A2FC10039A0A5 /* cocoascript_tool.m */; };
+		CC7869251F19283F00289E41 /* CocoaScript.bridgesupport in Resources */ = {isa = PBXBuildFile; fileRef = CC7869241F19283F00289E41 /* CocoaScript.bridgesupport */; };
+		CC78692E1F19292400289E41 /* FMDB.bridgesupport in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCD38341195A454F00C436B9 /* FMDB.bridgesupport */; };
+		CC78692F1F19293000289E41 /* CocoaScript.bridgesupport in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC7869241F19283F00289E41 /* CocoaScript.bridgesupport */; };
+		CC7869301F19293000289E41 /* Foundation.bridgesupport in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC7869281F19286D00289E41 /* Foundation.bridgesupport */; };
+		CC7869311F19293000289E41 /* AppKit.bridgesupport in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC7869261F19286200289E41 /* AppKit.bridgesupport */; };
+		CC7869321F19293000289E41 /* CoreImage.bridgesupport in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC78692A1F1928BA00289E41 /* CoreImage.bridgesupport */; };
+		CC7869331F19293000289E41 /* QuartzCore.bridgesupport in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC78692C1F1928D000289E41 /* QuartzCore.bridgesupport */; };
+		CC7869361F192E6900289E41 /* CoreGraphics.bridgesupport in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC7869341F192E5C00289E41 /* CoreGraphics.bridgesupport */; };
 		CC847AFC183EE02300436C38 /* COScript+Interval.h in Headers */ = {isa = PBXBuildFile; fileRef = CC847AFA183EE02300436C38 /* COScript+Interval.h */; };
 		CC847AFD183EE02300436C38 /* COScript+Interval.m in Sources */ = {isa = PBXBuildFile; fileRef = CC847AFB183EE02300436C38 /* COScript+Interval.m */; };
 		CC86430D163B29E600908427 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC86430C163B29E600908427 /* QuartzCore.framework */; };
@@ -334,7 +341,6 @@
 		CCD3834C195A454F00C436B9 /* COSResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = CCD3833F195A454F00C436B9 /* COSResultSet.h */; };
 		CCD3834D195A454F00C436B9 /* COSResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD38340195A454F00C436B9 /* COSResultSet.m */; };
 		CCD3834E195A454F00C436B9 /* COSResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD38340195A454F00C436B9 /* COSResultSet.m */; };
-		CCD3834F195A454F00C436B9 /* FMDB.bridgesupport in Resources */ = {isa = PBXBuildFile; fileRef = CCD38341195A454F00C436B9 /* FMDB.bridgesupport */; };
 		CCD38352195A457800C436B9 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD38351195A457800C436B9 /* libsqlite3.0.dylib */; };
 		CCD38353195A457800C436B9 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD38351195A457800C436B9 /* libsqlite3.0.dylib */; };
 		CCD38356195A458D00C436B9 /* COSR.h in Headers */ = {isa = PBXBuildFile; fileRef = CCD38354195A458D00C436B9 /* COSR.h */; };
@@ -377,7 +383,13 @@
 			dstPath = BridgeSupport;
 			dstSubfolderSpec = 7;
 			files = (
-				CC239E9419BE64B0006F9837 /* CocoaScript.bridgesupport in CopyFiles */,
+				CC7869361F192E6900289E41 /* CoreGraphics.bridgesupport in CopyFiles */,
+				CC78692F1F19293000289E41 /* CocoaScript.bridgesupport in CopyFiles */,
+				CC7869301F19293000289E41 /* Foundation.bridgesupport in CopyFiles */,
+				CC7869311F19293000289E41 /* AppKit.bridgesupport in CopyFiles */,
+				CC7869321F19293000289E41 /* CoreImage.bridgesupport in CopyFiles */,
+				CC7869331F19293000289E41 /* QuartzCore.bridgesupport in CopyFiles */,
+				CC78692E1F19292400289E41 /* FMDB.bridgesupport in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,7 +426,6 @@
 		CC1323840F24FF9D0032FEB8 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		CC1C7E3F0F48C34D007A2941 /* Play.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Play.tiff; path = res/images/Play.tiff; sourceTree = "<group>"; };
 		CC1C7E570F48C76B007A2941 /* Clear.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Clear.tiff; path = res/images/Clear.tiff; sourceTree = "<group>"; };
-		CC239E9319BE64AD006F9837 /* CocoaScript.bridgesupport */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = CocoaScript.bridgesupport; path = lib/CocoaScript.bridgesupport; sourceTree = "<group>"; };
 		CC41431A0F25254200E46669 /* CocoaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC41440F0F252D0700E46669 /* JSTalkFramework-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "JSTalkFramework-Info.plist"; path = "res/JSTalkFramework-Info.plist"; sourceTree = "<group>"; };
 		CC43C11D0F4BBDF40044BA41 /* main.jstalk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jstalk; path = res/main.jstalk; sourceTree = "<group>"; };
@@ -620,6 +631,12 @@
 		CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSTTextView.m; path = src/editor/JSTTextView.m; sourceTree = "<group>"; };
 		CC66D8CE181A2E2F0039A0A5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = src/editor/main.m; sourceTree = "<group>"; };
 		CC66D8D7181A2FC10039A0A5 /* cocoascript_tool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = cocoascript_tool.m; path = src/cocoascript_tool.m; sourceTree = "<group>"; };
+		CC7869241F19283F00289E41 /* CocoaScript.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CocoaScript.bridgesupport; path = lib/bridgesupport/CocoaScript.bridgesupport; sourceTree = "<group>"; };
+		CC7869261F19286200289E41 /* AppKit.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AppKit.bridgesupport; path = lib/bridgesupport/AppKit.bridgesupport; sourceTree = "<group>"; };
+		CC7869281F19286D00289E41 /* Foundation.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Foundation.bridgesupport; path = lib/bridgesupport/Foundation.bridgesupport; sourceTree = "<group>"; };
+		CC78692A1F1928BA00289E41 /* CoreImage.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CoreImage.bridgesupport; path = lib/bridgesupport/CoreImage.bridgesupport; sourceTree = "<group>"; };
+		CC78692C1F1928D000289E41 /* QuartzCore.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = QuartzCore.bridgesupport; path = lib/bridgesupport/QuartzCore.bridgesupport; sourceTree = "<group>"; };
+		CC7869341F192E5C00289E41 /* CoreGraphics.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CoreGraphics.bridgesupport; path = lib/bridgesupport/CoreGraphics.bridgesupport; sourceTree = "<group>"; };
 		CC847AFA183EE02300436C38 /* COScript+Interval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "COScript+Interval.h"; path = "src/framework/COScript+Interval.h"; sourceTree = "<group>"; };
 		CC847AFB183EE02300436C38 /* COScript+Interval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "COScript+Interval.m"; path = "src/framework/COScript+Interval.m"; sourceTree = "<group>"; };
 		CC86430C163B29E600908427 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = ../../../../../../System/Library/Frameworks/QuartzCore.framework; sourceTree = "<group>"; };
@@ -775,7 +792,12 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CC239E9319BE64AD006F9837 /* CocoaScript.bridgesupport */,
+				CC7869241F19283F00289E41 /* CocoaScript.bridgesupport */,
+				CC7869281F19286D00289E41 /* Foundation.bridgesupport */,
+				CC7869261F19286200289E41 /* AppKit.bridgesupport */,
+				CC78692A1F1928BA00289E41 /* CoreImage.bridgesupport */,
+				CC78692C1F1928D000289E41 /* QuartzCore.bridgesupport */,
+				CC7869341F192E5C00289E41 /* CoreGraphics.bridgesupport */,
 				CC43C11D0F4BBDF40044BA41 /* main.jstalk */,
 				CC1C7E3E0F48C2F3007A2941 /* images */,
 				CC41440F0F252D0700E46669 /* JSTalkFramework-Info.plist */,
@@ -1431,6 +1453,7 @@
 				CCC5B8C90F1EFA9700126722 /* MainMenu.xib in Resources */,
 				CC99F0EF181A239200F0D48E /* clouds.jpg in Resources */,
 				CCC5B8CA0F1EFA9700126722 /* Credits.rtf in Resources */,
+				CC7869251F19283F00289E41 /* CocoaScript.bridgesupport in Resources */,
 				CC1C7E400F48C34D007A2941 /* Play.tiff in Resources */,
 				CC99F0F2181A239200F0D48E /* mask1.jpg in Resources */,
 				CC99F0F5181A239200F0D48E /* mask4.png in Resources */,
@@ -1459,7 +1482,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCD3834F195A454F00C436B9 /* FMDB.bridgesupport in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2002,6 +2024,7 @@
 				9FC343D21AF7D2FE00B53759 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Cocoa Script Editor" */ = {
 			isa = XCConfigurationList;
