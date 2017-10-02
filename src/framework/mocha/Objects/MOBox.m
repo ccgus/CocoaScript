@@ -7,37 +7,74 @@
 //
 
 #import "MOBox.h"
-
+#import "MOMethod.h"
+#import "MOBridgeSupportSymbol.h"
+#import "MOFunctionArgument.h"
+#import "MOClosure.h"
 
 @implementation MOBox
 
-@synthesize JSObject=_JSObject;
-@synthesize runtime=_runtime;
-@synthesize representedObject=_representedObject;
+#if DEBUG_CRASHES
+static NSUInteger initCount = 0;
+#endif
 
-- (void)dealloc {
-    //debug(@"MOBox dealloc releasing: '%@'", _representedObjectCanaryDesc);
-}
 
-- (void)setRepresentedObject:(id)representedObject {
-    
-    
-    //debug(@"%p set %p (%@)", self, representedObject, [representedObject isKindOfClass:[NSData class]] ? @"BIG BIT O' DATA" : representedObject);
-    
-    _representedObject = representedObject;
-    _representedObjectCanary = representedObject;
-    _representedObjectCanaryDesc = [representedObject description];
-    
-    if ([representedObject isKindOfClass:[NSData class]]) {
-        //debug(@"DATAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        _representedObjectCanaryDesc = [NSString stringWithFormat:@"NSData object (%p)", representedObject];
+- (id)initWithManager:(MOBoxManager *)manager object:(id)object jsObject:(JSObjectRef)jsObject {
+    self = [super init];
+    if (self) {
+        NSAssert(manager != nil, @"valid manager");
+        _manager = manager;
+        _representedObject = object;
+#if DEBUG_CRASHES
+        _representedObjectCanaryDesc = [NSString stringWithFormat:@"box: %p\nobject: %p %@\njs object: %p\nboxed at: %@\n", self, object, object, jsObject, [NSDate date]];
+        _count = initCount++;
+#endif
+        _JSObject = jsObject;
+        JSObjectSetPrivate(jsObject, (__bridge void*)self);
+        debug(@"set private for %p to %p (%@)", jsObject, self, [_representedObject className]);
     }
     
+    return self;
 }
 
-- (id)representedObject {
-    return _representedObject;
+- (void)disassociateObject {
+#if DEBUG_CRASHES
+    debug(@"dissassociated %p %ld", self, _count);
+#else
+    debug(@"dissassociated %p", self);
+#endif
+    if (_JSObject) {
+        JSObjectSetPrivate(_JSObject, nil);
+        debug(@"cleared private for %p", _JSObject);
+        _JSObject = nil;
+    }
+
+    if (_manager) {
+        _representedObject = nil;
+        _manager = nil;
+    } else {
+#if DEBUG_CRASHES
+        debug(@"shouldn't have been disassociated already %@", _representedObjectCanaryDesc);
+#else
+        debug(@"shouldn't have been disassociated already %@", _representedObject);
+#endif
+    }
 }
 
+- (void)dealloc {
+#if DEBUG_CRASHES
+    debug(@"dealloced %p %ld", self, _count);
+#else
+    debug(@"dealloced %p", self);
+#endif
+    if (_manager || _JSObject) {
+#if DEBUG_CRASHES
+        debug(@"box should have been disassociated for %@", _representedObjectCanaryDesc);
+#else
+        debug(@"box should have been disassociated for %@", _representedObject);
+#endif
+        [self disassociateObject];
+    }
+}
 
 @end

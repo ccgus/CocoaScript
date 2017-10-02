@@ -70,10 +70,15 @@ void COScriptDebug(NSString* format, ...) {
     JSTalkShouldLoadJSTPlugins = b;
 }
 
+
 - (id)init {
+    return [self initWithName:@"Untitled"];
+}
+
+- (instancetype)initWithName:(NSString*)name {
 	self = [super init];
 	if ((self != nil)) {
-        _mochaRuntime = [[Mocha alloc] init];
+        _mochaRuntime = [[Mocha alloc] initWithName:name];
         
         [self setEnv:[NSMutableDictionary dictionary]];
         [self setShouldPreprocess:YES];
@@ -102,7 +107,7 @@ void COScriptDebug(NSString* format, ...) {
     [self deleteObjectWithName:@"log"];
     
     [_mochaRuntime shutdown];
-    
+    _mochaRuntime = nil;
 }
 
 - (void)garbageCollect {
@@ -111,7 +116,7 @@ void COScriptDebug(NSString* format, ...) {
     
     [_mochaRuntime garbageCollect];
     
-    debug(@"gc took %f seconds", [NSDate timeIntervalSinceReferenceDate] - start);
+    debug(@"gc took %f seconds", [NSDate timeIntervalSinceReferenceDate] - start); (void)start;
 }
 
 
@@ -268,7 +273,7 @@ void COScriptDebug(NSString* format, ...) {
 
 NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
 
-#pragma message "FIXME: Change currentCOScript and friends to use a stack in the thread dictionary, instead of just overwriting what might already be there."
+// FIXME: Change currentCOScript and friends to use a stack in the thread dictionary, instead of just overwriting what might already be there."
 
 + (NSMutableArray*)currentCOSThreadStack {
     
@@ -347,7 +352,7 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
         NSDictionary *d = [e userInfo];
         if ([d objectForKey:@"line"]) {
             if ([_errorController respondsToSelector:@selector(coscript:hadError:onLineNumber:atSourceURL:)]) {
-                [_errorController coscript:self hadError:[e reason] onLineNumber:[[d objectForKey:@"line"] integerValue] atSourceURL:nil];
+                [_errorController coscript:self hadError:[e reason] onLineNumber:[[d objectForKey:@"line"] integerValue] atSourceURL:base];
             }
         }
         

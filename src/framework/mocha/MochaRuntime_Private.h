@@ -14,7 +14,7 @@
 
 + (Mocha *)runtimeWithContext:(JSContextRef)ctx;
 
-- (id)initWithGlobalContext:(JSGlobalContextRef)ctx;
+- (id)initWithGlobalContext:(JSGlobalContextRef)ctx name:(NSString*)name;
 
 @property (readonly) JSGlobalContextRef context;
 

@@ -4,6 +4,19 @@
 
 BOOL JSCErrorHandlerExitOnError = YES;
 
+@interface NullDebugController : NSObject<CODebugController>
+
+@end
+
+@implementation NullDebugController
+
+- (void)output:(NSString*)format args:(va_list)args
+{
+    
+}
+
+@end
+
 @interface JSCErrorHandler : NSObject {
     
 }
@@ -92,11 +105,15 @@ int main(int argc, char *argv[]) {
         }
     }
     
+    [COScript setDebugController:[NullDebugController new]];
+    
     id o = [t executeString:source];
     
     if (o) {
         printf("%s\n", [[o description] UTF8String]);
     }
+    
+    [t cleanup];
     
     return 0;
 }

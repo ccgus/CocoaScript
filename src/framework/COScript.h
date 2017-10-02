@@ -30,6 +30,7 @@
 @property (assign) BOOL shouldPreprocess;
 @property (assign) BOOL shouldKeepAround;
 
+- (instancetype)initWithName:(NSString*)name;
 - (void)cleanup;
 - (void)garbageCollect;
 - (id)executeString:(NSString*) str;
