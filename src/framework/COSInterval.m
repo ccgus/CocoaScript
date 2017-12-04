@@ -7,15 +7,15 @@
 //
 
 #import "COSInterval.h"
-#import "COScript+Interval.h"
+#import "COSFiber.h"
+
 @implementation COSInterval
 
 + (id)scheduleWithInterval:(NSTimeInterval)i cocoaScript:(COScript*)cos jsFunction:(MOJavaScriptObject *)jsFunction repeat:(BOOL)repeat {
     
-    COSInterval *interval = [[[self class] alloc] init];
+    COSInterval *interval = [COSFiber createWithCocoaScript: cos];
     
     [interval setJsfunc:jsFunction];
-    [interval setCoscript:cos];
     
     NSTimer *t = [NSTimer scheduledTimerWithTimeInterval:i target:interval selector:@selector(timerHit:) userInfo:nil repeats:repeat];
     
@@ -33,10 +33,9 @@
 
 - (void)cleanup {
     
-    [_coscript removeInterval:self];
+    [super cleanup];
     
     _jsfunc = nil;
-    _coscript = nil;
 }
 
 - (void)cancel {
@@ -48,7 +47,7 @@
 
 - (void)timerHit:(NSTimer*)timer {
     
-    [_coscript callJSFunction:[_jsfunc JSObject] withArgumentsInArray:@[self]];
+    [self.coscript callJSFunction:[_jsfunc JSObject] withArgumentsInArray:@[self]];
     
     if (_onshot) {
         [self cancel];
