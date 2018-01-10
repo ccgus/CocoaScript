@@ -13,9 +13,9 @@
 
 + (id)scheduleWithInterval:(NSTimeInterval)i cocoaScript:(COScript*)cos jsFunction:(MOJavaScriptObject *)jsFunction repeat:(BOOL)repeat {
     
-    COSInterval *interval = [COSFiber createWithCocoaScript: cos];
+    COSInterval *interval = [COSInterval createWithCocoaScript: cos];
     
-    [interval setJsfunc:jsFunction];
+    interval->_jsfunc = jsFunction;
     
     NSTimer *t = [NSTimer scheduledTimerWithTimeInterval:i target:interval selector:@selector(timerHit:) userInfo:nil repeats:repeat];
     

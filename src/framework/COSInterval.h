@@ -13,7 +13,7 @@
 #import "COSFiber.h"
 
 @interface COSInterval : COSFiber {
-    
+    MOJavaScriptObject *_jsfunc;
     NSTimer *_timer;
     BOOL _onshot;
 }
