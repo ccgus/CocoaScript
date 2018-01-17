@@ -1,5 +1,5 @@
 //
-//  COSScript+Interval.h
+//  COScript+Interval.h
 //  Cocoa Script
 //
 //  Created by August Mueller on 11/21/13.
@@ -12,6 +12,4 @@
 @class COSInterval;
 
 @interface COScript (IntervalAdditions)
-- (void)cleanupIntervals;
-- (void)removeInterval:(COSInterval*)interval;
 @end
