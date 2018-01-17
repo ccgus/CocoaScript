@@ -210,7 +210,7 @@
         }
     }
     
-    if (![jstalk shouldKeepAround] && ![jstalk hasActiveFibers]) {
+    if (![jstalk shouldKeepAround]) {
         [jstalk cleanup];
     }
     
