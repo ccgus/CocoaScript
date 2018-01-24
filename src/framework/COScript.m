@@ -331,13 +331,12 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
     if (!JSTalkPluginList && JSTalkShouldLoadJSTPlugins) {
         [COScript loadPlugins];
     }
+	
+    if (!base && [[_env objectForKey:@"scriptURL"] isKindOfClass:[NSURL class]]) {
+        base = [_env objectForKey:@"scriptURL"];
+    }
     
     if ([self shouldPreprocess]) {
-        
-        if (!base && [[_env objectForKey:@"scriptURL"] isKindOfClass:[NSURL class]]) {
-            base = [_env objectForKey:@"scriptURL"];
-        }
-        
         str = [COSPreprocessor preprocessCode:str withBaseURL:base];
     }
     
