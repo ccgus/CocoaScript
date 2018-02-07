@@ -1213,12 +1213,6 @@ static void MOObject_initialize(JSContextRef ctx, JSObjectRef object) {
 static void MOObject_finalize(JSObjectRef object) {
     MOBox *private = (__bridge MOBox *)(JSObjectGetPrivate(object));
     
-    if (![private representedObjectCanary]) {
-        NSLog(@"whoa- the canary is gone!  I'm not touching this stuff. (%@)", [private representedObjectCanaryDesc]);
-        return;
-    }
-    
-    
     // debug(@"%p finalizing %ld", private, CFGetRetainCount((__bridge CFTypeRef)private));
     id o = [private representedObject];
     
