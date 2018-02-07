@@ -205,7 +205,7 @@ NSString * const MOAlreadyProtectedKey = @"moAlreadyProtectedKey";
         _ctx = ctx;
         _exportedObjects = [[NSMutableDictionary alloc] init];
         _objectsToBoxes = [NSMapTable
-                           mapTableWithKeyOptions:NSMapTableWeakMemory | NSMapTableObjectPointerPersonality
+                           mapTableWithKeyOptions:NSMapTableStrongMemory | NSMapTableObjectPointerPersonality
                            valueOptions:NSMapTableStrongMemory | NSMapTableObjectPointerPersonality];
         _frameworkSearchPaths = [[NSMutableArray alloc] initWithObjects:
                                  @"/System/Library/Frameworks",
