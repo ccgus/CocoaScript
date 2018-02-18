@@ -1071,7 +1071,7 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
     // ObjC class
     //
     Class objCClass = NSClassFromString(propertyName);
-    if (objCClass && ![propertyName isEqualToString:@"Object"]) {
+    if (objCClass && ![propertyName isEqualToString:@"Object"] && ![propertyName isEqualToString:@"Function"]) {
         JSValueRef ret = [runtime JSValueForObject:objCClass];
         
         if (!objc_getAssociatedObject(objCClass, &MOAlreadyProtectedKey)) {
