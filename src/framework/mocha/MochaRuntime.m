@@ -1315,9 +1315,9 @@ static bool MOBoxedObject_hasProperty(JSContextRef ctx, JSObjectRef objectJS, JS
     SEL selector = MOSelectorFromPropertyName(propertyName);
     
     // calling methodSignatureForSelector: on a proxy when it doesn't respond to the selector will throw an exception and we'll crash.
-    // so we'll just look ahead and see if maybe it is because of a missing _
-    if (([object class] == [NSDistantObject class]) && ![object respondsToSelector:selector] && [object respondsToSelector:MOSelectorFromPropertyName([propertyName stringByAppendingString:@"_"])]) {
-        return YES;
+    // so we'll just look ahead and make a special case for it. We are assuming that a NSDistantObject doesn't specify a `isSelectorExcludedFromMochaScript`
+    if ([object class] == [NSDistantObject class]) {
+        return [object respondsToSelector:selector] || [object respondsToSelector:MOSelectorFromPropertyName([propertyName stringByAppendingString:@"_"])];
     }
     
     NSMethodSignature *methodSignature = [object methodSignatureForSelector:selector];
