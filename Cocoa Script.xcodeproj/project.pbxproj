@@ -21,6 +21,8 @@
 		CC07AF4C1982C310001CCA93 /* COSMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = CC07AF4A1982C310001CCA93 /* COSMarkdown.h */; };
 		CC07AF4D1982C310001CCA93 /* COSMarkdown.m in Sources */ = {isa = PBXBuildFile; fileRef = CC07AF4B1982C310001CCA93 /* COSMarkdown.m */; };
 		CC07AF4F1982C3F1001CCA93 /* libMultiMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = CC07AF4E1982C3F1001CCA93 /* libMultiMarkdown.h */; };
+		CC0BB82D2118C580004F4CE6 /* JSTTextView.m in Headers */ = {isa = PBXBuildFile; fileRef = CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */; };
+		CC0BB82E2118C5A9004F4CE6 /* JSTTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC66D8CD181A2E2F0039A0A5 /* JSTTextView.m */; };
 		CC0EC3290F226F550094F69D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0EC3280F226F550094F69D /* ScriptingBridge.framework */; };
 		CC0EC32A0F226F550094F69D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0EC3280F226F550094F69D /* ScriptingBridge.framework */; };
 		CC1323850F24FF9D0032FEB8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1323840F24FF9D0032FEB8 /* Carbon.framework */; };
@@ -1313,6 +1315,7 @@
 				CC66D83E181A2A9B0039A0A5 /* COSQuickCIFilter.h in Headers */,
 				CC66D806181A2A470039A0A5 /* TDTokenizerState.h in Headers */,
 				CC66D83C181A2A9B0039A0A5 /* COSOpenCLProgram.h in Headers */,
+				CC0BB82D2118C580004F4CE6 /* JSTTextView.m in Headers */,
 				CC66D872181A2AF30039A0A5 /* MOFunctionArgument.h in Headers */,
 				CC66D7DE181A2A470039A0A5 /* TDParser.h in Headers */,
 				CC66D8B0181A2B0A0039A0A5 /* MOObjCRuntime.h in Headers */,
@@ -1630,6 +1633,7 @@
 				CC66D839181A2A9B0039A0A5 /* COSImageTools.m in Sources */,
 				CCD38345195A454F00C436B9 /* COSDatabase.m in Sources */,
 				CC66D7C4181A2A470039A0A5 /* TDCharacterAssembly.m in Sources */,
+				CC0BB82E2118C5A9004F4CE6 /* JSTTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

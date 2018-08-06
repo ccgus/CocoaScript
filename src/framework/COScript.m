@@ -401,6 +401,11 @@ NSString *currentCOScriptThreadIdentifier = @"org.jstalk.currentCOScriptHack";
     @catch (NSException * e) {
         NSLog(@"Exception: %@", e);
         [self printException:e];
+        
+        NSDictionary *d = [e userInfo];
+        if ([_errorController respondsToSelector:@selector(coscript:hadError:onLineNumber:atSourceURL:)]) {
+            [_errorController coscript:self hadError:[e reason] onLineNumber:[[d objectForKey:@"line"] integerValue] atSourceURL:nil];
+        }
     }
     
     [self popAsCurrentCOScript];
