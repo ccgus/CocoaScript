@@ -14,16 +14,18 @@
 #import <Carbon/Carbon.h>
 
 static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
+static NSString *JSTIndent = @"    ";
 
 @interface JSTTextView ()
-
+@property JSTTextViewTheme _theme;
 @property (assign) NSRange currentlyHighlightedRange;
 @property (assign) NSRange initialNumberRange;
 @property (assign) NSRange initialDragCommandRange;
 @property (assign) CGPoint initialDragPoint;
 @property (strong) NSNumber *initialNumber;
 @property (strong) NSMutableDictionary *numberRanges;
-
+@property (strong) NSDictionary *lightCodeHighlightingColors;
+@property (strong) NSDictionary *darkCodeHighlightingColors;
 @end
 
 
@@ -31,13 +33,14 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 
 @synthesize keywords=_keywords;
 @synthesize lastAutoInsert=_lastAutoInsert;
-
+@synthesize ignoredSymbols=_ignoredSymbols;
 
 - (id)initWithFrame:(NSRect)frameRect textContainer:(NSTextContainer *)container {
     
 	self = [super initWithFrame:frameRect textContainer:container];
     
 	if (self != nil) {
+        [self initThemes];
         [self performSelector:@selector(setupLineViewAndStuff) withObject:nil afterDelay:0];
         [self setSmartInsertDeleteEnabled:NO];
         [self setAutomaticQuoteSubstitutionEnabled:NO];
@@ -50,6 +53,7 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
     
     self = [super initWithCoder:aDecoder];
 	if (self != nil) {
+        [self initThemes];
         // what's the right way to do this?
         [self performSelector:@selector(setupLineViewAndStuff) withObject:nil afterDelay:0];
         [self setSmartInsertDeleteEnabled:NO];
@@ -64,6 +68,32 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
     
 }
 
+- (void)initThemes {
+    self.darkCodeHighlightingColors = @{
+        @"keyword.control": [NSColor colorWithRed:0.81 green:0.43 blue:0.92 alpha:1],
+        @"storage": [NSColor colorWithRed:0.81 green:0.43 blue:0.92 alpha:1],
+        @"constant": [NSColor colorWithRed:0.98 green:0.78 blue:0.25 alpha:1.0],
+        @"support.class": [NSColor colorWithRed:0.98 green:0.78 blue:0.25 alpha:1.0],
+        @"support.function": [NSColor colorWithRed:0.40 green:0.83 blue:1.00 alpha:1.0],
+        @"none": [NSColor colorWithRed:1 green:1 blue:1 alpha:0.85],
+        @"string": [NSColor colorWithRed:0.57 green:0.87 blue:0.25 alpha:1.0],
+        @"constant.numeric": [NSColor colorWithRed:0.98 green:0.78 blue:0.25 alpha:1.0],
+        @"comment": [NSColor colorWithRed:1 green:1 blue:1 alpha:0.5],
+        @"source.js keyword.operators": [NSColor colorWithRed:0.40 green:0.83 blue:1.00 alpha:1.0]
+    };
+    self.lightCodeHighlightingColors = @{
+         @"keyword.control": [NSColor colorWithRed:0.54 green:0.09 blue:0.66 alpha:1.0],
+         @"storage": [NSColor colorWithRed:0.54 green:0.09 blue:0.66 alpha:1.0],
+         @"constant": [NSColor colorWithRed:0.73 green:0.53 blue:0.00 alpha:1.0],
+         @"support.class": [NSColor colorWithRed:0.73 green:0.53 blue:0.00 alpha:1.0],
+         @"support.function": [NSColor colorWithRed:0.15 green:0.58 blue:0.75 alpha:1.0],
+         @"none": [NSColor colorWithRed:0 green:0 blue:0 alpha:0.85],
+         @"string": [NSColor colorWithRed:0.32 green:0.62 blue:0.00 alpha:1.0],
+         @"constant.numeric": [NSColor colorWithRed:0.73 green:0.53 blue:0.00 alpha:1.0],
+         @"comment": [NSColor colorWithRed:0 green:0 blue:0 alpha:0.5],
+         @"source.js keyword.operators": [NSColor colorWithRed:0.15 green:0.58 blue:0.75 alpha:1.0]
+     };
+}
 
 - (void)setupLineViewAndStuff {
     
@@ -75,40 +105,69 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
     
     [[self textStorage] setDelegate:self];
     
-    /*
-     var s = "break case catch continue default delete do else finally for function if in instanceof new return switch this throw try typeof var void while with abstract boolean byte char class const debugger double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized throws transient volatile null true false nil id CGFloat NSInteger NSUInteger bool BOOL"
-     
-     words = s.split(" ")
-     var i = 0;
-     list = ""
-     while (i < words.length) {
-     list = list + '@"' + words[i] + '", ';
-     i++
-     }
-     
-     print("NSArray *blueWords = [NSArray arrayWithObjects:" + list + " nil];")
-     */
+    NSArray *controlKeywords = [NSArray arrayWithObjects:@"catch", @"finally", @"throw", @"try", @"break", @"continue", @"goto", @"do", @"while", @"return", @"case", @"default", @"switch", @"else", @"if", @"with", @"package", @"class", @"for", @"await", @"yield", @"async", nil];
     
-    NSArray *blueWords = [NSArray arrayWithObjects:@"break", @"case", @"catch", @"continue", @"default", @"delete", @"do", @"else", @"finally", @"for", @"function", @"if", @"in", @"instanceof", @"new", @"return", @"switch", @"this", @"throw", @"try", @"typeof", @"var", @"void", @"while", @"with", @"abstract", @"boolean", @"byte", @"char", @"class", @"const", @"debugger", @"double", @"enum", @"export", @"extends", @"final", @"float", @"goto", @"implements", @"import", @"int", @"interface", @"long", @"native", @"package", @"private", @"protected", @"public", @"short", @"static", @"super", @"synchronized", @"throws", @"transient", @"volatile", @"null", @"true", @"false", @"nil", @"id", @"CGFloat", @"NSInteger", @"NSUInteger", @"bool", @"BOOL", nil];
-
+    NSArray *jsKeywords = [NSArray arrayWithObjects:@"delete", @"in", @"of", @"instanceof", @"new", @"typeof", @"void", @"package", nil];
+    
+    NSArray *storageKeywords = [NSArray arrayWithObjects:@"var", @"let", @"const", @"function", nil];
+    
+    NSArray *constants = [NSArray arrayWithObjects:@"null", @"nil", @"undefined", @"this", @"NaN", @"Infinity", @"arguments", @"context", @"true", @"false", nil];
+    
+    NSArray *globalObjects = [NSArray arrayWithObjects:@"Array", @"Date", @"Map", @"Boolean", @"Number", @"Object", @"Proxy", @"Reflect", @"RegExp", @"Set", @"String", @"Symbol", @"WeakMap", @"WeakSet", @"EvalError", @"InternalError", @"RangeError", @"ReferenceError", @"SyntaxError", @"TypeError", @"URIError", @"Error", @"Math", @"console", @"JSON", @"Promise", nil];
+    
+    NSArray *globalFunctions = [NSArray arrayWithObjects:@"clearInterval", @"clearTimeout", @"decodeURI", @"decodeURIComponent", @"encodeURI", @"encodeURIComponent", @"escape", @"eval", @"isFinite", @"isNaN", @"parseFloat", @"parseInt", @"require", @"setInterval", @"setTimeout", @"super", @"unescape", @"uneval", nil];
     
     NSMutableDictionary *keywords = [NSMutableDictionary dictionary];
     
-    for (NSString *word in blueWords) {
-        [keywords setObject:[NSColor blueColor] forKey:word];
+    for (NSString *word in controlKeywords) {
+        [keywords setObject:@"keyword.control" forKey:word];
+    }
+    for (NSString *word in jsKeywords) {
+        [keywords setObject:@"keyword.control" forKey:word];
+    }
+    for (NSString *word in storageKeywords) {
+        [keywords setObject:@"storage" forKey:word];
+    }
+    for (NSString *word in constants) {
+        [keywords setObject:@"constant" forKey:word];
+    }
+    for (NSString *word in globalObjects) {
+        [keywords setObject:@"support.class" forKey:word];
+    }
+    for (NSString *word in globalFunctions) {
+        [keywords setObject:@"support.function" forKey:word];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeSelection:) name:NSTextViewDidChangeSelectionNotification object:self];
-
+    
     
     self.keywords = keywords;
+    self.ignoredSymbols = [NSSet setWithArray:@[@"{", @"}", @"(", @")", @",", @";"]];
     
-	self.numberRanges = [NSMutableDictionary new];
+    self.numberRanges = [NSMutableDictionary new];
     
     [self parseCode:nil];
-    
 }
 
+- (JSTTextViewTheme) theme {
+    return self._theme;
+}
+
+- (void) setTheme:(JSTTextViewTheme)newTheme {
+    if (self.theme != newTheme) {
+        self._theme = newTheme;
+        [self parseCode:self];
+    }
+}
+
+- (NSDictionary<NSString*, NSColor*>*)colors {
+    BOOL isDarkMode = self.theme == JSTTextViewThemeDark;
+    if (isDarkMode) {
+        return self.darkCodeHighlightingColors;
+    }
+    
+    return self.lightCodeHighlightingColors;
+}
 
 - (void)parseCode:(id)sender {
     
@@ -127,25 +186,30 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
     [self.numberRanges removeAllObjects];
     NSUInteger sourceLoc = 0;
     
+    NSDictionary *colors = [self colors];
+    
     while ((tok = [tokenizer nextToken]) != eof) {
         
         NSUInteger strLen = [[tok stringValue] length];
         NSRange tokenRange = NSMakeRange(sourceLoc, strLen);
-        NSColor *fontColor = [NSColor blackColor];
+        NSColor *fontColor = colors[@"none"];
         
         if ([tok isQuotedString]) {
-            fontColor = [NSColor darkGrayColor];
+            fontColor = colors[@"string"];
         }
         else if ([tok isNumber]) {
-            fontColor = [NSColor blueColor];
+            fontColor = colors[@"constant.numeric"];
             [self setNumberString:[tok stringValue] forRange:tokenRange];
         }
         else if ([tok isComment]) {
-            fontColor = [NSColor redColor];
+            fontColor = colors[@"comment"];
         }
         else if ([tok isWord]) {
-            NSColor *c = [_keywords objectForKey:[tok stringValue]];
-            fontColor = c ? c : fontColor;
+            NSString *c = [_keywords objectForKey:[tok stringValue]];
+            fontColor = c && colors[c] ? colors[c] : fontColor;
+        }
+        else if ([tok isSymbol] && ![_ignoredSymbols containsObject:[tok stringValue]]) {
+            fontColor = colors[@"source.js keyword.operators"];
         }
         
         
@@ -178,7 +242,89 @@ static NSString *JSTQuotedStringAttributeName = @"JSTQuotedString";
 }
 
 - (void)insertTab:(id)sender {
-    [self insertText:@"    "];
+    NSRange selectedRange = self.selectedRange;
+    if (selectedRange.location == NSNotFound) {
+        return [self insertText:JSTIndent];
+    }
+    
+    // if we have some selected lines, then indent them all
+    NSString *content = self.string;
+    
+    NSRange lineRange = [content lineRangeForRange:selectedRange];
+    
+    NSString *toProcess = [content substringWithRange:lineRange];
+    NSArray *lines = [toProcess componentsSeparatedByString:@"\n"];
+    NSMutableArray *modLines = [NSMutableArray arrayWithCapacity:lines.count];
+    NSUInteger paddingLength = JSTIndent.length;
+    
+    __block NSUInteger totalShift = 0;
+    [lines enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
+        NSString *line = obj;
+        if (line.length)
+            totalShift += paddingLength;
+        [modLines addObject:[JSTIndent stringByAppendingString:line]];
+    }];
+    if ([modLines.lastObject isEqualToString:JSTIndent])
+    {
+        [modLines removeLastObject];
+        [modLines addObject:@""];
+    }
+    NSString *processed = [modLines componentsJoinedByString:@"\n"];
+    [self insertText:processed replacementRange:lineRange];
+    
+    selectedRange.location += paddingLength;
+    selectedRange.length +=
+    (totalShift > paddingLength) ? totalShift - paddingLength : 0;
+    self.selectedRange = selectedRange;
+}
+
+- (void)insertBacktab:(id)sender {
+    NSString *content = self.string;
+    NSRange selectedRange = self.selectedRange;
+    NSRange lineRange = [content lineRangeForRange:selectedRange];
+    
+    // Get the lines to unindent.
+    NSString *toProcess = [content substringWithRange:lineRange];
+    NSArray *lines = [toProcess componentsSeparatedByString:@"\n"];
+    
+    // This will hold the modified lines.
+    NSMutableArray *modLines = [NSMutableArray arrayWithCapacity:lines.count];
+    
+    // Unindent the lines one by one, and put them in the new array.
+    __block NSUInteger firstShift = 0;      // Indentation of the first line.
+    __block NSUInteger totalShift = 0;      // Indents removed in total.
+    [lines enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
+        NSString *line = obj;
+        NSUInteger lineLength = line.length;
+        NSUInteger shift = 0;
+        
+        for (shift = 0; shift < JSTIndent.length; shift++)
+        {
+            if (shift >= lineLength)
+                break;
+            unichar c = [line characterAtIndex:shift];
+            if (c == '\t')
+                shift++;
+            if (c != ' ')
+                break;
+        }
+        if (index == 0)
+            firstShift += shift;
+        totalShift += shift;
+        if (shift && shift < lineLength)
+            line = [line substringFromIndex:shift];
+        [modLines addObject:line];
+    }];
+    
+    // Join the processed lines, and replace the original with them.
+    NSString *processed = [modLines componentsJoinedByString:@"\n"];
+    [self insertText:processed replacementRange:lineRange];
+    
+    // Modify the selection range so that the same text (minus removed spaces)
+    // are selected.
+    selectedRange.location -= firstShift;
+    selectedRange.length -= totalShift - firstShift;
+    self.selectedRange = selectedRange;
 }
 
 - (void)autoInsertText:(NSString*)text {
