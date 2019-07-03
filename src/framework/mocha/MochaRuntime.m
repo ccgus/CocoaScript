@@ -1154,7 +1154,7 @@ JSValueRef Mocha_getProperty(JSContextRef ctx, JSObjectRef object, JSStringRef p
 #if __LP64__
             NSNumber *value64 = [(MOBridgeSupportEnum *)symbol value64];
             if (value64 != nil) {
-                doubleValue = [value doubleValue];
+                doubleValue = [value64 doubleValue];
             }
             else {
 #endif
