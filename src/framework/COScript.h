@@ -18,9 +18,9 @@
 @end
 
 @interface COScript : NSObject {
-    
+
     Mocha *_mochaRuntime;
-    
+
     // used in COScript+Fiber
     NSMutableArray *_activeFibers;
     int _nextFiberId;
@@ -31,7 +31,9 @@
 @property (retain) NSMutableDictionary *env;
 @property (assign) BOOL shouldPreprocess;
 @property (assign) BOOL shouldKeepAround;
+@property (strong, nonatomic) NSDictionary* coreModuleMap;
 
+- (instancetype)initWithCoreModules:(NSDictionary*)coreModules;
 - (void)cleanup;
 - (void)garbageCollect;
 - (id)executeString:(NSString*) str;
