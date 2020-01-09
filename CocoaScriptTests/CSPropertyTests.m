@@ -67,11 +67,11 @@ id dynamicMethodIMP(id self, SEL _cmd) {
   moContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
   model = [[NSManagedObjectModel alloc] initWithContentsOfURL: testModelURL];
   coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: model];
-  
-  NSPersistentStore *store = [coordinator addPersistentStoreWithType: NSInMemoryStoreType
-                                                       configuration: nil
-                                                                 URL: [NSURL fileURLWithPath: @"/tmp/testmodel"]
-                                                             options: 0
+    
+  [coordinator addPersistentStoreWithType: NSInMemoryStoreType
+                              configuration: nil
+                                        URL: [NSURL fileURLWithPath: @"/tmp/testmodel"]
+                                    options: 0
                                                                error: &error];
   [moContext setPersistentStoreCoordinator: coordinator];
 }
@@ -106,7 +106,7 @@ id dynamicMethodIMP(id self, SEL _cmd) {
 {
   NSManagedObject *modelObject = [NSEntityDescription insertNewObjectForEntityForName: @"Product" inManagedObjectContext: moContext];  
   [runtime evalString: @"function setTestProperty(object) { object.name = \"testValue\" }"];
-  id result = [runtime callFunctionWithName:@"setTestProperty" withArgumentsInArray: @[modelObject]];
+  [runtime callFunctionWithName:@"setTestProperty" withArgumentsInArray: @[modelObject]];
   
   XCTAssertTrue([[modelObject valueForKey: @"name"] isEqualToString: @"testValue"], @"Property not set");
 }
